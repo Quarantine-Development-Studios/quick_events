@@ -5,13 +5,13 @@ import ReactDom from 'react-dom';
 export class TitleBar extends React.Component {
     menuBtnCount = 5;
 
-    ButtonTmp(text) { return(<button className="menu-button">{text}</button>);}
+    ButtonTmp(text, id) { return(<button className="menu-button" key={id.toString()}>{text}</button>);}
 
     getButtons(count){
         const items = [];
 
         for(let i = 0; i < count; i++){
-            items.push(this.ButtonTmp(i));
+            items.push(this.ButtonTmp("test", i));
         }
 
         return (

@@ -1,6 +1,6 @@
 //import test from "./inquiry"
 
-export class Client { 
+export default class Client { 
     constructor(name, email, phone){
         this.name = name;
         this.email = email;
@@ -31,14 +31,13 @@ export class Client {
         }
     }
     
-    createInquiry(){
-        console.log(test);
-        return test;
-         for(let i = 0; i < this.inquiries.length + 1; i++){
-            if(!this.inquiries[i]){
-                this.inquiries[i] = test;
-                return this.inquiries[i];    
-            }
-        } 
+    toJSON(){
+        return {
+            name: this.name,
+            email: this.email,
+            phone: this.phone,
+
+        }
     }
 }
+
