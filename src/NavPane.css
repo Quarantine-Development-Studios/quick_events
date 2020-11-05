@@ -1,0 +1,51 @@
+.navpane {
+    position: relative;
+    top: 0vh; bottom: 6vh;
+
+    margin: 3px;
+    padding: 4px;
+
+    min-height: 90vh;
+
+    background-color: azure;
+    width: 25vw;
+    border: black;
+    border-style: solid;
+    border-radius: 10px;
+
+    text-align: left;
+}
+
+input {
+    position: relative;
+    top: 0px; left: 0px;
+
+    height: 1.5vh;
+    width: 75%;
+
+}
+
+.navpane-search-button {
+    position: relative;
+    top: 0vh; bottom: 3pv;
+    left: 1vw;
+
+    
+
+    width: 15%;
+    min-height: 2.1vh;
+
+    font-size: 1vh;
+}
+
+.navpane-content {
+    position: relative;
+    top: 1vh; bottom: 3vh;
+
+    height: 85vh;
+
+    background-color: burlywood;
+    border: black;
+    border-style: ridge;
+    border-radius: 10px;
+}
