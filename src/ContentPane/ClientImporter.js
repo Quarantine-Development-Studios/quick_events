@@ -1,12 +1,9 @@
 import React from 'react';
+import ReactComponent_Custom from '../ReactComponent_Custom.js';
 import './ClientImporter.css'
-import firebase from '../firebase';
-import Client from '../client';
-import rxClients from '../rxClients';
-import ClientDirectory from '../NavPane/ClientDirectory/ClientDirectory';
 import WindowCloseImg from '../images/WindowClose.png'
 
-export default class ClientImporter extends React.Component {
+export default class ClientImporter extends ReactComponent_Custom {
     constructor(props){
         super(props);
         this.state = {
@@ -14,16 +11,19 @@ export default class ClientImporter extends React.Component {
         }
 
         //bind functions
-
+        this.customBinds();
+        this.closeWindow = this.closeWindow.bind(this);
     }
 
 
-    closeWindow(){
-        console.log(this.props);
-        //this.props.creatingClient = false;
+    closeWindow(e){
+        console.log("ClientImporter_CloseWindow");
+        this.stateHandler('creatingClient', false);
     }
 
     render(){
+        console.log("ClientImporter")
+        console.log(this.props);
         return (
             <div className="App-Border1 client-importer">
                 <div className="control-Bar">

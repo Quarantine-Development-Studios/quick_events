@@ -1,11 +1,12 @@
 import React from 'react';
-import './NavPane.css'
+import ReactComponent_Custom from '../ReactComponent_Custom.js';
+import './NavPane.css';
 import firebase from '../firebase';
 import Client from '../client';
 import rxClients from '../rxClients';
 import ClientDirectory from './ClientDirectory/ClientDirectory';
 
-export class NavPane extends React.Component {
+export class NavPane extends ReactComponent_Custom {
     
     constructor(){
         super();
@@ -14,22 +15,19 @@ export class NavPane extends React.Component {
             selectedClient: "",
         }
 
+        this.customBinds();
+
         this.removeClient = this.removeClient.bind(this);
-        this.stateHandler = this.stateHandler.bind(this);
+        this.createClient = this.createClient.bind(this);
 
-    }
-
-    stateHandler(varName, value){
-        console.log("trying to set stateHandler: " + varName + "  " + value)
-        this.setState({
-            [varName]: value
-        })
     }
 
 
     createClient(e){
-        let entry = firebase.firestore().collection('clients').doc();
-        entry.set(new Client("kevin", "blah@gmail.com", "1234567890").toJSON());
+        //let entry = firebase.firestore().collection('clients').doc();
+        //entry.set(new Client("kevin", "blah@gmail.com", "1234567890").toJSON());
+        this.stateHandler('creatingClient', true);
+
     }
 
     removeClient(e){

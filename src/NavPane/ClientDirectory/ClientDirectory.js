@@ -1,11 +1,11 @@
 import React from 'react';
+import ReactComponent_Custom from '../../ReactComponent_Custom.js';
 
-
-export default class ClientDirectory extends React.Component {
+export default class ClientDirectory extends ReactComponent_Custom {
     constructor(props){
         super(props)
         
-        
+        this.customBinds();
         this.chgNormal = this.chgNormal.bind(this)
         this.selectClient = this.selectClient.bind(this)
     }
