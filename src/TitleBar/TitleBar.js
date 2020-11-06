@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDom from 'react-dom';
+import './TitleBar.css';
 
 
 export class TitleBar extends React.Component {
@@ -11,7 +11,7 @@ export class TitleBar extends React.Component {
         const items = [];
 
         for(let i = 0; i < count; i++){
-            items.push(this.ButtonTmp("test", i));
+            items.push(this.ButtonTmp(i, i));
         }
 
         return (
@@ -20,6 +20,7 @@ export class TitleBar extends React.Component {
             </div>   
         );
     }
+
 
     render(){
 

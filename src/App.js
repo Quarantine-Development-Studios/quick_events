@@ -1,6 +1,5 @@
-import { findAllByTitle } from '@testing-library/react';
-import {TitleBar} from './TitleBar.js';
-import {NavPane} from './NavPane.js';
+import {TitleBar} from './TitleBar/TitleBar.js';
+import {NavPane} from './NavPane/NavPane.js';
 import './App.css';
 
 function App() {
