@@ -1,3 +1,20 @@
+.title-bar-header {
+  background-color: #282c34;
+  min-height: 5vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+.title-bar-header-title {
+  margin-top: .25vh;
+  margin-bottom: .25vh;
+
+  text-align: left;
+  font-size: 1.5vh;
+}
+
 .menu-button {
     position: relative;
     align-items: start;

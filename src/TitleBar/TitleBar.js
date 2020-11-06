@@ -25,8 +25,8 @@ export class TitleBar extends React.Component {
     render(){
 
         return (
-            <div className="App-header">
-                <h1 className="App-header-title">Quick Events</h1>
+            <div className="title-bar-header">
+                <h1 className="title-bar-header-title">Quick Events</h1>
                 {this.getButtons(this.menuBtnCount)}
             </div>
         );

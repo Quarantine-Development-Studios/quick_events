@@ -1,0 +1,28 @@
+.content-pane{
+    display: inline-flex;
+    position: relative;
+    vertical-align: top;
+    
+
+    text-align: left;
+}
+
+.client-importer {
+    position: relative;
+    width: 15vw;
+    height: 30vh;
+
+    background-color: LightSteelBlue !important;
+
+}
+
+.control-Bar {
+    position: relative;
+    top: 0vh; left: 0vw;
+    background-color: azure;
+    height: 2vh;
+    border-color: black;
+    border-width: 1px !important;
+    border-bottom: solid;
+    text-align: right;
+}

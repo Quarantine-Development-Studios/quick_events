@@ -42,9 +42,9 @@ export default class ClientDirectory extends React.Component {
                 //default className
                 let className = "client-label"
                 //if pointer
-                if(dbID === this.props.selectedClient){ className = "client-label-pointer" }
-
-                //create lbl
+                if(dbID === this.props.selectedClient){ 
+                    className = "client-label-pointer" 
+                }
                 rClients[i] = this.ClientLBL(key, text, dbID, className);
 
             }

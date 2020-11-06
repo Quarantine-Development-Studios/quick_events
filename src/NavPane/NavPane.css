@@ -1,19 +1,11 @@
 .navpane {
+    display: inline-block;
     position: relative;
-    top: 0vh; bottom: 6vh;
+    vertical-align: top;
 
-    margin: 3px;
-    padding: 4px;
-
-    min-height: 90vh;
-
-    background-color: azure;
-    min-width: 15vw;
-    max-width: 250px;
-    border: black;
-    border-style: solid;
-    border-radius: 3px;
-    border-width: 1px;
+    height: 90vh;
+    width: 15vw;
+    min-width: 175px;
 
     text-align: left;
 }

@@ -46,9 +46,10 @@ export class NavPane extends React.Component {
         rxClients.subscribe((clients) => this.setState({...this.state, clients: clients}));
     }
 
+
     render(){
         return (
-            <div className="navpane">
+            <div className="App-Window navpane">
                 
                 <div className="navpane-searchbar">
                     <input className="navpane-search-input"></input>
@@ -65,6 +66,8 @@ export class NavPane extends React.Component {
                     selectedClient = {this.state.selectedClient}
                     stateHandler = {this.stateHandler}
                 />
+
+
             </div>
         )
     }

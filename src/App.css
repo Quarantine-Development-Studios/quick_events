@@ -1,25 +1,11 @@
 .App {
-  text-align: center;
-}
-
-
-
-.App-header {
-  background-color: #282c34;
-  min-height: 5vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: top;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-.App-header-title {
-  margin-top: .25vh;
-  margin-bottom: .25vh;
-
+  background-color: darkslategrey;
   text-align: left;
-  font-size: 1.5vh;
 }
+
+
+
+
 .App-header-menu {
   position: relative;
   top:0px;
@@ -42,3 +28,29 @@
   color: #61dafb;
 }
 
+.App-Window {
+  margin-top: .25vh;
+  margin-bottom: .25vh;
+  margin-left: .25vw;
+
+.App-Border1{
+  background-color: azure;
+  border: black;
+  border-style: solid;
+  border-radius: 3px;
+  border-width: 1px;
+}
+
+.App-Window-Title {
+  float:left;
+  margin-left: 1vw;
+  margin-right: 1vw;
+  left: 1vw;
+  font-size: 1.5vh;
+  font-weight: bold;
+
+}
+.App-Window-CloseBtn {
+  position: relative;
+  float: right;
+}
