@@ -32,6 +32,15 @@
   margin-top: .25vh;
   margin-bottom: .25vh;
   margin-left: .25vw;
+  margin-right: .25vw;
+  padding: 6px;
+
+  background-color: azure;
+  border: black;
+  border-style: solid;
+  border-radius: 3px;
+  border-width: 1px;
+}
 
 .App-Border1{
   background-color: azure;
