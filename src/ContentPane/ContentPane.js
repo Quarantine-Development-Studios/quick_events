@@ -2,7 +2,7 @@ import React from 'react';
 import ReactComponent_Custom from '../ReactComponent_Custom.js';
 import './ContentPane.css'
 import firebase from '../firebase';
-import Client from '../client';
+import Client from './client';
 import rxClients from '../rxClients';
 import ClientImporter from './ClientImporter';
 
