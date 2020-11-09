@@ -1,0 +1,37 @@
+.inquiry-window{
+    background-color: lightsteelblue !important;
+    flex-basis: 300px !important;
+
+}
+
+.InquiryWindow-content {
+    flex: auto;
+    flex-direction: column;
+    order:2;
+    margin: 10px;
+    
+}
+
+.InquiryWindow-field {
+    flex: auto;
+    flex-direction: row;
+
+
+    margin-bottom: 10px;
+}
+
+.InquiryWindow-field-label {
+    position: relative;
+    display: inline-block;
+
+    font-weight: bold;
+
+}
+
+.InquiryWindow-field-input {
+    position: relative;
+    float: right;
+
+    max-width: 125px;
+    margin-right: 10px;
+}

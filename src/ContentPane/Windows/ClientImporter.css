@@ -1,0 +1,29 @@
+.clientImporter {
+    position: absolute;
+    top:10px; left: 10px;
+
+    padding: 3px;
+
+    width: 15vw;
+    height: 25vh;
+}
+
+.clientImporter-field {
+    text-align: left;
+}
+
+.clientImporter-field-label {
+    display: block;
+    margin-left: 10px;
+
+
+
+    font-weight: bold;
+}
+
+.clientImporter-field-input {
+    display: block;
+    margin-left:20px;
+
+    width: 12vw;
+}

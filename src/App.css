@@ -1,6 +1,9 @@
 .App {
-  background-color: darkslategrey;
+  background-color: rgb(30, 49, 49);
   text-align: left;
+  position: absolute;
+  top:0px; bottom: 0px;
+  left: 0px; right: 0px;
 }
 
 
@@ -16,7 +19,7 @@
   padding-top: .25vh;
   padding-bottom: .25vh;
 
-  width: 100vw;
+  width: 100%;
   text-align: left;
   font-size: 1vh;
   max-height: 1.5vh;
@@ -29,17 +32,33 @@
 }
 
 .App-Window {
-  margin-top: .25vh;
-  margin-bottom: .25vh;
-  margin-left: .25vw;
-  margin-right: .25vw;
-  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  order: 1;
+  flex-basis: 250px;
 
-  background-color: azure;
+  margin-right: 15px;
+
+
+  background-color: rgb(190, 194, 157);
   border: black;
   border-style: solid;
-  border-radius: 3px;
+  border-radius: 10px;
   border-width: 1px;
+}
+
+.control-Bar {
+  position: relative;
+  top: 0vh; left: 0vw;
+  background-color: azure;
+  height: 2vh;
+  border-color: black;
+  border-width: 1px !important;
+  border-bottom: solid;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+
+  text-align: right;
 }
 
 .App-Border1{
@@ -61,5 +80,6 @@
 }
 .App-Window-CloseBtn {
   position: relative;
+  top: 1px; right:5px;
   float: right;
 }

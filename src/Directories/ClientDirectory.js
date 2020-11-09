@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactComponent_Custom from '../../ReactComponent_Custom.js';
+import ReactComponent_Custom from '../ReactComponent_Custom.js';
 
 export default class ClientDirectory extends ReactComponent_Custom {
     constructor(props){
@@ -49,11 +49,7 @@ export default class ClientDirectory extends ReactComponent_Custom {
 
             }
 
-            return (
-                <div className="navpane-content">
-                    {rClients}
-                </div>
-            ) 
+            return rClients;
         } else {
             return (<label></label>);
         } 
@@ -61,8 +57,10 @@ export default class ClientDirectory extends ReactComponent_Custom {
 
     render(){
         return (
-            <div>
-                {this.getClientAccessors()}
+            <div className="navpane-content">
+                {
+                    this.getClientAccessors()
+                }
             </div>
         )
     }

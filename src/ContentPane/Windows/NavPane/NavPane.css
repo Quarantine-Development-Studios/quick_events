@@ -1,0 +1,53 @@
+.navpane-searchbar {
+
+    display: flex;
+    flex-direction: column;
+
+    margin: 5px;;
+    
+    border-color: navy;
+    border-width: 0px;
+    border-style: solid;
+    border-bottom-width: 1px;
+}
+
+.navpane-searchbar-line {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5px;
+}
+
+.navpane-search-input {
+    display: flex;
+    order:1;
+}
+
+.navpane-button {
+    display: flex;
+    order: 2;
+    margin-left: 10px;
+
+}
+
+.navpane-content {
+    flex: auto;
+
+    flex-direction: column;
+    order: 5;
+
+    margin: 10px;
+    padding: 4px;
+
+    border-color: navy;
+    border-style: groove;
+    border-radius: 3px;
+    border-width: 2px;
+    background-color: papayawhip;
+
+    overflow-y: auto;
+}
+
+.client-label {
+    display: block;
+    position: relative;
+}

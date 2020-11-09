@@ -1,10 +1,22 @@
-.content-pane{
-    display: inline-flex;
-    position: relative;
-    vertical-align: top;
-    
+.content-pane{ 
+    display: flex; 
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    position: absolute;
+    top:55px; bottom: 35px;
+    left: 5px; right: 5px;
 
-    text-align: left;
+    padding: 10px;
+
+    border-style: solid;
+    border-radius: 8px;
+    border-color: rgb(26, 31, 95);
+    background-color: rgba(77, 87, 226, 0.329);
+
+
+
+    height: auto;
+
 }
 
 .client-importer {
@@ -16,13 +28,16 @@
 
 }
 
-.control-Bar {
-    position: relative;
-    top: 0vh; left: 0vw;
-    background-color: azure;
-    height: 2vh;
-    border-color: black;
-    border-width: 1px !important;
-    border-bottom: solid;
-    text-align: right;
+
+
+.client-label {
+    display: block;
+    color: black;
+    font-weight: normal;
+}
+
+.client-label-pointer {
+    display: block;
+    color: DarkBlue;
+    font-weight: bold;
 }

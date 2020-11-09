@@ -1,9 +1,9 @@
 import React from 'react';
-import ReactComponent_Custom from '../ReactComponent_Custom.js';
+import ReactComponent_Custom from '../../ReactComponent_Custom.js';
 import './ClientImporter.css';
-import WindowCloseImg from '../images/WindowClose.png';
-import Client from './client.js';
-import firebase from '../firebase';
+import WindowCloseImg from '../../images/WindowClose.png';
+import Client from '../Definitions/client.js';
+import firebase from '../../firebase';
 
 export default class ClientImporter extends ReactComponent_Custom {
     constructor(props){
@@ -18,13 +18,6 @@ export default class ClientImporter extends ReactComponent_Custom {
         this.submitImport = this.submitImport.bind(this);
     }
 
-    //templates
-    clientImporterField(valueID) { return (
-        <div className="client-importer-field">
-            <label className="client-importer-field-label" >{valueID}: </label>
-            <input className="client-importer-field-input" id={"clientImporter-" + valueID}></input>
-        </div>
-    )};
 
     closeWindow(e){
         console.log("ClientImporter_CloseWindow");
@@ -54,26 +47,21 @@ export default class ClientImporter extends ReactComponent_Custom {
     };
 
     render(){
-        console.log("ClientImporter")
+        console.log("ClientImporter");
         console.log(this.props);
         return (
-            <div className="App-Border1 client-importer">
-                <div className="control-Bar">
-                    <div className="App-Window-Title">
-                        <label >Client Importer</label>
-                    </div>
-                    <img className="App-Window-CloseBtn" onClick={this.closeWindow} alt="" src={WindowCloseImg} ></img>
-                </div>
+            <div className="App-Border1 clientImporter">
+                {this.WindowControlBar("Client Importer")}
 
-                <div className="client-importer-body">
-                    {this.clientImporterField('First Name')}
-                    {this.clientImporterField('Last Name')}
-                    {this.clientImporterField('Email')}
-                    {this.clientImporterField('Phone')}
+                <div className="clientImporter-body">
+                    {this.InfoField('First Name','clientImporter')}
+                    {this.InfoField('Last Name','clientImporter')}
+                    {this.InfoField('Email','clientImporter')}
+                    {this.InfoField('Phone','clientImporter')}
                     
                 </div>
                 <div>
-                    <button className="client-importer-submit" onClick={this.submitImport} >Submit</button>
+                    <button className="clientImporter-submit" onClick={this.submitImport} >Submit</button>
                 </div>
             </div>
         )

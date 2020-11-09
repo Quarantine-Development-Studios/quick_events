@@ -1,17 +1,16 @@
 import React from 'react';
 import './TitleBar.css';
+import ReactComponent_Custom from '../ReactComponent_Custom.js';
 
-
-export class TitleBar extends React.Component {
+export class TitleBar extends ReactComponent_Custom {
     menuBtnCount = 5;
 
-    ButtonTmp(text, id) { return(<button className="menu-button" key={id.toString()}>{text}</button>);}
-
+    
     getButtons(count){
         const items = [];
 
         for(let i = 0; i < count; i++){
-            items.push(this.ButtonTmp(i, i));
+            items.push(this.ReactButton(i, i));
         }
 
         return (
