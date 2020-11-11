@@ -5,7 +5,7 @@ import rxClients from '../rxClients';
 import ClientImporter from './Windows/ClientImporter';
 import Inquiry from './Definitions/Inquiry.js';
 import NavPane from './Windows/NavPane/NavPane.js';
-import ClientPane from './Windows/ClientPane.js';
+import ClientPane from './Windows/ClientPane/ClientPane.js';
 import rxInquiries from '../rxInquiries.js';
 
 export class ContentPane extends ReactComponent_Custom {
@@ -18,6 +18,8 @@ export class ContentPane extends ReactComponent_Custom {
 
         //function binds
         this.customBinds();
+        this.tryShowClientPane = this.tryShowClientPane.bind(this);
+        this.getRelatedInquiries = this.getRelatedInquiries.bind(this);
     }
 
     componentDidMount(){
@@ -31,7 +33,7 @@ export class ContentPane extends ReactComponent_Custom {
         if (this.props.creatingClient) {
             content.push(
                 //make sure windows that appear on top are assigned last
-                <ClientImporter
+                <ClientImporter key="ClientImporter"
                     stateHandler={this.stateHandler} 
                 />
             );
@@ -42,22 +44,40 @@ export class ContentPane extends ReactComponent_Custom {
             const client = this.state.clients.filter(e => e.id === this.props.selectedClient)[0]
             content.push(
                 //make sure windows that appear on top are assigned last
-                <ClientPane
+                <ClientPane key="ClientPane"
                     stateHandler={this.stateHandler}
 
                     client = {client}
+                    selectedClient = {this.props.selectedClient}
+
 
                     selectedInquiry = {this.props.selectedInquiry}
                     viewingInquiry = {this.props.viewingInquiry} 
+                    inquiries = {this.state.inquiries}
                 />
             );
         }
     }
 
+    getRelatedInquiries(){
+        console.log('logging inquiries')
+        
+        console.log(this.state)
+        const client = this.state.clients.find(client => client.id === this.props.selectedClient)
+        if(client){
+            const linkedInquiriesIDs = client.inquiries;
+            const inquiries = this.state.inquiries.filter(inquiry => linkedInquiriesIDs.includes(inquiry.id))
+            console.log('logging inquiries')
+            console.log(inquiries)
+            return inquiries;
+        }
+    }
+
+
     tryShowNavPane(content) {
         if (this.props.viewingNavigation) {
             content.push(
-                <NavPane
+                <NavPane key="NavPane"
                     stateHandler={this.stateHandler}
                     //pass clients for display
                     clients = {this.state.clients}
@@ -66,6 +86,7 @@ export class ContentPane extends ReactComponent_Custom {
                     //pass selected client for highlighting comparison
                     selectedClient = {this.props.selectedClient} 
                     selectedInquiry = {this.props.selectedInquiry}
+                    relatedInquiries = {this.getRelatedInquiries()}
                 />
             );
         }
