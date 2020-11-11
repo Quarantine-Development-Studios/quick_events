@@ -66,7 +66,7 @@ export default class ReactComponent_Custom extends React.Component{
         return (
             <div className={rootName + "-selector"} key={id + '-selector'}>
                 <label className={rootName + "-selector-label content-label"} key={id + '-lbl'}>{id}: </label>
-                <select name={id} className={rootName + "-dropdown"} key={id + "-selecter"} onChange={callback}>
+                <select name={id} className={rootName + "-dropdown"} key={id + "-selecter"} onBlur={callback}>
                         {optionElements}
                 </select>
             </div>
@@ -77,7 +77,7 @@ export default class ReactComponent_Custom extends React.Component{
         return (
             <div className={rootName + "-field"} key={id}>
                 <label className={rootName + "-field-label content-label"} key={'lbl-' + id}>{id}: </label>
-                <input className={rootName + '-field-input content-input'} id={rootName + '-' + id} key={'input-' + id} value={value} onChange={callback} callbackpointer={callbackPointer}></input>
+                <input className={rootName + '-field-input content-input'} id={rootName + '-' + id} key={'input-' + id} defaultValue={value} onBlur={callback} callbackpointer={callbackPointer}></input>
             </div>
         )
     };
@@ -130,9 +130,7 @@ export default class ReactComponent_Custom extends React.Component{
 
     setValue(event){
         console.log('attempting to change db value')
-        
         const cbPointer = event.target.attributes['callbackpointer'].value;
-        console.log(cbPointer);
 
         let dbRootKey = '';
         let dbKey = '';
