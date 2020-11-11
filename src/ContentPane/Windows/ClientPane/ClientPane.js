@@ -30,20 +30,29 @@ export default class ClientPane extends ReactComponent_Custom{
         this.state.inquiries.push(inquiry);
     } */
 
-
-
-    tryShowInquiryInfo(){
-        
-        if(this.props.selectedInquiry !== '' && this.props.viewingInquiry === true){
-            const inquiry = this.props.inquiries.filter(inquiry => inquiry.id = this.props.selectedInquiry);
-            console.log('testing inquiry')
+    getDisplayContents(){
+        console.log('trying to get Display Contents')
+        if(this.props.viewingInquiry && this.props.inquiry !== undefined){
+            const dispItems = [];
+            const inquiry = new Inquiry(this.props.inquiry)
             console.log(inquiry)
+
+            for(const [key, value] of Object.entries(inquiry.basicInfo)){
+                let _key = key.replace(/([A-Z])/g, ' $1').trim();
+                _key = _key.charAt(0).toUpperCase() + _key.slice(1);
+
+                dispItems.push(this.InfoField(_key, 'InquiryPane', value, this.setValue, 'inquiry'));
+            }
+
+
             return (
-                <InquiryDisp
-                    stateHandler = {this.stateHandler}
-                    inquiry = {inquiry}
-                />
-            )
+                <div className="InquiryPane-content">
+                    {dispItems}
+                </div>
+            ) 
+
+        } else {
+            return (<div></div>);
         }
     }
 
@@ -52,7 +61,6 @@ export default class ClientPane extends ReactComponent_Custom{
 
 
     render() {
-        console.log(this.tryShowInquiryInfo())
         return (
             <div className="ClientPane App-Window">
                 {this.WindowControlBar("Client Information")}   
@@ -62,6 +70,7 @@ export default class ClientPane extends ReactComponent_Custom{
                     {this.InfoField('Phone', 'ClientPane', this.props.client['phone'], this.setValue, 'client')}
                 </div>
                 {this.Divider()}
+                {this.getDisplayContents()}
             </div>
         )
     }

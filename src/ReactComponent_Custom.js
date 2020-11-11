@@ -109,9 +109,9 @@ export default class ReactComponent_Custom extends React.Component{
 
 
     async stateHandler(varName, value, inputChangeCallback){
-        console.log('setting: ' + varName + ' to value: ')
-        console.log(value);
         if (this.state[varName] !== undefined){
+            console.log('stateHandler: ' + varName + ' => ')
+            console.log(value)
             this.setState({
                 ...this.state,
                 [varName]: value
@@ -129,9 +129,14 @@ export default class ReactComponent_Custom extends React.Component{
 
 
     setValue(event){
+        console.log('attempting to change db value')
+        
         const cbPointer = event.target.attributes['callbackpointer'].value;
+        console.log(cbPointer);
+
         let dbRootKey = '';
         let dbKey = '';
+
 
         switch (cbPointer) {
             case 'client':
@@ -139,8 +144,10 @@ export default class ReactComponent_Custom extends React.Component{
                 dbKey = this.props.selectedClient;
                 break;
             case 'inquiry':
+                
                 dbRootKey = 'inquiries';
                 dbKey = this.props.selectedInquiry;
+                console.log('setting db entry args: ' + dbRootKey + '  ' + dbKey)
                 break;
             default:
                 console.log('unable to set dbRoot in "setValue()"');
@@ -155,9 +162,11 @@ export default class ReactComponent_Custom extends React.Component{
         let entry = firebase.firestore().collection(dbRootKey).doc(dbKey);
         console.log('entry is:')
         console.log(entry);
-        entry.set(
-            {[fieldKey]: event.target.value},
-            {merge: true});
+        if(fieldKey !== 'id'){
+            entry.set(
+                {[fieldKey]: event.target.value},
+                {merge: true});
+        }
     }
 
     customBinds(){

@@ -39,6 +39,19 @@ export class ContentPane extends ReactComponent_Custom {
             );
         }
     }
+
+    getSelectedInquiry(){
+        if(this.props.selectedClient !== '' && this.props.viewingInquiry){
+            const inquiry = this.state.inquiries.filter(e => e.id === this.props.selectedInquiry) 
+                //should return array of 1 value so we return first input in array
+            if(inquiry && inquiry[0]){
+                return inquiry[0];
+            }
+        }
+
+        return undefined;
+    }
+
     tryShowClientPane(content) {
         if (this.props.viewingClient && this.props.selectedClient !== "") {
             const client = this.state.clients.filter(e => e.id === this.props.selectedClient)[0]
@@ -50,25 +63,19 @@ export class ContentPane extends ReactComponent_Custom {
                     client = {client}
                     selectedClient = {this.props.selectedClient}
 
-
-                    selectedInquiry = {this.props.selectedInquiry}
                     viewingInquiry = {this.props.viewingInquiry} 
-                    inquiries = {this.state.inquiries}
+                    selectedInquiry = {this.props.selectedInquiry}
+                    inquiry = {this.getSelectedInquiry()}
                 />
             );
         }
     }
 
     getRelatedInquiries(){
-        console.log('logging inquiries')
-        
-        console.log(this.state)
         const client = this.state.clients.find(client => client.id === this.props.selectedClient)
         if(client){
             const linkedInquiriesIDs = client.inquiries;
             const inquiries = this.state.inquiries.filter(inquiry => linkedInquiriesIDs.includes(inquiry.id))
-            console.log('logging inquiries')
-            console.log(inquiries)
             return inquiries;
         }
     }
@@ -81,7 +88,6 @@ export class ContentPane extends ReactComponent_Custom {
                     stateHandler={this.stateHandler}
                     //pass clients for display
                     clients = {this.state.clients}
-                    inquiries = {this.state.inquiries}
 
                     //pass selected client for highlighting comparison
                     selectedClient = {this.props.selectedClient} 
@@ -97,9 +103,8 @@ export class ContentPane extends ReactComponent_Custom {
     
     render(){
         let content = [];
-        const testInquiry = new Inquiry();
         this.tryShowNavPane(content);
-        this.tryShowClientPane(content, testInquiry);
+        this.tryShowClientPane(content);
         this.tryShowClientImporter(content);
 
         return (

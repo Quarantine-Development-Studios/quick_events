@@ -1,5 +1,6 @@
-import React from 'react';
 import ReactComponent_Custom from '../ReactComponent_Custom.js';
+
+
 
 export default class ClientDirectory extends ReactComponent_Custom {
     constructor(props){
@@ -14,24 +15,13 @@ export default class ClientDirectory extends ReactComponent_Custom {
     
 
     selectLbl(event){
-        const pointer = event.target.attributes['callbackpointer'].value;
 
-        if(pointer === 'client'){
-            const targetID = event.target.attributes['data-key'].value
-            let value = ((this.props.selectedClient !== targetID) ? targetID : "");
+        let pointer = event.target.attributes['callbackpointer'].value;
 
-            this.stateHandler('selectedClient', value)
-        }
-        
-        if(pointer === 'inquiry'){
-            const targetID = event.target.attributes['data-key'].value
-            let value = (this.props.selectedInquiry !== targetID) ? targetID : "";
+        const targetID = event.target.attributes['data-key'].value
+        let value = ((this.props['selected' + pointer] !== targetID) ? targetID : "");
 
-            this.stateHandler('selectedInquiry', value)
-
-            console.log('testing inquiry')
-            console.log(this.props)
-        }
+        this.stateHandler('selected' + pointer, value)
     }
 
 
@@ -49,36 +39,35 @@ export default class ClientDirectory extends ReactComponent_Custom {
                 let tagMod = '';
                 let isPointer = (dbID === this.props.selectedClient);
         
+                let clientLabel = this.NavLbl(ClientIndex, rootName, text, dbID, this.selectLbl, tagMod, 'Client');
+
                 //if pointer establish extra class name for highlighting
                 if (isPointer) {
                     tagMod = '-pointer';
-                }
-        
-                //establish root label
-                const clientLabel = this.NavLbl(ClientIndex, rootName, text, dbID, this.selectLbl, tagMod, 'client');
-                const relatedInquiries = this.props.relatedInquiries;
-
-                if(isPointer && relatedInquiries){
-                    console.log('test 1')
-                    console.log(relatedInquiries)
-
+                    //overwrite
+                    clientLabel = this.NavLbl(ClientIndex, rootName, text, dbID, this.selectLbl, tagMod, 'Client');
+                    //establish root label
                     const inquiryLabels = [];
+                    const relatedInquiries = this.props.relatedInquiries;
+                    const selectedInquiry = this.props.selectedInquiry;
 
-                    for (let i2 = 0; i2 < relatedInquiries.length; i2++) {
-                        const key = i2;
-                        const text = '- ' + relatedInquiries[key].name;
-                        const dbID = relatedInquiries[key].id;
-                        console.log(dbID)
-                        let tagMod = '';
-                        const isPointer = (dbID === this.props.selectedInquiry);
-            
-                        if (isPointer) {
-                            tagMod = '-pointer';
+                    if(relatedInquiries){
+                        for (let riIndex = 0; riIndex < relatedInquiries.length; riIndex++) {
+                            const key = riIndex;
+                            const text = '- ' + relatedInquiries[riIndex].name;
+                            const dbID = relatedInquiries[riIndex].id;
+                            let tagMod = '';
+
+                            const isPointer = (dbID === selectedInquiry);
+                
+                            if (isPointer) {
+                                tagMod = '-pointer';
+                            }
+                
+                            const newLabel = this.NavLbl(key, rootName + '-nested', text, dbID, this.selectLbl, tagMod, 'Inquiry');
+                
+                            inquiryLabels.push(newLabel);
                         }
-            
-                        const newLabel = this.NavLbl(key, rootName + '-nested', text, dbID, this.selectLbl, tagMod, 'inquiry');
-            
-                        inquiryLabels.push(newLabel);
                     }
 
                     returnData[ClientIndex] = this.ExpandedNavTree(rootName, clientLabel, inquiryLabels);

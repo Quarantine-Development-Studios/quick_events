@@ -23,13 +23,11 @@ export default class Inquiry {
         //this.coorespondence = [];
 
         if(dataObj){
+            console.log('attempting to set inquiry values')
             for(const [key, value] of Object.entries(dataObj)){
-                if(this.basicInfo[key]){
-                    this.basicInfo[key] = value;
-                }
+                this.basicInfo[key] = value;
             }
         }
-        
     }
 
 
