@@ -155,11 +155,9 @@ export default class ReactComponent_Custom extends React.Component{
         fieldKey = fieldKey.split('-');
         fieldKey = fieldKey[fieldKey.length - 1];
         fieldKey = fieldKey[0].toLowerCase() + fieldKey.slice(1);
-        console.log(fieldKey);
+        fieldKey = fieldKey.replace(' ', '');
 
         let entry = firebase.firestore().collection(dbRootKey).doc(dbKey);
-        console.log('entry is:')
-        console.log(entry);
         if(fieldKey !== 'id'){
             entry.set(
                 {[fieldKey]: event.target.value},

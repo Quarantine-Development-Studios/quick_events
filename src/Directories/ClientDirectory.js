@@ -15,13 +15,18 @@ export default class ClientDirectory extends ReactComponent_Custom {
     
 
     selectLbl(event){
-
         let pointer = event.target.attributes['callbackpointer'].value;
-
-        const targetID = event.target.attributes['data-key'].value
+        const targetID = event.target.attributes['data-key'].value;
         let value = ((this.props['selected' + pointer] !== targetID) ? targetID : "");
 
-        this.stateHandler('selected' + pointer, value)
+        //clear previsou value
+        this.stateHandler('selected' + pointer, "")
+
+        //assign new value after everything else has finished to do a proper update and data seperation
+        setTimeout(() => {
+            this.stateHandler('selected' + pointer, value)
+        }, 0);
+
     }
 
 

@@ -68,14 +68,21 @@ export class ContentPane extends ReactComponent_Custom {
                     inquiry = {this.getSelectedInquiry()}
                 />
             );
+        } else {
+            if(this.props.selectedInquiry !== ""){
+                this.stateHandler('selectedInquiry', "")
+            }
         }
     }
 
     getRelatedInquiries(){
         const client = this.state.clients.find(client => client.id === this.props.selectedClient)
+        let inquiries;
         if(client){
             const linkedInquiriesIDs = client.inquiries;
-            const inquiries = this.state.inquiries.filter(inquiry => linkedInquiriesIDs.includes(inquiry.id))
+            if(linkedInquiriesIDs){
+            inquiries = this.state.inquiries.filter(inquiry => linkedInquiriesIDs.includes(inquiry.id))
+            }
             return inquiries;
         }
     }
