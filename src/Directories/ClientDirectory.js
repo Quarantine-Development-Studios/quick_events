@@ -21,11 +21,9 @@ export default class ClientDirectory extends ReactComponent_Custom {
             let value = ((this.props.selectedClient !== targetID) ? targetID : "");
 
             this.stateHandler('selectedClient', value)
-        }
-        
-        if(pointer === 'inquiry'){
+        } else if(pointer === 'inquiry'){
             const targetID = event.target.attributes['data-key'].value
-            let value = (this.props.selectedInquiry !== targetID) ? targetID : "";
+            let value = ((this.props.selectedInquiry !== targetID) ? targetID : "");
 
             this.stateHandler('selectedInquiry', value)
 
@@ -40,50 +38,36 @@ export default class ClientDirectory extends ReactComponent_Custom {
         const returnData = [];
 
         if(liveClients[0]){
-            for(let ClientIndex = 0; ClientIndex < liveClients.length; ClientIndex++){
+            for(let i = 0; i < liveClients.length; i++){
                 const rootName = "ClientDirectory";
+                var {isPointer, clientLabel } = this.getClientLabel(i, liveClients, rootName);
 
-                //get RootClient Label then build children if isPointer
-                let text = liveClients[ClientIndex].name;
-                let dbID = liveClients[ClientIndex].id;
-                let tagMod = '';
-                let isPointer = (dbID === this.props.selectedClient);
-        
-                //if pointer establish extra class name for highlighting
-                if (isPointer) {
-                    tagMod = '-pointer';
-                }
-        
-                //establish root label
-                const clientLabel = this.NavLbl(ClientIndex, rootName, text, dbID, this.selectLbl, tagMod, 'client');
-                const relatedInquiries = this.props.relatedInquiries;
 
-                if(isPointer && relatedInquiries){
-                    console.log('test 1')
-                    console.log(relatedInquiries)
+                if(isPointer){
+                    //check for linked inquiries
+                    const linkedInquiriesIDs = liveClients[i].inquiries;
+                    const relatedInquiries = this.props.inquiries.filter(inquiry => linkedInquiriesIDs.includes(inquiry.id) )
+                    console.log('debug client object');
+                    console.log(relatedInquiries);
 
                     const inquiryLabels = [];
-
-                    for (let i2 = 0; i2 < relatedInquiries.length; i2++) {
+                    
+                    for(let i2 = 0; i2 < relatedInquiries.length; i2++){
                         const key = i2;
-                        const text = '- ' + relatedInquiries[key].name;
-                        const dbID = relatedInquiries[key].id;
-                        console.log(dbID)
+                        const text = '- ' + relatedInquiries[i2].name;
+                        const dbID = relatedInquiries[i2].id;
                         let tagMod = '';
                         const isPointer = (dbID === this.props.selectedInquiry);
-            
+
                         if (isPointer) {
                             tagMod = '-pointer';
                         }
-            
-                        const newLabel = this.NavLbl(key, rootName + '-nested', text, dbID, this.selectLbl, tagMod, 'inquiry');
-            
-                        inquiryLabels.push(newLabel);
-                    }
 
-                    returnData[ClientIndex] = this.ExpandedNavTree(rootName, clientLabel, inquiryLabels);
+                        inquiryLabels.push(this.NavLbl(key, rootName + '-nested', text, dbID, this.selectLbl, tagMod, 'inquiry'))
+                    }
+                    returnData[i] = this.ExpandedNavTree(rootName, clientLabel, inquiryLabels);
                 } else {
-                    returnData[ClientIndex] = clientLabel;
+                    returnData[i] = clientLabel;
                 }
             }
             return returnData;
@@ -93,6 +77,22 @@ export default class ClientDirectory extends ReactComponent_Custom {
         } 
     }
 
+    getClientLabel(i, liveClients, rootName) {
+        let key = i;
+        let text = liveClients[i].name;
+        let dbID = liveClients[i].id;
+        let tagMod = '';
+        let isPointer = (dbID === this.props.selectedClient);
+
+        //if pointer establish extra class name for highlighting
+        if (isPointer) {
+            tagMod = '-pointer';
+        }
+
+        //establish root label
+        const clientLabel = this.NavLbl(key, rootName, text, dbID, this.selectLbl, tagMod, 'client');
+        return { isPointer, clientLabel };
+    }
 
     render(){
 
