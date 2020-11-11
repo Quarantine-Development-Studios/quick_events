@@ -57,6 +57,7 @@ export default class NavPane extends ReactComponent_Custom {
 
                     inquiries = {this.props.inquiries}
                     selectedInquiry = {this.props.selectedInquiry}
+                    relatedInquiries = {this.props.relatedInquiries}
 
                     stateHandler = {this.stateHandler}
                 />

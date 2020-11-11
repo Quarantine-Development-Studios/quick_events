@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import firebase from './firebase';
 import WindowCloseImg from './images/WindowClose.png';
 
 export default class ReactComponent_Custom extends React.Component{
@@ -6,9 +7,9 @@ export default class ReactComponent_Custom extends React.Component{
 
     ExpandedNavTree(rootName, parentElement, childrenElements){
         return (
-            <div className={rootName + '-expanded'}>
+            <div className={rootName + '-expanded'} key={rootName}>
                 {parentElement}
-                <div className={rootName + '-nested'}>
+                <div className={rootName + '-nested'} key={rootName + '-nested'}>
                     {childrenElements}
                 </div>
             </div>
@@ -37,18 +38,19 @@ export default class ReactComponent_Custom extends React.Component{
     
     }
 
+
     //display changes
     chgPointer(event){
-        console.log('adding pointer')
+        //console.log('adding pointer')
         event.target.className.concat('-pointer');
     }
 
     chgNormal(event){
-        let callbackPointer = event.target.attributes['callbackPointer'].value;
-        callbackPointer = callbackPointer.charAt(0).toUpperCase() + callbackPointer.slice(1);
+        let callbackpointer = event.target.attributes['callbackpointer'].value;
+        callbackpointer = callbackpointer.charAt(0).toUpperCase() + callbackpointer.slice(1);
 
-        if(event.target.attributes['data-key'].value !== this.props['selected' + callbackPointer]){
-            console.log('removing pointer');
+        if(event.target.attributes['data-key'].value !== this.props['selected' + callbackpointer]){
+            //console.log('removing pointer');
             event.target.className.replace('-pointer', '');
         }
     }
@@ -71,11 +73,11 @@ export default class ReactComponent_Custom extends React.Component{
         )
     }
 
-    InfoField(id, rootName, value, callback) {
+    InfoField(id, rootName, value, callback, callbackPointer) {
         return (
             <div className={rootName + "-field"} key={id}>
                 <label className={rootName + "-field-label content-label"} key={'lbl-' + id}>{id}: </label>
-                <input className={rootName + '-field-input content-input'} id={rootName + '-' + id} key={'input-' + id} value={value} onChange={callback}></input>
+                <input className={rootName + '-field-input content-input'} id={rootName + '-' + id} key={'input-' + id} value={value} onChange={callback} callbackpointer={callbackPointer}></input>
             </div>
         )
     };
@@ -126,10 +128,43 @@ export default class ReactComponent_Custom extends React.Component{
     }
 
 
+    setValue(event){
+        const cbPointer = event.target.attributes['callbackpointer'].value;
+        let dbRootKey = '';
+        let dbKey = '';
+
+        switch (cbPointer) {
+            case 'client':
+                dbRootKey = 'clients';
+                dbKey = this.props.selectedClient;
+                break;
+            case 'inquiry':
+                dbRootKey = 'inquiries';
+                dbKey = this.props.selectedInquiry;
+                break;
+            default:
+                console.log('unable to set dbRoot in "setValue()"');
+        }
+
+        let fieldKey = event.target.attributes['id'].value;
+        fieldKey = fieldKey.split('-');
+        fieldKey = fieldKey[fieldKey.length - 1];
+        fieldKey = fieldKey[0].toLowerCase() + fieldKey.slice(1);
+        console.log(fieldKey);
+
+        let entry = firebase.firestore().collection(dbRootKey).doc(dbKey);
+        console.log('entry is:')
+        console.log(entry);
+        entry.set(
+            {[fieldKey]: event.target.value},
+            {merge: true});
+    }
+
     customBinds(){
         this.stateHandler = this.stateHandler.bind(this);
         this.chgNormal = this.chgNormal.bind(this);
         this.chgPointer = this.chgPointer.bind(this);
+        this.setValue = this.setValue.bind(this);
     }
 
 
