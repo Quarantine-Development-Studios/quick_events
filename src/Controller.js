@@ -8,9 +8,15 @@ export class Controller extends ReactComponent_Custom{
         super(props);
         this.state = {
             creatingClient: false,
+
             viewingNavigation: true,
+
+            selectedClient: "",
             viewingClient: true,
+
+            selectedInquiry: "",
             viewingInquiry: true,
+            
             viewingAgreement: false,
         }
 
@@ -28,10 +34,18 @@ export class Controller extends ReactComponent_Custom{
                 <TitleBar />
                 <ContentPane
                     stateHandler = {this.stateHandler}
+                    
                     creatingClient = {this.state.creatingClient}
+
                     viewingNavigation = {this.state.viewingNavigation}
+
+                    selectedClient = {this.state.selectedClient}
                     viewingClient = {this.state.viewingClient}
+
+                    selectedInquiry = {this.state.selectedInquiry}
                     viewingInquiry = {this.state.viewingInquiry}
+
+                    selectedAgreement = {this.state.selectedAgreement}
                     viewingAgreement = {this.state.viewingAgreement}
                 />
             </div>

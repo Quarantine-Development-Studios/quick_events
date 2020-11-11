@@ -47,7 +47,32 @@
     overflow-y: auto;
 }
 
-.client-label {
+
+.ClientDirectory-label {
     display: block;
-    position: relative;
+    color: black;
+    font-weight: normal;
+}
+
+
+.ClientDirectory-label-pointer {
+    display: block;
+    color: DarkBlue;
+    font-weight: bold;
+}
+
+.ClientDirectory-nested {
+    margin-left: 15px;
+}
+
+.ClientDirectory-nested-label {
+    display: block;
+    color: black;
+    font-weight: normal;
+}
+
+.ClientDirectory-nested-label-pointer {
+    display: block;
+    color: DarkBlue;
+    font-weight: bold;
 }

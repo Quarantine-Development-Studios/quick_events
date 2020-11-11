@@ -38,6 +38,7 @@ export default class ClientImporter extends ReactComponent_Custom {
             let entry = firebase.firestore().collection('clients').doc();
             entry.set(ClientOut.toJSON());
 
+
             //clean up content space and close window
             this.closeWindow(e);
         } else {

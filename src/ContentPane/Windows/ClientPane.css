@@ -1,0 +1,39 @@
+.ClientPane {
+    flex-basis: 300px !important;
+}
+.ClientPane-content {
+    display: block;
+    flex-direction: column;
+    margin: 10px;
+    
+}
+
+.ClientPane-field {
+    flex: auto;
+    flex-direction: row;
+
+
+    margin-bottom: 10px;
+}
+
+.ClientPane-field-label {
+    position: relative;
+    display: inline-block;
+
+}
+
+.ClientPane-field-input {
+    position: relative;
+    float: right;
+
+    max-width: 175px;
+    margin-right: 10px;
+}
+
+.ClientPane-dropdown {
+    float: right;
+
+    width: 150px;
+    max-width: 175px;
+    margin-right: 10px;
+}

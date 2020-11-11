@@ -4,58 +4,98 @@ import ReactComponent_Custom from '../ReactComponent_Custom.js';
 export default class ClientDirectory extends ReactComponent_Custom {
     constructor(props){
         super(props)
-        
-        this.customBinds();
-        this.chgNormal = this.chgNormal.bind(this)
-        this.selectClient = this.selectClient.bind(this)
-    }
-    
-    //templates
-    ClientLBL(id, name, dbID, className) { return (<label className={className} key={id.toString()} data-key={dbID} onClick={this.selectClient} onMouseOver={this.chgPointer} onMouseOut={this.chgNormal}>{name}</label>); }
+        this.state = {
 
-    //display changes
-    chgPointer(event){
-        event.target.className = "client-label-pointer";
-    }
-    chgNormal(event){
-        if(!(event.target.attributes['data-key'].value === this.props.selectedClient)){
-            event.target.className = "client-label";
         }
+
+        this.customBinds();
+        this.selectLbl = this.selectLbl.bind(this)
     }
     
-    selectClient(event){
-        const stateHandler = this.props.stateHandler;
-        stateHandler('selectedClient', event.target.attributes['data-key'].value);
+
+    selectLbl(event){
+        const pointer = event.target.attributes['callbackpointer'].value;
+
+        if(pointer === 'client'){
+            const targetID = event.target.attributes['data-key'].value
+            let value = ((this.props.selectedClient !== targetID) ? targetID : "");
+
+            this.stateHandler('selectedClient', value)
+        } else if(pointer === 'inquiry'){
+            const targetID = event.target.attributes['data-key'].value
+            let value = ((this.props.selectedInquiry !== targetID) ? targetID : "");
+
+            this.stateHandler('selectedInquiry', value)
+
+            console.log('testing inquiry')
+            console.log(this.props)
+        }
     }
 
 
     getClientAccessors(){
-        const liveClients = this.props.clients;
-        const rClients = [];        
+        const liveClients = this.props.clients;        
+        const returnData = [];
 
         if(liveClients[0]){
             for(let i = 0; i < liveClients.length; i++){
-                const key = i;
-                const text = liveClients[i].name;
-                const dbID = liveClients[i].id;
-                
-                //default className
-                let className = "client-label"
-                //if pointer
-                if(dbID === this.props.selectedClient){ 
-                    className = "client-label-pointer" 
+                const rootName = "ClientDirectory";
+                var {isPointer, clientLabel } = this.getClientLabel(i, liveClients, rootName);
+
+
+                if(isPointer){
+                    //check for linked inquiries
+                    const linkedInquiriesIDs = liveClients[i].inquiries;
+                    const relatedInquiries = this.props.inquiries.filter(inquiry => linkedInquiriesIDs.includes(inquiry.id) )
+                    console.log('debug client object');
+                    console.log(relatedInquiries);
+
+                    const inquiryLabels = [];
+                    
+                    for(let i2 = 0; i2 < relatedInquiries.length; i2++){
+                        const key = i2;
+                        const text = '- ' + relatedInquiries[i2].name;
+                        const dbID = relatedInquiries[i2].id;
+                        let tagMod = '';
+                        const isPointer = (dbID === this.props.selectedInquiry);
+
+                        if (isPointer) {
+                            tagMod = '-pointer';
+                        }
+
+                        inquiryLabels.push(this.NavLbl(key, rootName + '-nested', text, dbID, this.selectLbl, tagMod, 'inquiry'))
+                    }
+                    returnData[i] = this.ExpandedNavTree(rootName, clientLabel, inquiryLabels);
+                } else {
+                    returnData[i] = clientLabel;
                 }
-                rClients[i] = this.ClientLBL(key, text, dbID, className);
-
             }
+            return returnData;
 
-            return rClients;
         } else {
             return (<label></label>);
         } 
     }
 
+    getClientLabel(i, liveClients, rootName) {
+        let key = i;
+        let text = liveClients[i].name;
+        let dbID = liveClients[i].id;
+        let tagMod = '';
+        let isPointer = (dbID === this.props.selectedClient);
+
+        //if pointer establish extra class name for highlighting
+        if (isPointer) {
+            tagMod = '-pointer';
+        }
+
+        //establish root label
+        const clientLabel = this.NavLbl(key, rootName, text, dbID, this.selectLbl, tagMod, 'client');
+        return { isPointer, clientLabel };
+    }
+
     render(){
+
         return (
             <div className="navpane-content">
                 {

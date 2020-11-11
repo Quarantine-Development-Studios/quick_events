@@ -1,7 +1,7 @@
-import Client from './client.js';
 
 export default class Inquiry { 
     constructor(dataObj){
+        console.log(dataObj)
         this.basicInfo = {
             name: "",
             email: "",
@@ -29,8 +29,7 @@ export default class Inquiry {
                 }
             }
         }
-
-        console.log(this);
+        
     }
 
 

@@ -1,37 +1,39 @@
-.inquiry-window{
+.InquiryPane {
+
     background-color: lightsteelblue !important;
     flex-basis: 300px !important;
 
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 3px;
 }
 
-.InquiryWindow-content {
+.InquiryPane-content {
     flex: auto;
     flex-direction: column;
     order:2;
-    margin: 10px;
-    
+    margin: 5px;
 }
 
-.InquiryWindow-field {
+.InquiryPane-field {
+    display: inline-block;
     flex: auto;
     flex-direction: row;
 
 
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
-.InquiryWindow-field-label {
-    position: relative;
-    display: inline-block;
+.InquiryPane-field-label {
+
 
     font-weight: bold;
+    max-width: 60px;
 
 }
 
-.InquiryWindow-field-input {
-    position: relative;
-    float: right;
+.InquiryPane-field-input {
+    display: block;
+    margin-left: 20px;
 
-    max-width: 125px;
-    margin-right: 10px;
 }

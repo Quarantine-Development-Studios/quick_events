@@ -10,8 +10,7 @@ export default class NavPane extends ReactComponent_Custom {
     constructor(props){
         super(props);
         this.state = {
-            clients: [],
-            selectedClient: "",
+
         }
 
         this.customBinds();
@@ -28,20 +27,15 @@ export default class NavPane extends ReactComponent_Custom {
 
     removeClient(e){
         
-        if(this.state.selectedClient !== ""){
-            this.setState({...this.state, selectClient: ""});
-            let entry = firebase.firestore().collection('clients').doc(this.state.selectedClient); 
+        if(this.props.selectedClient !== ""){
+            this.stateHandler('selectedClient', "");
+            let entry = firebase.firestore().collection('clients').doc(this.props.selectedClient); 
             entry.delete();
         }
     }
 
 
-    componentDidMount(){
-        rxClients.subscribe((clients) => this.setState({...this.state, clients: clients}));
-    }
-
-
-    render(){
+    render(){   
         return (
             <div className="App-Window navpane">
                 {this.WindowControlBar("Client Directory")}
@@ -52,17 +46,20 @@ export default class NavPane extends ReactComponent_Custom {
                     </div>
 
                     <div className="navpane-searchbar-line">
-                        <button className="navpane-button" onClick={this.createClient}>New Client</button>
-                        <button className="navpane-button" onClick={this.removeClient}>Remove Client</button>
+                        {this.ReactButton('createClient', 'navpane', 'New Client', this.createClient)}
+                        {this.ReactButton('removeClient', 'navpane', 'Remove Client', this.removeClient)}
                     </div>
                 </div>
-                {
+
                 <ClientDirectory 
-                    clients = {this.state.clients}
-                    selectedClient = {this.state.selectedClient}
+                    clients = {this.props.clients}
+                    selectedClient = {this.props.selectedClient}
+
+                    inquiries = {this.props.inquiries}
+                    selectedInquiry = {this.props.selectedInquiry}
+
                     stateHandler = {this.stateHandler}
                 />
-                }
 
             </div>
         )

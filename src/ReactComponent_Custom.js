@@ -1,43 +1,114 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import WindowCloseImg from './images/WindowClose.png';
 
 export default class ReactComponent_Custom extends React.Component{
     //element templates
-    InfoField(id, rootName, value) { 
-        console.log(rootName)
+
+    ExpandedNavTree(rootName, parentElement, childrenElements){
         return (
-        <div className={rootName + "-field"} key={id}>
-            <label className={rootName + "-field-label"} key={'lbl-' + id}>{id}: </label>
-            <input className={rootName + '-field-input'} id={rootName + '-' + id} key={'input-' + id} value={value}></input>
-        </div>
+            <div className={rootName + '-expanded'}>
+                {parentElement}
+                <div className={rootName + '-nested'}>
+                    {childrenElements}
+                </div>
+            </div>
+        )
+    }
+
+    NavLbl(id, rootName, text, dbID, callback, tagMod, pointer) { 
+        let className = rootName + '-label' + tagMod;
+        if(tagMod !== ''){
+            className.concat(tagMod);
+        }
+
+        return (
+        <label 
+            className={className} 
+            key={id.toString()} 
+            data-key={dbID} 
+            onClick={callback} 
+            onMouseOver={this.chgPointer} 
+            onMouseOut={this.chgNormal}
+            callbackpointer={pointer}
+        >
+            {text}
+        </label>
+        ); 
+    
+    }
+
+    //display changes
+    chgPointer(event){
+        console.log('adding pointer')
+        event.target.className.concat('-pointer');
+    }
+
+    chgNormal(event){
+        let callbackPointer = event.target.attributes['callbackPointer'].value;
+        callbackPointer = callbackPointer.charAt(0).toUpperCase() + callbackPointer.slice(1);
+
+        if(event.target.attributes['data-key'].value !== this.props['selected' + callbackPointer]){
+            console.log('removing pointer');
+            event.target.className.replace('-pointer', '');
+        }
+    }
+
+    InfoSelector(id, rootName, options, callback){
+        const optionElements = [];
+        for(let i = 0; i < options.length; i++){
+            optionElements.push(
+                <option className={rootName + '-option'} key={rootName + "-option-" + i}>{options[i]}</option>
+            )
+        }
+
+        return (
+            <div className={rootName + "-selector"} key={id + '-selector'}>
+                <label className={rootName + "-selector-label content-label"} key={id + '-lbl'}>{id}: </label>
+                <select name={id} className={rootName + "-dropdown"} key={id + "-selecter"} onChange={callback}>
+                        {optionElements}
+                </select>
+            </div>
+        )
+    }
+
+    InfoField(id, rootName, value, callback) {
+        return (
+            <div className={rootName + "-field"} key={id}>
+                <label className={rootName + "-field-label content-label"} key={'lbl-' + id}>{id}: </label>
+                <input className={rootName + '-field-input content-input'} id={rootName + '-' + id} key={'input-' + id} value={value} onChange={callback}></input>
+            </div>
         )
     };
 
     WindowControlBar(WindowTitle){
         return(
-        <div className="control-Bar">
-            <div className="App-Window-Title">
-                <label >{WindowTitle}</label>
+            <div className="control-Bar">
+                <div className="App-Window-Title">
+                    <label >{WindowTitle}</label>
+                </div>
+                <img className="App-Window-CloseBtn" onClick={this.closeWindow} alt="" src={WindowCloseImg} ></img>
             </div>
-            <img className="App-Window-CloseBtn" onClick={this.closeWindow} alt="" src={WindowCloseImg} ></img>
-        </div>
         )
     }
 
-    ReactButton(text, id, callback) { 
+    ReactButton(id, rootName, value, callback) { 
         return(
-        <button className="menu-button" key={id.toString()}>
-            {text}
+            <button className={rootName + '-button'} key={id.toString()} onClick={callback}>
+                {value}
             </button>
         );
     }
 
+    Divider(){
+        return (
+            <div className='App-divider'></div>
+        )
+    }
 
 
-    stateHandler(varName, value, inputChangeCallback){
-        console.log("trying to set stateHandler: " + varName + "  " + value);
-        console.log(this.state);
-
+    async stateHandler(varName, value, inputChangeCallback){
+        console.log('setting: ' + varName + ' to value: ')
+        console.log(value);
         if (this.state[varName] !== undefined){
             this.setState({
                 ...this.state,
@@ -49,12 +120,16 @@ export default class ReactComponent_Custom extends React.Component{
                 this.props.stateHandler(varName, value);
             } else {
                 console.log("unable to find desired state with desired prop")
+                console.log(varName + '  ' + value)
             }
         }
     }
 
+
     customBinds(){
         this.stateHandler = this.stateHandler.bind(this);
+        this.chgNormal = this.chgNormal.bind(this);
+        this.chgPointer = this.chgPointer.bind(this);
     }
 
 
