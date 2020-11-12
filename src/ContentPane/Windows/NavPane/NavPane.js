@@ -10,13 +10,16 @@ export default class NavPane extends ReactComponent_Custom {
     constructor(props){
         super(props);
         this.state = {
-
+            rootName: 'NavPane',
+            isSearching: false,
+            searchQuery: '',
         }
 
         this.customBinds();
 
         this.removeClient = this.removeClient.bind(this);
         this.createClient = this.createClient.bind(this);
+        this.SearchChange = this.SearchChange.bind(this);
 
     }
 
@@ -34,32 +37,57 @@ export default class NavPane extends ReactComponent_Custom {
         }
     }
 
+    SearchChange(e){
+        this.stateHandler('isSearching', ((e.target.value === '') ? false : true ))
+        setTimeout(() => {
+            this.stateHandler('searchQuery', e.target.value)
+        }, 0);
+    }
+
+
+    getSearchBar(){
+        const className = this.state.rootName + '-searchbar';
+
+        return (
+            <div className={className}>
+                <div className={className + "-line"}>
+                    <input className={className + '-input'} id='seachbarInput' key='searchbarInput' defaultValue='' onChange={this.SearchChange}></input>
+                </div>
+
+                <div className={className + '-line'}>
+                    {this.ReactButton('createClient', className, 'New Client', this.createClient)}
+                    {this.ReactButton('removeClient', className, 'Remove Client', this.removeClient)}
+                </div>
+            </div>
+        )
+    }
+
+
+    getContent(){
+            return(
+                <ClientDirectory 
+                clients = {this.props.clients}
+                selectedClient = {this.props.selectedClient}
+
+                selectedInquiry = {this.props.selectedInquiry}
+                relatedInquiries = {this.props.relatedInquiries}
+
+                stateHandler = {this.stateHandler}
+                
+                
+                isSearching = {this.state.isSearching}
+                searchQuery = {this.state.searchQuery}
+            />
+            )
+    }
+
 
     render(){   
         return (
             <div className="App-Window navpane">
                 {this.WindowControlBar("Client Directory")}
-                <div className="navpane-searchbar">
-                    <div className="navpane-searchbar-line">
-                        <input className="navpane-search-input"></input>
-                        <button className="navpane-button">search</button>
-                    </div>
-
-                    <div className="navpane-searchbar-line">
-                        {this.ReactButton('createClient', 'navpane', 'New Client', this.createClient)}
-                        {this.ReactButton('removeClient', 'navpane', 'Remove Client', this.removeClient)}
-                    </div>
-                </div>
-
-                <ClientDirectory 
-                    clients = {this.props.clients}
-                    selectedClient = {this.props.selectedClient}
-
-                    selectedInquiry = {this.props.selectedInquiry}
-                    relatedInquiries = {this.props.relatedInquiries}
-
-                    stateHandler = {this.stateHandler}
-                />
+                {this.getSearchBar()}
+                {this.getContent()}
 
             </div>
         )

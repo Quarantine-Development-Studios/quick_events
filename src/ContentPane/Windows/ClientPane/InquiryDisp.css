@@ -20,20 +20,15 @@
     flex: auto;
     flex-direction: row;
 
-
     margin-bottom: 5px;
 }
 
 .InquiryPane-field-label {
-
-
     font-weight: bold;
     max-width: 60px;
-
 }
 
 .InquiryPane-field-input {
     display: block;
     margin-left: 20px;
-
 }

@@ -1,4 +1,4 @@
-.navpane-searchbar {
+.NavPane-searchbar {
 
     display: flex;
     flex-direction: column;
@@ -11,25 +11,25 @@
     border-bottom-width: 1px;
 }
 
-.navpane-searchbar-line {
+.NavPane-searchbar-line {
     display: flex;
     flex-direction: row;
     margin-bottom: 5px;
 }
 
-.navpane-search-input {
+.NavPane-search-input {
     display: flex;
     order:1;
 }
 
-.navpane-button {
+.NavPane-button {
     display: flex;
     order: 2;
     margin-left: 10px;
 
 }
 
-.navpane-content {
+.NavPane-content {
     flex: auto;
 
     flex-direction: column;
