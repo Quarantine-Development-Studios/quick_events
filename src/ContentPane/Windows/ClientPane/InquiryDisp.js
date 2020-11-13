@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactComponent_Custom from '../../../ReactComponent_Custom.js';
+import ReactComponent_Custom from '../../../CustomLibrary/ReactComponent_Custom.js';
 import './InquiryDisp.css';
 import WindowCloseImg from '../../../images/WindowClose.png';
 import Client from '../../Definitions/client.js';

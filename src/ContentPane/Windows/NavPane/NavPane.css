@@ -1,14 +1,9 @@
 .NavPane-searchbar {
-
     display: flex;
     flex-direction: column;
-
-    margin: 5px;;
-    
-    border-color: navy;
-    border-width: 0px;
-    border-style: solid;
-    border-bottom-width: 1px;
+    align-self: left;
+    margin: 3px;
+    margin-left: 10px;
 }
 
 .NavPane-searchbar-line {

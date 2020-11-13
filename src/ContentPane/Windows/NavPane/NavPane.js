@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactComponent_Custom from '../../../ReactComponent_Custom.js';
+import ReactComponent_Custom from '../../../CustomLibrary/ReactComponent_Custom.js';
 import './NavPane.css';
 import firebase from '../../../firebase';
 import rxClients from '../../../rxClients';
@@ -18,14 +18,8 @@ export default class NavPane extends ReactComponent_Custom {
         this.customBinds();
 
         this.removeClient = this.removeClient.bind(this);
-        this.createClient = this.createClient.bind(this);
         this.SearchChange = this.SearchChange.bind(this);
 
-    }
-
-
-    createClient(e){
-        this.stateHandler('creatingClient', true);
     }
 
     removeClient(e){
@@ -51,12 +45,7 @@ export default class NavPane extends ReactComponent_Custom {
         return (
             <div className={className}>
                 <div className={className + "-line"}>
-                    <input className={className + '-input'} id='seachbarInput' key='searchbarInput' defaultValue='' onChange={this.SearchChange}></input>
-                </div>
-
-                <div className={className + '-line'}>
-                    {this.ReactButton('createClient', className, 'New Client', this.createClient)}
-                    {this.ReactButton('removeClient', className, 'Remove Client', this.removeClient)}
+                    <input className={className + '-input'} id='seachbarInput' defaultValue='Search' onChange={this.SearchChange}></input>
                 </div>
             </div>
         )
@@ -87,6 +76,7 @@ export default class NavPane extends ReactComponent_Custom {
             <div className="App-Window navpane">
                 {this.WindowControlBar("Client Directory")}
                 {this.getSearchBar()}
+                {this.Divider()}
                 {this.getContent()}
 
             </div>

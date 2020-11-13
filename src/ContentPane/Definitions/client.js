@@ -1,11 +1,18 @@
-//import test from "./inquiry"
+import firebase from '../../firebase';
 
 export default class Client { 
-    constructor(name, email, phone){
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.inquiries = [];
+    constructor(id, name, email, phone, inquiryIDArray){
+        this.name = (name) ? name : 'New Client';
+        this.email = (email) ? email : '';
+        this.phone = (phone) ? phone : '';
+        this.inquiries = (inquiryIDArray) ? inquiryIDArray : [];
+
+    }
+
+
+    setID(id){
+        this.id = id;
+        console.log("set id of client to " + this.id)
     }
 
     setName(name) {
@@ -39,5 +46,6 @@ export default class Client {
 
         }
     }
+
 }
 

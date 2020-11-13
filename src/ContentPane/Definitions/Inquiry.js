@@ -43,7 +43,7 @@ export default class Inquiry {
     
 
     
-    BasicToJSON(){
+    toJSON(){
         const rInfo = {};
         for(const[key, value] of Object.entries(this.basicInfo)){
             rInfo[key] = value;
