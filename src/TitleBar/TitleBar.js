@@ -1,10 +1,11 @@
 import React from 'react';
 import './TitleBar.css';
 import ReactComponent_Custom from '../CustomLibrary/ReactComponent_Custom.js';
-import CC from '../CustomLibrary/Object_Custom.js';
 import Client from '../ContentPane/Definitions/client';
 import Inquiry from '../ContentPane/Definitions/Inquiry';
 
+
+const CC = require( '../CustomLibrary/Object_Custom.js');
 
 export class TitleBar extends ReactComponent_Custom {
     constructor(props){
@@ -19,6 +20,7 @@ export class TitleBar extends ReactComponent_Custom {
         this.processButton = this.processButton.bind(this);
         this.createClient = this.createClient.bind(this);
         this.createInquiry = this.createInquiry.bind(this);
+        this.selectClient = this.selectClient(this);
         this.linkInquiry = this.linkInquiry.bind(this);
 
         this.buttonReqs = {
@@ -29,10 +31,13 @@ export class TitleBar extends ReactComponent_Custom {
 
     createClient(e){
         let newClient = new Client();
-        this.dbInsertEntry('clients', newClient);
-        
+        this.dbInsertEntry('clients', newClient, this.selectClient);
     }
 
+    selectClient(id){
+        console.log('test')
+        console.log(id)
+    }
 
     createInquiry(e){
         if(this.props.selectedClient !== ''){
