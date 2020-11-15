@@ -3,19 +3,21 @@ export default class Inquiry {
     constructor(dataObj){
         console.log(dataObj)
         this.basicInfo = {
-            name: "",
-            email: "",
-            phone: "",
-            company: "",
-            dateRecieved: "",
-            source: "",
-            sourceLocation: "",
             eventTitle: "",
             eventDate: "",
             room: "",
             startTime: "",
             stopTime: "",
             guestCount: "",
+            dateRecieved: "",
+
+            name: "",
+            email: "",
+            phone: "",
+            company: "",
+            
+            source: "",
+            sourceLocation: "",
         }
         //this.calendarSlot = "";
         //this.agreement = {};
@@ -27,9 +29,19 @@ export default class Inquiry {
                 this.basicInfo[key] = value;
             }
         }
+
     }
 
-
+    static createInquiryByClient(client){
+        const dataObj = {
+            name: client.name,
+            email: client.email,
+            phone: client.phone,
+            dateRecieved: new Date().toDateString(),
+            eventTitle: 'New Event'
+        }
+        return new Inquiry(dataObj);
+    }
     
     getBaseProps(){
         const rInfo = {};
