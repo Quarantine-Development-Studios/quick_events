@@ -1,4 +1,4 @@
-import firebase from '../../firebase';
+
 
 export default class Client { 
     constructor(id, name, email, phone, inquiryIDArray){

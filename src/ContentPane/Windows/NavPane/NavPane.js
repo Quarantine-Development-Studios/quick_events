@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactComponent_Custom from '../../../CustomLibrary/ReactComponent_Custom.js';
 import './NavPane.css';
-import firebase from '../../../firebase';
-import rxClients from '../../../rxClients';
 import ClientDirectory from '../../../Directories/ClientDirectory';
 import CC from '../../../CustomLibrary/Object_Custom.js';
 import Client from '../../Definitions/client.js';
@@ -46,9 +44,9 @@ export default class NavPane extends ReactComponent_Custom {
     
     removeClient(e){ 
         if(this.props.selectedClient !== ""){
+            const selectedClient = this.props.selectedClient;
             this.stateHandler('selectedClient', "");
-            let entry = firebase.firestore().collection('clients').doc(this.props.selectedClient); 
-            entry.delete();
+            this.dbRemoveEntry('clients', selectedClient);
         }
     }
 

@@ -1,10 +1,10 @@
 .ClientPane {
 }
 .ClientPane-content {
-    display: block;
-    flex-direction: column;
+    background-color: lightsteelblue !important;
+
     margin: 10px;
-    
+    padding: 3px;
 }
 
 .ClientPane-field {
@@ -12,7 +12,7 @@
     flex-direction: row;
 
 
-    margin-bottom: 10px;
+    margin: 10px;
 }
 
 .ClientPane-field-label {

@@ -3,9 +3,8 @@ import ReactComponent_Custom from '../CustomLibrary/ReactComponent_Custom.js';
 import './ContentPane.css'
 import NavPane from './Windows/NavPane/NavPane.js';
 import ClientPane from './Windows/ClientPane/ClientPane.js';
-import rxInquiries from '../rxInquiries.js';
-import rxClients from '../rxClients';
-import Client from './Definitions/client.js';
+import rxInquiries from '../firebase/rxInquiries.js';
+import rxClients from '../firebase/rxClients';
 
 export class ContentPane extends ReactComponent_Custom {
     constructor(props){

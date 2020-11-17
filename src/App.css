@@ -36,7 +36,6 @@
   width: 100%;
   text-align: left;
   font-size: 1vh;
-  max-height: 1.5vh;
   justify-content: left;
   
 }
@@ -100,4 +99,19 @@
   position: relative;
   top: 1px; right:5px;
   float: right;
+}
+
+.-button {
+  position: relative;
+  align-items: start;
+
+  margin-left: 10px;
+
+  padding:0;
+
+  font-size: 1vh;
+  text-align: center;
+
+  min-width: 75px;
+  min-height: 20px;
 }

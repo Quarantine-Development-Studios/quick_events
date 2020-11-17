@@ -1,13 +1,9 @@
 import React from 'react';
 import ReactComponent_Custom from '../../../CustomLibrary/ReactComponent_Custom.js';
 import './ClientPane.css';
-import WindowCloseImg from '../../../images/WindowClose.png';
-import Client from '../../Definitions/client.js';
-import firebase from '../../../firebase';
 import Inquiry from '../../Definitions/Inquiry.js';
-import InquiryDisp from './InquiryDisp.js';
-import rxInquiries from '../../../rxInquiries.js';
 import CC from '../../../CustomLibrary/Object_Custom.js';
+import InquiryDisp from './InquiryDisp.js';
 
 
 export default class ClientPane extends ReactComponent_Custom{
@@ -82,7 +78,7 @@ export default class ClientPane extends ReactComponent_Custom{
     getButtons(buttonReqs){
         const rItems = [];
         let i = 0;
-        for(const [key, ButtonReq] of Object.entries(buttonReqs)){
+        for(const [ , ButtonReq] of Object.entries(buttonReqs)){
             const btn = this.ReactButton(ButtonReq, this.state.rootName, this.state.rootName + '-button-' + i);
             rItems.push(btn)
             i++;
@@ -98,39 +94,11 @@ export default class ClientPane extends ReactComponent_Custom{
     getDisplayContents(){
         console.log('trying to get Display Contents')
         if(this.props.viewingInquiry && this.props.inquiries && this.getInquiry()){
-            let inquiry = this.getInquiry();
-            const displayItems = [];
-            
-            //translate into native format
-            inquiry = new Inquiry(inquiry);
-
-
-            for(const [key, value] of Object.entries(inquiry.basicInfo)){
-                //push a new field for each value !except id (id is the database identifier used internally)
-                if(key !== 'id'){
-                    let _key = key.replace(/([A-Z])/g, ' $1').trim();
-                    _key = _key.charAt(0).toUpperCase() + _key.slice(1);
-                    let type = '';
-
-                    if(_key.includes('Date')) {
-                        type = 'date';
-                    } else if(_key.includes('Time')){
-                        type = 'time';
-                    }
-                    
-
-                    //pull InfoField from ReactComponent_Custom 
-                    displayItems.push(this.InfoField(_key, 'InquiryPane', value, this.setValue, 'inquiry', type));
-                }
-            }
-
-
             return (
-                <div className="InquiryPane-content">
-                    {displayItems}
-                </div>
+                <InquiryDisp 
+                    inquiry = {this.getInquiry()}
+                />
             ) 
-
         } else {
             return (<div></div>);
         }

@@ -3,8 +3,7 @@
     background-color: lightsteelblue !important;
     flex-basis: 300px !important;
 
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin: 10px;
     padding: 3px;
 }
 
@@ -31,4 +30,5 @@
 .InquiryPane-field-input {
     display: block;
     margin-left: 20px;
+    max-width: 150px;
 }
