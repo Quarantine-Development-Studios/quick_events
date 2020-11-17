@@ -106,12 +106,15 @@ export default class ReactComponent_Custom extends React.Component{
     //#endregion
 
     getClient(){ //completed; has error catches
-        if(!this.props.clients) {
-            console.log('clients is not passed through props'); return undefined;
-        } else if(!this.props.selectedClient) {
-            console.log('selectedClient has not been props'); return undefined;
+        const clients = (this.state.clients) ? this.state.clients : this.props.clients;
+        const selectedClient = (this.state.selectedClient) ? this.state.selectedClient : this.props.selectedClient;
+
+        if(!clients) {
+            console.log('clients is not passed'); return undefined;
+        } else if(!selectedClient) {
+            console.log('selectedClient has not been passed'); return undefined;
         } else {
-            return this.props.clients.filter(e => e.id === this.props.selectedClient)[0]
+            return clients.filter(e => e.id === selectedClient)[0]
         }
     }
 
