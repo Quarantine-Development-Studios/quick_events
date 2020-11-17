@@ -19,8 +19,9 @@ class LabelReq {
     }
 }
 
-module.exports = {
+const outObj = {
     ButtonReq,
     LabelReq,
-
 }
+
+export default outObj;
