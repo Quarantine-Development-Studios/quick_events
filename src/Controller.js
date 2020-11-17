@@ -40,8 +40,8 @@ export class Controller extends ReactComponent_Custom{
 
 
     render(){
-        // console.log('Controller')
-        // console.log(this.state)
+        console.log('Controller')
+        console.log(this.state)
 
         //reset creatingInquiry if no Client is selected
 

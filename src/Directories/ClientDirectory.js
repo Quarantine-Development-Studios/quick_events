@@ -31,7 +31,7 @@ export default class ClientDirectory extends ReactComponent_Custom {
     }
 
     getClientAccessors(){
-        if(this.props.clients !== undefined && this.props.clients[0]){
+        if(this.props.clients !== undefined){
             const liveClients = this.props.clients;        
             const returnData = [];
 
@@ -61,6 +61,7 @@ export default class ClientDirectory extends ReactComponent_Custom {
                             clientLabel = this.NavLbl(ClientIndex, this.state.rootName, text, dbID, this.selectLbl, tagMod, 'Client');
                             //establish root label
                             const inquiryLabels = this.getInquiryLabels();
+                            console.log(inquiryLabels)
                             
                             returnData.push(this.ExpandedNavTree(this.state.rootName, clientLabel, inquiryLabels));
                         } else {
@@ -79,17 +80,10 @@ export default class ClientDirectory extends ReactComponent_Custom {
 
 
     testQuery(dataObj, query){
-        if(dataObj){
-            for(const [key, value] of Object.entries(dataObj)){
-                if(value !== '' & typeof value === 'string'){
-                    const _value = value.toLowerCase();
-                    const _query = query.toLowerCase();
-
-                    if(_value.includes(_query)) {
-                        return true;
-                    }            
-                }
-            }
+        for(const [key, value] of Object.entries(dataObj)){
+            if(value !== '' && value.includes(query)) {
+                return true;
+            }            
         }
         return false;
     }
@@ -122,9 +116,12 @@ export default class ClientDirectory extends ReactComponent_Custom {
     }
 
     render(){
+        console.log(this.props)
         return (
             <div className="NavPane-content">
-                {this.getClientAccessors()}
+                {
+                    this.getClientAccessors()
+                }
             </div>
         )
     }

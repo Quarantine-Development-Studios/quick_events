@@ -6,7 +6,7 @@ export default class ReactComponent_Custom extends React.Component{
     //#region completed
     
     stateHandler(varName, value, inputChangeCallback){
-        // console.log(varName + '  ' + value)
+        console.log(varName + '  ' + value)
         if (this.state[varName] !== undefined){
             this.setState({
                 ...this.state,
@@ -33,11 +33,9 @@ export default class ReactComponent_Custom extends React.Component{
 
     //#endregion
     
-    //
     //#region database interaction functions
-
     insertIntoDB(dbID, entry){
-        // console.log('trying to create entry')
+        console.log('trying to create entry')
         if(entry.toJSON()){
             return new Promise(async (resolve, reject) =>{
                     let docRef = firebase.firestore().collection(dbID).doc();
@@ -56,13 +54,9 @@ export default class ReactComponent_Custom extends React.Component{
                     }
                   })
     }
-
-    dbRemoveEntry(dbID, entryID){
-        firebase.firestore().collection(dbID).doc(entryID).delete();
-    }
     
     setValue(event){
-        // console.log('attempting to change db value')
+        console.log('attempting to change db value')
         const cbPointer = event.target.attributes['callbackpointer'].value;
 
         let dbRootKey = '';
@@ -105,43 +99,16 @@ export default class ReactComponent_Custom extends React.Component{
 
     //#endregion
 
-    getClient(){ //completed; has error catches
-        if(!this.props.clients) {
-            console.log('clients is not passed through props'); return undefined;
-        } else if(!this.props.selectedClient) {
-            console.log('selectedClient has not been props'); return undefined;
-        } else {
-            return this.props.clients.filter(e => e.id === this.props.selectedClient)[0]
-        }
+    getClient(){
+        return this.props.clients.filter(e => e.id === this.props.selectedClient)[0]
     }
 
-    getInquiry(){ //completed; has error catches
-        if(!this.props.inquiries) {
-            console.log('inquiries is not passed through props'); return undefined;
-        } else if(!this.props.selectedInquiry) {
-            console.log('selectedInquiry is not passed through props'); return undefined;
-        } else {
-            return this.props.inquiries.filter(e => e.id === this.props.selectedInquiry)[0]
-        }
-    }
-    
-    getRelatedInquiries(){
-        if(this.props.clients && this.props.inquiries){
-            const client = this.props.clients.find(client => client.id === this.props.selectedClient)
-            let inquiries;
-            if(client){
-                const linkedInquiriesIDs = client.inquiries;
-                if(linkedInquiriesIDs){
-                    inquiries = this.props.inquiries.filter(inquiry => linkedInquiriesIDs.includes(inquiry.id))
-                }
-                return inquiries;
-            }
-        }
-    }
 
     //element templates
 
     ExpandedNavTree(rootName, parentElement, childrenElements){
+        console.log('test element')
+        console.log()
         return (
             <div className={rootName + '-expanded'} key={rootName}>
                 {parentElement}
@@ -174,7 +141,7 @@ export default class ReactComponent_Custom extends React.Component{
     
     }
 
-    //#region display changes
+    //display changes
     chgPointer(event){
         //console.log('adding pointer')
         event.target.className.concat('-pointer');
@@ -190,13 +157,11 @@ export default class ReactComponent_Custom extends React.Component{
         }
     }
 
-    InfoField(id, rootName, value, callback, callbackPointer, type) {
-        const inputType = (type) ? type : '';
-
+    InfoField(id, rootName, value, callback, callbackPointer) {
         return (
             <div className={rootName + "-field"} key={id}>
                 <label className={rootName + "-field-label content-label"} key={'lbl-' + id}>{id}: </label>
-                <input className={rootName + '-field-input content-input'} id={rootName + '-' + id} key={'input-' + id} defaultValue={value} onBlur={callback} callbackpointer={callbackPointer} type={inputType}></input>
+                <input className={rootName + '-field-input content-input'} id={rootName + '-' + id} key={'input-' + id} defaultValue={value} onBlur={callback} callbackpointer={callbackPointer}></input>
             </div>
         )
     };
@@ -217,7 +182,7 @@ export default class ReactComponent_Custom extends React.Component{
             <div className='App-divider'></div>
         )
     }
-    //#endregion
+
 
 
     customBinds(){
@@ -229,9 +194,6 @@ export default class ReactComponent_Custom extends React.Component{
         this.insertIntoDB = this.insertIntoDB.bind(this);
         this.dbInsertEntry = this.dbInsertEntry.bind(this);
         this.getClient = this.getClient.bind(this);
-        this.getInquiry = this.getInquiry.bind(this);
-        this.getRelatedInquiries = this.getRelatedInquiries.bind(this);
-        this.dbSetValue = this.dbSetValue.bind(this);
     }
 
 

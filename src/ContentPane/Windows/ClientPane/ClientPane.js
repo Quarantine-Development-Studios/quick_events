@@ -7,7 +7,6 @@ import firebase from '../../../firebase';
 import Inquiry from '../../Definitions/Inquiry.js';
 import InquiryDisp from './InquiryDisp.js';
 import rxInquiries from '../../../rxInquiries.js';
-import CC from '../../../CustomLibrary/Object_Custom.js';
 
 
 export default class ClientPane extends ReactComponent_Custom{
@@ -19,115 +18,33 @@ export default class ClientPane extends ReactComponent_Custom{
 
         //bind functions
         this.customBinds();
-        this.createInquiry = this.createInquiry.bind(this);
-        this.removeInquiry = this.removeInquiry.bind(this);
-        this.linkInquiry = this.linkInquiry.bind(this);
-
-        this.getButtons = this.getButtons.bind(this);
-
-        this.buttonReqs = {
-            'CreateInquiry': new CC.ButtonReq('CreateInquiry', 'Create Inquiry', this.createInquiry),
-            'RemoveInquiry': new CC.ButtonReq('RemoveInquiry', 'Remove Inquiry', this.removeInquiry)
-        }
+        
     }
 
-    //#region Inquiry Handling
-    createInquiry(e){
-        if(this.props.selectedClient !== ''){
-            let newInquiry = Inquiry.createInquiryByClient(this.props.client);
-            this.dbInsertEntry('inquiries', newInquiry, this.linkInquiry)
-        }
-    }
 
-    removeInquiry(e){
-        if(this.props.selectedInquiry !== ''){
-            const inquiryID = this.props.selectedInquiry;
-            const clientID = this.props.client.id;
-            console.log(this.props.client)
-            
-            let linkedInquiries = this.props.client.inquiries;
-            let newLinkedInquiries = [];
-
-            for(let i = 0; i < linkedInquiries.length; i++){
-                if(linkedInquiries[i] !== inquiryID){ 
-                    newLinkedInquiries.push(linkedInquiries[i]);
-                }
-            }
-
-            console.log(newLinkedInquiries)
-            
-            //unlink from client
-            this.dbSetValue('clients', clientID, 'inquiries', newLinkedInquiries);
-
-            //remove from inquiries collection
-            this.dbRemoveEntry('inquiries', inquiryID);
-            this.stateHandler('selectedInquiry', '');
-        }
-    }
-
-    linkInquiry(id){
-        if(this.props.selectedClient !== ''){
-            const client = this.props.client;
-            let newArray = (client.inquiries) ? client.inquiries : [];
-            //push id to array
-            newArray.push(id);
-            //insert into db
-            this.dbSetValue('clients', client.id, 'inquiries', newArray);
-            //select the inquiry to auto display it
-            this.stateHandler('selectedInquiry', id);
-        }
-    }
-    //#endregion
-
-    getButtons(buttonReqs){
-        const rItems = [];
-        let i = 0;
-        for(const [key, ButtonReq] of Object.entries(buttonReqs)){
-            const btn = this.ReactButton(ButtonReq, this.state.rootName, this.state.rootName + '-button-' + i);
-            rItems.push(btn)
-            i++;
-        }
-
-        return (
-            <div className="App-header-menu">
-                {rItems}
-            </div>   
-        );
-    }
 
     getDisplayContents(){
         console.log('trying to get Display Contents')
-        if(this.props.viewingInquiry && this.props.inquiries && this.getInquiry()){
-            let inquiry = this.getInquiry();
-            const displayItems = [];
-            
+        if(this.props.viewingInquiry && this.props.inquiry !== undefined){
+            const dispItems = [];
             //translate into native format
-            inquiry = new Inquiry(inquiry);
-
+            const inquiry = new Inquiry(this.props.inquiry)
+            console.log(inquiry)
 
             for(const [key, value] of Object.entries(inquiry.basicInfo)){
-                //push a new field for each value !except id (id is the database identifier used internally)
                 if(key !== 'id'){
                     let _key = key.replace(/([A-Z])/g, ' $1').trim();
                     _key = _key.charAt(0).toUpperCase() + _key.slice(1);
-                    let type = '';
-
-                    if(_key.includes('Date')) {
-                        type = 'date';
-                    } else if(_key.includes('Time')){
-                        type = 'time';
-                    }
                     
 
-                    //pull InfoField from ReactComponent_Custom 
-                    displayItems.push(this.InfoField(_key, 'InquiryPane', value, this.setValue, 'inquiry', type));
+                    dispItems.push(this.InfoField(_key, 'InquiryPane', value, this.setValue, 'inquiry'));
                 }
             }
 
 
             return (
                 <div className="InquiryPane-content">
-                    {displayItems}
+                    {dispItems}
                 </div>
             ) 
 
@@ -138,25 +55,18 @@ export default class ClientPane extends ReactComponent_Custom{
 
     render() {
         //TODO: add test to insert blank inquiry as linked to current Client when activated
-        const client = this.props.client;
-        if(client !== undefined){
-            return (
-                <div className="ClientPane App-Window">
-                    {this.WindowControlBar("Client Information")}   
-                    <div className="ClientPane-content">
-                        {this.InfoField('Name', 'ClientPane', client['name'], this.setValue, 'client')}
-                        {this.InfoField('Email', 'ClientPane', client['email'], this.setValue, 'client')}
-                        {this.InfoField('Phone', 'ClientPane', client['phone'], this.setValue, 'client')}
-                    </div>
-                    {this.getButtons(this.buttonReqs)}
-                    {this.Divider()}
-                    {this.getDisplayContents()}
-                </div>
-            )
-        } else {
-            <div className="ClientPane App-Window">
 
-            </div>  
-        }
+        return (
+            <div className="ClientPane App-Window">
+                {this.WindowControlBar("Client Information")}   
+                <div className="ClientPane-content">
+                    {this.InfoField('Name', 'ClientPane', this.props.client['name'], this.setValue, 'client')}
+                    {this.InfoField('Email', 'ClientPane', this.props.client['email'], this.setValue, 'client')}
+                    {this.InfoField('Phone', 'ClientPane', this.props.client['phone'], this.setValue, 'client')}
+                </div>
+                {this.Divider()}
+                {this.getDisplayContents()}
+            </div>
+        )
     }
 }
