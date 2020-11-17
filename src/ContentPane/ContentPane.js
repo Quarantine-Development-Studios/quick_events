@@ -36,7 +36,19 @@ export class ContentPane extends ReactComponent_Custom {
         return undefined;
     }
 
-    
+    getRelatedInquiries(){
+        if(this.props.clients){
+            const client = this.props.clients.find(client => client.id === this.props.selectedClient)
+            let inquiries;
+            if(client){
+                const linkedInquiriesIDs = client.inquiries;
+                if(linkedInquiriesIDs){
+                    inquiries = this.state.inquiries.filter(inquiry => linkedInquiriesIDs.includes(inquiry.id))
+                }
+                return inquiries;
+            }
+        }
+    }
 
 
     tryShowNavPane(content) {
@@ -49,8 +61,6 @@ export class ContentPane extends ReactComponent_Custom {
 
                     //pass selected client for highlighting comparison
                     selectedClient = {this.props.selectedClient} 
-
-                    inquiries = {this.state.inquiries}
                     selectedInquiry = {this.props.selectedInquiry}
                     relatedInquiries = {this.getRelatedInquiries()}
                 />
@@ -61,23 +71,21 @@ export class ContentPane extends ReactComponent_Custom {
     tryShowClientPane(content) {
 
         let selectedClient = this.props.selectedClient
-        const client = this.getClient()
 
-        // console.log(this.state);
-        // console.log(this.props);
-
-        if (this.props.viewingClient && selectedClient !== "" && client) {
-            console.log('Content Pane 65')
+        if (this.props.viewingClient && selectedClient !== "") {
+            const client = this.getClient()
+            
             content.push(
-                
+                //make sure windows that appear on top are assigned last
                 <ClientPane key="ClientPane"
                     stateHandler={this.stateHandler}
 
                     client = {client}
+                    selectedClient = {this.props.selectedClient}
 
-                    inquiries = {this.state.inquiries}
                     viewingInquiry = {this.props.viewingInquiry} 
                     selectedInquiry = {this.props.selectedInquiry}
+                    inquiry = {this.getSelectedInquiry()}
                 />
             );
         } else {
@@ -91,7 +99,6 @@ export class ContentPane extends ReactComponent_Custom {
     render(){
         let content = [];
         
-        //make sure windows that appear on top are assigned last
         this.tryShowNavPane(content);
         this.tryShowClientPane(content);
 
