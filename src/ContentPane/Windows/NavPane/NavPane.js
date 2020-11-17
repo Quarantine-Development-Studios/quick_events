@@ -110,10 +110,12 @@ export default class NavPane extends ReactComponent_Custom {
 
     render(){   
         return (
-            <div className="App-Window navpane">
+            <div className="App-Window NavPane">
                 {this.WindowControlBar("Client Directory")}
-                {this.getSearchBar()}
-                {this.getButtons(this.buttonReqs)}
+                <div className="NavPane-header">
+                    {this.getSearchBar()}
+                    {this.getButtons(this.buttonReqs)}
+                </div>
                 {this.Divider()}
                 {this.getContent()}
             </div>

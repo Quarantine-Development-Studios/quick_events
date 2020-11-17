@@ -36,20 +36,20 @@ export default class ReactComponent_Custom extends React.Component{
     //
     //#region database interaction functions
 
-    insertIntoDB(dbID, entry){
-        // console.log('trying to create entry')
-        if(entry.toJSON()){
-            return new Promise(async (resolve, reject) =>{
-                    let docRef = firebase.firestore().collection(dbID).doc();
-                    await docRef.set(entry.toJSON())
-
-                    resolve(docRef);
-            })
-        }
-    }
-
     dbInsertEntry(dbID, entry, callback){
-        this.insertIntoDB(dbID, entry)
+        const insertIntoDB = function(dbID, entry){
+            // console.log('trying to create entry')
+            if(entry.toJSON()){
+                return new Promise(async (resolve, reject) =>{
+                        let docRef = firebase.firestore().collection(dbID).doc();
+                        await docRef.set(entry.toJSON())
+    
+                        resolve(docRef);
+                })
+            }
+        }
+
+        insertIntoDB(dbID, entry)
                 .then(function(docRef) {
                     if(callback){
                         callback(docRef.id);

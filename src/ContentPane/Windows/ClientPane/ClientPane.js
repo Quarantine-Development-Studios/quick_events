@@ -115,8 +115,9 @@ export default class ClientPane extends ReactComponent_Custom{
                         {this.InfoField('Name', 'ClientPane', client['name'], this.setValue, 'client')}
                         {this.InfoField('Email', 'ClientPane', client['email'], this.setValue, 'client')}
                         {this.InfoField('Phone', 'ClientPane', client['phone'], this.setValue, 'client')}
+                        {this.getButtons(this.buttonReqs)}
                     </div>
-                    {this.getButtons(this.buttonReqs)}
+    
                     {this.Divider()}
                     {this.getDisplayContents()}
                 </div>

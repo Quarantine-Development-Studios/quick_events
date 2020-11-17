@@ -1,3 +1,9 @@
+.NavPane-header {
+    background-color: lightsteelblue !important;
+    margin: 10px;
+    padding: 3px;
+}
+
 .NavPane-searchbar {
     display: flex;
     flex-direction: column;
@@ -21,9 +27,7 @@
     display: flex;
     order: 2;
     margin-left: 10px;
-
 }
-
 .NavPane-content {
     flex: auto;
 
