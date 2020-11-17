@@ -49,9 +49,13 @@
   display: flex;
   flex-direction: column;
   order: 1;
-  flex-basis: 250px;
+  flex-basis: 100vw;
+
+  min-width: 250px;
+  max-width: 450px;
 
   margin-right: 15px;
+  margin-bottom: 15px;
 
 
   background-color: rgb(190, 194, 157);
