@@ -1,20 +1,29 @@
 import React from 'react';
 import ReactComponent_Custom from './CustomLibrary/ReactComponent_Custom.js';
-import {TitleBar} from './TitleBar/TitleBar.js';
-import {ContentPane} from './ContentPane/ContentPane.js';
+import TitleBar from './TitleBar/TitleBar.js';
+import Management from './Management/ContentPane.js';
 
 export class Controller extends ReactComponent_Custom{
     constructor(props){
         super(props);
         this.state = {
-
+            isLoggedIn: false,
         }
 
         //function binds
         this.customBinds();
+        this.getDisplay = this.getDisplay.bind(this);
     }
 
 
+    getDisplay(){
+        
+        return(
+            <Management
+                stateHandler = {this.stateHandler}
+            />
+        )
+    }
 
     render(){
         // console.log('Controller')
@@ -28,10 +37,9 @@ export class Controller extends ReactComponent_Custom{
                     stateHandler = {this.stateHandler}
                     
                 />
+                <li className="test-line">{'is logged in: ' + this.state.isLoggedIn}</li>
 
-                <ContentPane
-                    stateHandler = {this.stateHandler}
-                />
+                {this.getDisplay()}
             </div>
         )
     }

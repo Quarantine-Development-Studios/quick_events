@@ -6,7 +6,7 @@ import ClientPane from './Windows/ClientPane/ClientPane.js';
 import rxInquiries from '../firebase/rxInquiries.js';
 import rxClients from '../firebase/rxClients';
 
-export class ContentPane extends ReactComponent_Custom {
+export default class ContentPane extends ReactComponent_Custom {
     constructor(props){
         super(props);
         this.state = {
@@ -77,11 +77,7 @@ export class ContentPane extends ReactComponent_Custom {
         let selectedClient = this.state.selectedClient
         const client = this.getClient()
 
-        // console.log(this.state);
-        // console.log(this.state);
-
         if (this.state.viewingClient && selectedClient !== "" && client) {
-            console.log('Content Pane 65')
             content.push(
                 
                 <ClientPane key="ClientPane"
@@ -92,6 +88,10 @@ export class ContentPane extends ReactComponent_Custom {
                     inquiries = {this.state.inquiries}
                     viewingInquiry = {this.state.viewingInquiry} 
                     selectedInquiry = {this.state.selectedInquiry}
+
+                    viewingClient = {this.state.viewingClient}
+                    selectedClient = {this.state.selectedClient}
+                    
                 />
             );
         } else {

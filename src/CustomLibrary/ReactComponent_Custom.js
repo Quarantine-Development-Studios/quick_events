@@ -37,24 +37,23 @@ export default class ReactComponent_Custom extends React.Component{
     //#region database interaction functions
 
     dbInsertEntry(dbID, entry, callback){
-        const insertIntoDB = function(dbID, entry){
-            // console.log('trying to create entry')
-            if(entry.toJSON()){
-                return new Promise(async (resolve, reject) =>{
-                        let docRef = firebase.firestore().collection(dbID).doc();
-                        await docRef.set(entry.toJSON())
-    
-                        resolve(docRef);
-                })
-            }
-        }
-
-        insertIntoDB(dbID, entry)
+        this.insertIntoDB(dbID, entry)
                 .then(function(docRef) {
                     if(callback){
                         callback(docRef.id);
                     }
                   })
+    }
+    insertIntoDB(dbID, entry){
+        // console.log('trying to create entry')
+        if(entry.toJSON()){
+            return new Promise(async (resolve, reject) =>{
+                    let docRef = firebase.firestore().collection(dbID).doc();
+                    await docRef.set(entry.toJSON())
+
+                    resolve(docRef);
+            })
+        }
     }
 
     dbRemoveEntry(dbID, entryID){
@@ -84,13 +83,17 @@ export default class ReactComponent_Custom extends React.Component{
                 console.log('unable to set dbRoot in "setValue()"');
         }
 
+        console.log('trying to set value')
+
+
         let fieldKey = event.target.attributes['id'].value;
         fieldKey = fieldKey.split('-');
         fieldKey = fieldKey[fieldKey.length - 1];
         fieldKey = fieldKey[0].toLowerCase() + fieldKey.slice(1);
         fieldKey = fieldKey.replace(' ', '');
 
-
+        console.log(this.props)
+        console.log(dbRootKey, dbKey, fieldKey, event.target.value)
         this.dbSetValue(dbRootKey, dbKey, fieldKey, event.target.value)
     }
 

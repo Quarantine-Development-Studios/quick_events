@@ -20,14 +20,10 @@ export default class ClientDirectory extends ReactComponent_Custom {
         const targetID = event.target.attributes['data-key'].value;
         let value = ((this.props['selected' + pointer] !== targetID) ? targetID : "");
 
-        //clear previsou value
-        this.stateHandler('selected' + pointer, "")
+        console.log('selected' + pointer)
+        console.log(value)
 
-        //assign new value after everything else has finished to do a proper update and data seperation
-        setTimeout(() => {
-            this.stateHandler('selected' + pointer, value)
-        }, 0);
-
+        this.stateHandler('selected' + pointer, value)
     }
 
     getClientAccessors(){

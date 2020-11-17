@@ -97,6 +97,8 @@ export default class ClientPane extends ReactComponent_Custom{
             return (
                 <InquiryDisp 
                     inquiry = {this.getInquiry()}
+                    selectedInquiry = {this.props.selectedInquiry}
+                    
                 />
             ) 
         } else {

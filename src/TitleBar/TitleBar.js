@@ -3,7 +3,7 @@ import './TitleBar.css';
 import ReactComponent_Custom from '../CustomLibrary/ReactComponent_Custom.js';
 
 
-export class TitleBar extends ReactComponent_Custom {
+export default class TitleBar extends ReactComponent_Custom {
     constructor(props){
         super(props);
         this.state = {
