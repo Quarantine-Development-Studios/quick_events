@@ -92,9 +92,20 @@ export default class ReactComponent_Custom extends React.Component{
         fieldKey = fieldKey[0].toLowerCase() + fieldKey.slice(1);
         fieldKey = fieldKey.replace(' ', '');
 
-        console.log(this.props)
-        console.log(dbRootKey, dbKey, fieldKey, event.target.value)
-        this.dbSetValue(dbRootKey, dbKey, fieldKey, event.target.value)
+        console.log(fieldKey + ' is fieldkey');
+
+        if(fieldKey === 'name' || fieldKey === 'email' || fieldKey === 'phone'){
+            const dbCRootKey = 'clients';
+            const dbCKey = this.props.selectedClient;
+            const dbIRootKey = 'inquiries';
+            const dbIKey = this.props.selectedInquiry;
+
+            this.dbSetValue(dbCRootKey, dbCKey, fieldKey, event.target.value);  
+            this.dbSetValue(dbIRootKey, dbIKey, fieldKey, event.target.value);
+            window.location.reload();
+        } else {
+            this.dbSetValue(dbRootKey, dbKey, fieldKey, event.target.value)
+        }
     }
 
     dbSetValue(dbRootKey, dbKey, fieldKey, value){

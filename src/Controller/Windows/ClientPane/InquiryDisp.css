@@ -1,7 +1,6 @@
 .InquiryPane {
 
     background-color: rgba(176, 196, 222, 0.344) !important;
-    flex-basis: 300px !important;
 
     border-style: ridge;
 
@@ -21,6 +20,7 @@
     flex: auto;
     flex-direction: row;
 
+    margin-left: 10px;
     margin-bottom: 5px;
 }
 

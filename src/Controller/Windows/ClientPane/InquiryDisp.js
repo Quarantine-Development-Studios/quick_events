@@ -31,9 +31,12 @@ export default class InquiryPane extends ReactComponent_Custom{
                     type = 'time';
                 }
 
-                //pull InfoField from ReactComponent_Custom 
-                displayItems.push(this.InfoField(_key, 'InquiryPane', value, this.setValue, 'inquiry', type));
-                
+                if(_key === 'Name' || _key === 'Email' || _key === 'Phone'){
+                    
+                }else {
+                    //pull InfoField from ReactComponent_Custom 
+                    displayItems.push(this.InfoField(_key, 'InquiryPane', value, this.setValue, 'inquiry', type));
+                }
             }
         }
 

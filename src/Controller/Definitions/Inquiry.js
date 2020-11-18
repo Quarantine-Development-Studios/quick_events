@@ -3,19 +3,20 @@ export default class Inquiry {
     constructor(dataObj){
         console.log(dataObj)
         this.basicInfo = {
+            name: "",
+            email: "",
+            phone: "",
+
             eventTitle: "",
             eventDate: "",
             room: "",
             startTime: "",
             stopTime: "",
             guestCount: "",
-            dateRecieved: "",
 
-            name: "",
-            email: "",
-            phone: "",
             company: "",
             
+            dateRecieved: "",
             source: "",
             sourceLocation: "",
         }
