@@ -1,4 +1,4 @@
-import {Controller} from './Controller.js';
+import {Controller} from './Controller/Controller.js';
 import './App.css';
 
 function App() {
@@ -7,9 +7,7 @@ function App() {
     
 
   return (
-    <div className="App">
       <Controller />
-    </div>
   );
 }
 

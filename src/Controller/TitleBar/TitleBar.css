@@ -1,15 +1,17 @@
 .TitleBar-header {
-  position: absolute;
+  position: relative;
   top: 0px; left: 0px; right:0px;
   background-color: #282c34;
   min-height: 40px;
-  height: 40px;
+  height: 4.75vh;
 
   flex-direction: column;
+  width: 100vw;
   justify-content: top;
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
 .TitleBar-header-title {
   margin-top: .25vh;
   margin-bottom: .25vh;

@@ -1,6 +1,6 @@
 import React from 'react';
 import './TitleBar.css';
-import ReactComponent_Custom from '../CustomLibrary/ReactComponent_Custom.js';
+import ReactComponent_Custom from '../../CustomLibrary/ReactComponent_Custom.js';
 
 
 export default class TitleBar extends ReactComponent_Custom {

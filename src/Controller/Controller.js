@@ -1,7 +1,7 @@
 import React from 'react';
-import ReactComponent_Custom from './CustomLibrary/ReactComponent_Custom.js';
+import ReactComponent_Custom from '../CustomLibrary/ReactComponent_Custom.js';
 import TitleBar from './TitleBar/TitleBar.js';
-import Management from './Management/ContentPane.js';
+import Management from './ContentPane/ContentPane.js';
 
 export class Controller extends ReactComponent_Custom{
     constructor(props){
@@ -37,7 +37,8 @@ export class Controller extends ReactComponent_Custom{
                     stateHandler = {this.stateHandler}
                     
                 />
-                <li className="test-line">{'is logged in: ' + this.state.isLoggedIn}</li>
+                {//<li className="test-line">{'is logged in: ' + this.state.isLoggedIn}</li>
+                }
 
                 {this.getDisplay()}
             </div>

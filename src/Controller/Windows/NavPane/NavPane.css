@@ -1,7 +1,10 @@
 .NavPane-header {
     background-color: lightsteelblue !important;
+
+    border-style: ridge;
+
     margin: 10px;
-    padding: 3px;
+    padding: 1px;
 }
 
 .NavPane-searchbar {
@@ -29,19 +32,17 @@
     margin-left: 10px;
 }
 .NavPane-content {
-    flex: auto;
+    flex: content;
 
-    flex-direction: column;
+    flex-direction: row;
     order: 5;
 
     margin: 10px;
-    padding: 4px;
+    padding: 10px;
 
-    border-color: navy;
-    border-style: groove;
-    border-radius: 3px;
-    border-width: 2px;
-    background-color: papayawhip;
+    border-style: ridge;
+
+    background-color: rgba(176, 196, 222, 0.75) !important;
 
     overflow-y: auto;
 }
