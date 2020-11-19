@@ -2,7 +2,7 @@ import firebase from 'firebase';
   
   
   // Your web app's Firebase configuration
-  var firebaseConfig = {
+  export const firebaseConfig = {
     apiKey: "AIzaSyCW7Hj3REjJfdct86iEOx4De5KHXnH75Z4",
     authDomain: "quick-events-f2dab.firebaseapp.com",
     databaseURL: "https://quick-events-f2dab.firebaseio.com",

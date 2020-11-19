@@ -11,8 +11,8 @@ export default class Inquiry {
             eventDate: "",
             room: "",
             startTime: "",
-            stopTime: "",
             guestCount: "",
+            stopTime: "",            
 
             company: "",
             

@@ -1,47 +1,57 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import ReactDOM from "react-dom";
 import ReactComponent_Custom from '../CustomLibrary/ReactComponent_Custom.js';
 import TitleBar from './TitleBar/TitleBar.js';
 import Management from './ContentPane/ContentPane.js';
+import AuthPane from './Auth/AuthPane.js';
+import {firebaseConfig} from '../firebase/firebase.js';
 
-export class Controller extends ReactComponent_Custom{
-    constructor(props){
-        super(props);
-        this.state = {
-            isLoggedIn: false,
+export const AuthContext = React.createContext(null);
+
+const Controller = () => {
+    const[isLoggedIn, setLoggedIn] = useState(false);
+
+    function readSession() {
+        const user = window.sessionStorage.getItem(
+                `firebase:authUser:${firebaseConfig.apiKey}:[DEFAULT]`
+            );
+            if (user) setLoggedIn(true)
+      }
+      useEffect(() => {
+        readSession()
+      }, [])
+
+
+    const getDisplay = () => {
+        if(isLoggedIn){
+            return(
+                <Management
+                    isLoggedIn = {isLoggedIn}
+                />
+            )
+        } else {
+            return(
+                <AuthPane 
+                    isLoggedIn = {isLoggedIn}
+                />
+            )
         }
-
-        //function binds
-        this.customBinds();
-        this.getDisplay = this.getDisplay.bind(this);
     }
 
-
-    getDisplay(){
-        
-        return(
-            <Management
-                stateHandler = {this.stateHandler}
-            />
-        )
-    }
-
-    render(){
-        // console.log('Controller')
-        // console.log(this.state)
-
-        //reset creatingInquiry if no Client is selected
-
-        return (
+    return (
+        <AuthContext.Provider value={{isLoggedIn, setLoggedIn }}>
             <div className="App">
                 <TitleBar 
-                    stateHandler = {this.stateHandler}
                     
                 />
-                {//<li className="test-line">{'is logged in: ' + this.state.isLoggedIn}</li>
-                }
 
-                {this.getDisplay()}
+
+                {getDisplay()}
+                {<li className="test-line">{'is logged in: ' + isLoggedIn}</li>
+                }
             </div>
-        )
-    }
+        </AuthContext.Provider>
+    )
 }
+
+export default Controller;

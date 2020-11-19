@@ -63,52 +63,73 @@ export default class ReactComponent_Custom extends React.Component{
     setValue(event){
         // console.log('attempting to change db value')
         const cbPointer = event.target.attributes['callbackpointer'].value;
+        const value = event.target.value;
 
-        let dbRootKey = '';
-        let dbKey = '';
-
+        let dbKey;
+        let dbRootKey;
 
         switch (cbPointer) {
             case 'client':
-                dbRootKey = 'clients';
                 dbKey = this.props.selectedClient;
+                dbRootKey = 'clients';
                 break;
             case 'inquiry':
-                
-                dbRootKey = 'inquiries';
                 dbKey = this.props.selectedInquiry;
-                console.log('setting db entry args: ' + dbRootKey + '  ' + dbKey)
+                dbRootKey = 'inquiries';
                 break;
             default:
                 console.log('unable to set dbRoot in "setValue()"');
+                return undefined;
         }
 
-        console.log('trying to set value')
 
-
-        let fieldKey = event.target.attributes['id'].value;
-        fieldKey = fieldKey.split('-');
-        fieldKey = fieldKey[fieldKey.length - 1];
+        //parse id for fieldkey
+        let fieldKey = event.target.attributes['id'].value.split('-');
+        fieldKey = fieldKey[fieldKey.length - 1]; //grab last index of array
         fieldKey = fieldKey[0].toLowerCase() + fieldKey.slice(1);
         fieldKey = fieldKey.replace(' ', '');
 
-        console.log(fieldKey + ' is fieldkey');
+        console.log('setValue')
+        if(dbRootKey && dbKey && fieldKey){
+            console.log({dbRootKey, dbKey, fieldKey, value})
+            //lock name, email and phone to linked inquiries
+            if(fieldKey === 'name' || fieldKey === 'email' || fieldKey === 'phone'){
+                const dbCRootKey = 'clients';
+                const dbCKey = this.props.selectedClient;
 
-        if(fieldKey === 'name' || fieldKey === 'email' || fieldKey === 'phone'){
-            const dbCRootKey = 'clients';
-            const dbCKey = this.props.selectedClient;
-            const dbIRootKey = 'inquiries';
-            const dbIKey = this.props.selectedInquiry;
 
-            this.dbSetValue(dbCRootKey, dbCKey, fieldKey, event.target.value);  
-            this.dbSetValue(dbIRootKey, dbIKey, fieldKey, event.target.value);
-            window.location.reload();
+                this.dbSetValue(dbCRootKey, dbCKey, fieldKey, value); 
+                console.log('client');
+                const client = this.getClient();
+                console.log(client);
+
+                this.dbUpdateLinkedInquiries(this.getClient(), fieldKey, value); 
+
+            } else {
+                this.dbSetValue(dbRootKey, dbKey, fieldKey, value)
+            }
         } else {
-            this.dbSetValue(dbRootKey, dbKey, fieldKey, event.target.value)
+            console.log('improper input')
+            console.log({dbRootKey, dbKey, fieldKey, value})
+        }
+    }
+
+    dbUpdateLinkedInquiries(client, fieldKey, value){
+
+        if(client.hasOwnProperty('inquiries')  && client.inquiries[0]){
+            const inquiries = client.inquiries
+            for(let i = 0; i < inquiries.length; i++){
+                this.dbSetValue('inquiries', inquiries[i], fieldKey, value)
+            }
+        } else {
+            console.log('no linked inquiries')
         }
     }
 
     dbSetValue(dbRootKey, dbKey, fieldKey, value){
+        console.log('dbSetValue');
+        console.log({dbRootKey, dbKey, fieldKey, value})
+
         let entry = firebase.firestore().collection(dbRootKey).doc(dbKey);
         if(fieldKey !== 'id'){
             entry.set(
@@ -134,9 +155,9 @@ export default class ReactComponent_Custom extends React.Component{
 
     getInquiry(){ //completed; has error catches
         if(!this.props.inquiries) {
-            console.log('inquiries is not passed through props'); return undefined;
+            console.log('inquiries is not passed through props'); return false;
         } else if(!this.props.selectedInquiry) {
-            console.log('selectedInquiry is not passed through props'); return undefined;
+            console.log('selectedInquiry is not passed through props'); return false;
         } else {
             return this.props.inquiries.filter(e => e.id === this.props.selectedInquiry)[0]
         }

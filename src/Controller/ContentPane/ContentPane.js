@@ -84,6 +84,7 @@ export default class ContentPane extends ReactComponent_Custom {
                     stateHandler={this.stateHandler}
 
                     client = {client}
+                    clients = {this.state.clients}
 
                     inquiries = {this.state.inquiries}
                     viewingInquiry = {this.state.viewingInquiry} 

@@ -1,0 +1,60 @@
+.AuthPane {
+    position: relative;
+    top:0px;
+    display: block;
+
+    min-height: 0 !important;
+    max-height: fit-content !important;
+    margin: auto !important;
+    margin-top: 0px !important;    
+}
+
+.AuthPane-titlebar {
+    height: 40px;
+    text-align: left;
+}
+
+.AuthPane-titlebar-label {
+    font-size: 20px;
+    font-weight: bold;
+
+    margin-left: 10px;
+}
+
+.AuthPane-formField {
+    margin-left: 20px;
+    margin-bottom: 10px;
+}
+
+.AuthPane-label {
+    display: flex;
+
+}
+
+.AuthPane-input {
+    display: flex;
+    left: 20px;
+}
+
+.Btn {
+    width: 200px;
+    height: 50px;
+    
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    font-size: 16px;
+    background: url('./sign-in-with-google-icon-19.jpg');
+    background-position: center;
+    background-size: contain;
+}
+
+.google-icon {
+
+    max-width: 300px;
+    margin: auto;
+}
