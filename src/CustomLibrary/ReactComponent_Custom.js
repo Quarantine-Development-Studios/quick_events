@@ -2,49 +2,34 @@ import React from 'react';
 import firebase from '../firebase/firebase';
 import WindowCloseImg from '../images/WindowClose.png';
 
-export default class ReactComponent_Custom extends React.Component{
-    //#region completed
-    
-    stateHandler(varName, value, inputChangeCallback){
-        // console.log(varName + '  ' + value)
-        if (this.state[varName] !== undefined){
-            this.setState({
-                ...this.state,
-                [varName]: value
-            })
-        } else {
-            //call again to check in parent
-            if(this.props.stateHandler){
-                this.props.stateHandler(varName, value);
-            } else {
-                console.log("unable to find desired state with desired prop")
-                console.log(varName + '  ' + value)
-            }
-        }
-    }
 
-    ReactButton(ButtonReq, rootName, key) { 
+const React_Custom = {
+    //#region completed
+    ReactButton: (ButtonReq, rootName, key) => { 
         return(
             <button className={rootName + ' -button'} id={ButtonReq.name} key={key} onClick={ButtonReq.callback} callbackpointer={ButtonReq.callbackPointer}>
                 {ButtonReq.value}
             </button>
         );
-    }
+    },
 
     //#endregion
     
-    //
+
     //#region database interaction functions
 
-    dbInsertEntry(dbID, entry, callback){
-        this.insertIntoDB(dbID, entry)
+    dbInsertEntry: (dbID, entry, callback) => {
+        React_Custom.insertIntoDB(dbID, entry)
                 .then(function(docRef) {
                     if(callback){
+                        console.log(docRef.id)
                         callback(docRef.id);
+                        
                     }
                   })
-    }
-    insertIntoDB(dbID, entry){
+    },
+    
+    insertIntoDB: (dbID, entry) => {
         // console.log('trying to create entry')
         if(entry.toJSON()){
             return new Promise(async (resolve, reject) =>{
@@ -54,132 +39,62 @@ export default class ReactComponent_Custom extends React.Component{
                     resolve(docRef);
             })
         }
-    }
+    },
 
-    dbRemoveEntry(dbID, entryID){
-        firebase.firestore().collection(dbID).doc(entryID).delete();
-    }
-    
-    setValue(event){
-        // console.log('attempting to change db value')
-        const cbPointer = event.target.attributes['callbackpointer'].value;
-        const value = event.target.value;
-
-        let dbKey;
-        let dbRootKey;
-
-        switch (cbPointer) {
-            case 'client':
-                dbKey = this.props.selectedClient;
-                dbRootKey = 'clients';
-                break;
-            case 'inquiry':
-                dbKey = this.props.selectedInquiry;
-                dbRootKey = 'inquiries';
-                break;
-            default:
-                console.log('unable to set dbRoot in "setValue()"');
-                return undefined;
-        }
-
-
-        //parse id for fieldkey
-        let fieldKey = event.target.attributes['id'].value.split('-');
-        fieldKey = fieldKey[fieldKey.length - 1]; //grab last index of array
-        fieldKey = fieldKey[0].toLowerCase() + fieldKey.slice(1);
-        fieldKey = fieldKey.replace(' ', '');
-
-        console.log('setValue')
-        if(dbRootKey && dbKey && fieldKey){
-            console.log({dbRootKey, dbKey, fieldKey, value})
-            //lock name, email and phone to linked inquiries
-            if(fieldKey === 'name' || fieldKey === 'email' || fieldKey === 'phone'){
-                const dbCRootKey = 'clients';
-                const dbCKey = this.props.selectedClient;
-
-
-                this.dbSetValue(dbCRootKey, dbCKey, fieldKey, value); 
-                console.log('client');
-                const client = this.getClient();
-                console.log(client);
-
-                this.dbUpdateLinkedInquiries(this.getClient(), fieldKey, value); 
-
-            } else {
-                this.dbSetValue(dbRootKey, dbKey, fieldKey, value)
-            }
+    dbRemoveEntry: (dbID, entryID) => {
+        if(dbID && entryID){
+            firebase.firestore().collection(dbID).doc(entryID).delete();
         } else {
-            console.log('improper input')
-            console.log({dbRootKey, dbKey, fieldKey, value})
+            console.log("proper ID's not passed to 'dbRemoveEntry'");
         }
-    }
+    },  
 
-    dbUpdateLinkedInquiries(client, fieldKey, value){
+    dbUpdateLinkedInquiries: (client, fieldKey, value) => {
 
         if(client.hasOwnProperty('inquiries')  && client.inquiries[0]){
             const inquiries = client.inquiries
             for(let i = 0; i < inquiries.length; i++){
-                this.dbSetValue('inquiries', inquiries[i], fieldKey, value)
+                React_Custom.dbSetValue('inquiries', inquiries[i], fieldKey, value)
             }
         } else {
             console.log('no linked inquiries')
         }
-    }
+    },
 
-    dbSetValue(dbRootKey, dbKey, fieldKey, value){
-        console.log('dbSetValue');
-        console.log({dbRootKey, dbKey, fieldKey, value})
-
+    dbSetValue: (dbRootKey, dbKey, fieldKey, value) => {
         let entry = firebase.firestore().collection(dbRootKey).doc(dbKey);
         if(fieldKey !== 'id'){
             entry.set(
                 {[fieldKey]: value},
                 {merge: true});
         }
-    }
+    },
 
     //#endregion
-
-    getClient(){ //completed; has error catches
-        const clients = (this.state.clients) ? this.state.clients : this.props.clients;
-        const selectedClient = (this.state.selectedClient) ? this.state.selectedClient : this.props.selectedClient;
-
-        if(!clients) {
-            console.log('clients is not passed'); return undefined;
-        } else if(!selectedClient) {
-            console.log('selectedClient has not been passed'); return undefined;
+    getEntry: (array, accessorID) => {
+        if(!array) {
+            //console.log('array is not passed'); return undefined;
+        } else if (!accessorID) {
+            //console.log('accessorID has not been passed'); return undefined;
         } else {
-            return clients.filter(e => e.id === selectedClient)[0]
+            return array.filter(e => e.id === accessorID)[0]
         }
-    }
-
-    getInquiry(){ //completed; has error catches
-        if(!this.props.inquiries) {
-            console.log('inquiries is not passed through props'); return false;
-        } else if(!this.props.selectedInquiry) {
-            console.log('selectedInquiry is not passed through props'); return false;
-        } else {
-            return this.props.inquiries.filter(e => e.id === this.props.selectedInquiry)[0]
-        }
-    }
+    },
     
-    getRelatedInquiries(){
-        if(this.props.clients && this.props.inquiries){
-            const client = this.props.clients.find(client => client.id === this.props.selectedClient)
-            let inquiries;
-            if(client){
-                const linkedInquiriesIDs = client.inquiries;
-                if(linkedInquiriesIDs){
-                    inquiries = this.props.inquiries.filter(inquiry => linkedInquiriesIDs.includes(inquiry.id))
-                }
-                return inquiries;
+    getRelatedInquiries: (client, inquiries) => {
+        let rInquiries;
+        if(client){
+            const linkedInquiriesIDs = client.inquiries;
+            if(linkedInquiriesIDs && inquiries){
+                rInquiries = inquiries.filter(inquiry => linkedInquiriesIDs.includes(inquiry.id))
             }
+            return rInquiries;
         }
-    }
+    },
 
     //element templates
 
-    ExpandedNavTree(rootName, parentElement, childrenElements){
+    ExpandedNavTree: (rootName, parentElement, childrenElements) => {
         return (
             <div className={rootName + '-expanded'} key={rootName}>
                 {parentElement}
@@ -188,9 +103,9 @@ export default class ReactComponent_Custom extends React.Component{
                 </div>
             </div>
         )
-    }
+    },
 
-    NavLbl(id, rootName, text, dbID, callback, tagMod, pointer) { 
+    NavLbl: (id, rootName, text, dbID, callback, tagMod, pointer, onMouseOutCB) => { 
         let className = rootName + '-label' + tagMod;
         if(tagMod !== ''){
             className.concat(tagMod);
@@ -202,33 +117,22 @@ export default class ReactComponent_Custom extends React.Component{
             key={id.toString()} 
             data-key={dbID} 
             onClick={callback} 
-            onMouseOver={this.chgPointer} 
-            onMouseOut={this.chgNormal}
+            onMouseOver={React_Custom.chgPointer} 
+            onMouseOut={onMouseOutCB}
             callbackpointer={pointer}
         >
             {text}
         </label>
-        ); 
-    
-    }
+        );     
+    },
 
     //#region display changes
-    chgPointer(event){
+    chgPointer: (event) => {
         //console.log('adding pointer')
         event.target.className.concat('-pointer');
-    }
+    },
 
-    chgNormal(event){
-        let callbackpointer = event.target.attributes['callbackpointer'].value;
-        callbackpointer = callbackpointer.charAt(0).toUpperCase() + callbackpointer.slice(1);
-
-        if(event.target.attributes['data-key'].value !== this.props['selected' + callbackpointer]){
-            //console.log('removing pointer');
-            event.target.className.replace('-pointer', '');
-        }
-    }
-
-    InfoField(id, rootName, value, callback, callbackPointer, type) {
+    InfoField: (id, rootName, value, callback, callbackPointer, type) => {
         const inputType = (type) ? type : '';
 
         return (
@@ -237,44 +141,25 @@ export default class ReactComponent_Custom extends React.Component{
                 <input className={rootName + '-field-input content-input'} id={rootName + '-' + id} key={'input-' + id} defaultValue={value} onBlur={callback} callbackpointer={callbackPointer} type={inputType}></input>
             </div>
         )
-    };
+    },
 
-    WindowControlBar(WindowTitle){
+    WindowControlBar: (WindowTitle, closingCallback) => {
         return(
             <div className="control-Bar">
                 <div className="App-Window-Title">
                     <label >{WindowTitle}</label>
                 </div>
-                <img className="App-Window-CloseBtn" onClick={this.closeWindow} alt="" src={WindowCloseImg} ></img>
+                <img className="App-Window-CloseBtn" onClick={closingCallback} alt="" src={WindowCloseImg} ></img>
             </div>
         )
-    }
+    },
 
-    Divider(){
+    Divider: () => {
         return (
             <div className='App-divider'></div>
         )
     }
     //#endregion
-
-
-    customBinds(){
-        this.stateHandler = this.stateHandler.bind(this);
-        this.chgNormal = this.chgNormal.bind(this);
-        this.chgPointer = this.chgPointer.bind(this);
-        this.setValue = this.setValue.bind(this);
-        this.ReactButton = this.ReactButton.bind(this);
-        this.insertIntoDB = this.insertIntoDB.bind(this);
-        this.dbInsertEntry = this.dbInsertEntry.bind(this);
-        this.getClient = this.getClient.bind(this);
-        this.getInquiry = this.getInquiry.bind(this);
-        this.getRelatedInquiries = this.getRelatedInquiries.bind(this);
-        this.dbSetValue = this.dbSetValue.bind(this);
-    }
-
-
-    //element templates
-
-
-
 }
+
+export default React_Custom;

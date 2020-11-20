@@ -33,6 +33,7 @@
 }
 .NavPane-content {
     flex: auto;
+    
 
     flex-direction: row;
     order: 5;

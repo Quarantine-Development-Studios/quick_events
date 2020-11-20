@@ -1,7 +1,6 @@
 
 export default class Inquiry { 
     constructor(dataObj){
-        console.log(dataObj)
         this.basicInfo = {
             name: "",
             email: "",

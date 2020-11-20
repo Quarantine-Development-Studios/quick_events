@@ -1,23 +1,12 @@
 import React from 'react';
-import ReactComponent_Custom from '../../../CustomLibrary/ReactComponent_Custom.js';
+import React_Custom from '../../../CustomLibrary/ReactComponent_Custom.js';
 import './InquiryDisp.css';
 import Inquiry from '../../Definitions/Inquiry.js'
 
-export default class InquiryPane extends ReactComponent_Custom{
-    constructor(props){
-        super(props);
-        this.state = {
-
-        }   
-        //bind functions
-        this.customBinds();
-        this.getDisplayContents = this.getDisplayContents.bind(this);
-    }
-
-
-    getDisplayContents(){
+const InquiryPane = (props) => {
+    const getDisplayContents = () => {
         const displayItems = [];
-        const inquiry = new Inquiry(this.props.inquiry)
+        const inquiry = new Inquiry(props.inquiry)
         for(const [key, value] of Object.entries(inquiry.basicInfo)){
             //push a new field for each value !except id (id is the database identifier used internally)
             if(key !== 'id'){
@@ -35,7 +24,7 @@ export default class InquiryPane extends ReactComponent_Custom{
                     
                 }else {
                     //pull InfoField from ReactComponent_Custom 
-                    displayItems.push(this.InfoField(_key, 'InquiryPane', value, this.setValue, 'inquiry', type));
+                    displayItems.push(React_Custom.InfoField(_key, 'InquiryPane', value, props.setValue, 'inquiry', type));
                 }
             }
         }
@@ -48,11 +37,12 @@ export default class InquiryPane extends ReactComponent_Custom{
     }
 
 
-    render(){
-        return (
-            <div className="InquiryPane" key="InquiryPane">
-                {this.getDisplayContents()}
-            </div>
-        )
-    }
+    return (
+        <div className="InquiryPane" key="InquiryPane">
+            {getDisplayContents()}
+        </div>
+    )
+    
 }
+
+export default InquiryPane;

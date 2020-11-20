@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import ReactDOM from "react-dom";
-import ReactComponent_Custom from '../CustomLibrary/ReactComponent_Custom.js';
+import React_Custom from '../CustomLibrary/ReactComponent_Custom.js';
 import TitleBar from './TitleBar/TitleBar.js';
-import Management from './ContentPane/ContentPane.js';
+import ContentPane from './ContentPane/ContentPane.js';
 import AuthPane from './Auth/AuthPane.js';
 import {firebaseConfig} from '../firebase/firebase.js';
 
@@ -25,7 +24,7 @@ const Controller = () => {
     const getDisplay = () => {
         if(isLoggedIn){
             return(
-                <Management
+                <ContentPane
                     isLoggedIn = {isLoggedIn}
                 />
             )
@@ -38,12 +37,11 @@ const Controller = () => {
         }
     }
 
+    console.log('Controller');
     return (
         <AuthContext.Provider value={{isLoggedIn, setLoggedIn }}>
             <div className="App">
-                <TitleBar 
-                    
-                />
+                <TitleBar />
 
 
                 {getDisplay()}

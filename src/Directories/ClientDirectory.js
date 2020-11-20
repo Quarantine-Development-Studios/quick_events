@@ -1,64 +1,60 @@
-import ReactComponent_Custom from '../CustomLibrary/ReactComponent_Custom.js';
+import { useState } from 'react';
+import React_Custom from '../CustomLibrary/ReactComponent_Custom.js';
 
 
+const ClientDirectory = (props) => {
 
-export default class ClientDirectory extends ReactComponent_Custom {
-    constructor(props){
-        super(props)
-        this.state = {
-            rootName: 'ClientDirectory',
-
-        }
-
-        this.customBinds();
-        this.selectLbl = this.selectLbl.bind(this)
-    }
+        const [rootName, ] = useState('ClientDirectory');
     
 
-    selectLbl(event){
+    const selectLbl = (event) => {
         let pointer = event.target.attributes['callbackpointer'].value;
         const targetID = event.target.attributes['data-key'].value;
-        let value = ((this.props['selected' + pointer] !== targetID) ? targetID : "");
+        let value = ((props['selected' + pointer] !== targetID) ? targetID : "");
 
-        console.log('selected' + pointer)
-        console.log(value)
-
-        this.stateHandler('selected' + pointer, value)
+        props['setSelected' + pointer](value);
     }
 
-    getClientAccessors(){
-        if(this.props.clients !== undefined && this.props.clients[0]){
-            const liveClients = this.props.clients;        
+    const isSelected = (event) => {
+        let callbackpointer = event.target.attributes['callbackpointer'].value;
+        callbackpointer = callbackpointer.charAt(0).toUpperCase() + callbackpointer.slice(1);
+
+        if(event.target.attributes['data-key'].value !== props['selected' + callbackpointer]){
+            //console.log('removing pointer');
+            event.target.className.replace('-pointer', '');
+        }
+    }
+
+    const getClientAccessors = () => {
+        if(props.clients !== undefined && props.clients[0]){    
             const returnData = [];
 
-            if(liveClients[0]){
-                for(let ClientIndex = 0; ClientIndex < liveClients.length; ClientIndex++){
-                    const isSearching = this.props.isSearching;
-                    const searchQuery = this.props.searchQuery;
+            if(props.clients[0]){
+                for(let ClientIndex = 0; ClientIndex < props.clients.length; ClientIndex++){
                     let isQuery = false;
 
-                    if(isSearching && searchQuery !== ''){
-                        isQuery = this.testQuery(liveClients[ClientIndex], searchQuery);
+                    if(props.isSearching && props.searchQuery !== ''){
+                        isQuery = testQuery(props.clients[ClientIndex], props.searchQuery);
                     }
 
-                    if(!isSearching || isQuery){
+                    if(!props.isSearching || isQuery){
                         //get RootClient Label then build children if isPointer
-                        let text = liveClients[ClientIndex].name;
-                        let dbID = liveClients[ClientIndex].id;
+                        let text = props.clients[ClientIndex].name;
+                        let dbID = props.clients[ClientIndex].id;
                         let tagMod = '';
-                        let isPointer = (dbID === this.props.selectedClient);
+                        let isPointer = (dbID === props.selectedClient);
                 
-                        let clientLabel = this.NavLbl(ClientIndex, this.state.rootName, text, dbID, this.selectLbl, tagMod, 'Client');
+                        let clientLabel = React_Custom.NavLbl(ClientIndex, rootName, text, dbID, selectLbl, tagMod, 'Client', isSelected);
 
                         //if pointer establish extra class name for highlighting
                         if (isPointer) {
                             tagMod = '-pointer';
                             //overwrite
-                            clientLabel = this.NavLbl(ClientIndex, this.state.rootName, text, dbID, this.selectLbl, tagMod, 'Client');
+                            clientLabel = React_Custom.NavLbl(ClientIndex, rootName, text, dbID, selectLbl, tagMod, 'Client', isSelected);
                             //establish root label
-                            const inquiryLabels = this.getInquiryLabels();
+                            const inquiryLabels = getInquiryLabels(props.clients[ClientIndex]);
                             
-                            returnData.push(this.ExpandedNavTree(this.state.rootName, clientLabel, inquiryLabels));
+                            returnData.push(React_Custom.ExpandedNavTree(rootName, clientLabel, inquiryLabels));
                         } else {
                             returnData.push(clientLabel);
                         }
@@ -74,7 +70,7 @@ export default class ClientDirectory extends ReactComponent_Custom {
 
 
 
-    testQuery(dataObj, query){
+    const testQuery = (dataObj, query) => {
         if(dataObj){
             for(const [key, value] of Object.entries(dataObj)){
                 if(value !== '' & typeof value === 'string'){
@@ -90,10 +86,10 @@ export default class ClientDirectory extends ReactComponent_Custom {
         return false;
     }
 
-    getInquiryLabels() {
+    const getInquiryLabels = (client) => {
         const inquiryLabels = [];
-        const relatedInquiries = this.props.relatedInquiries;
-        const selectedInquiry = this.props.selectedInquiry;
+        const relatedInquiries = React_Custom.getRelatedInquiries(client, props.inquiries);
+        const selectedInquiry = props.selectedInquiry;
 
         if (relatedInquiries) {
             for (let riIndex = 0; riIndex < relatedInquiries.length; riIndex++) {
@@ -109,7 +105,7 @@ export default class ClientDirectory extends ReactComponent_Custom {
                     tagMod = '-pointer';
                 }
 
-                const newLabel = this.NavLbl(key, this.state.rootName + '-nested', text, dbID, this.selectLbl, tagMod, 'Inquiry');
+                const newLabel = React_Custom.NavLbl(key, rootName + '-nested', text, dbID, selectLbl, tagMod, 'Inquiry');
 
                 inquiryLabels.push(newLabel);
             }
@@ -117,11 +113,11 @@ export default class ClientDirectory extends ReactComponent_Custom {
         return inquiryLabels;
     }
 
-    render(){
-        return (
-            <div className="NavPane-content">
-                {this.getClientAccessors()}
-            </div>
-        )
-    }
+    return (
+        <div className="NavPane-content">
+            {getClientAccessors()}
+        </div>
+    )
 }
+
+export default ClientDirectory;

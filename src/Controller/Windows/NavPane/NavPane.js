@@ -1,60 +1,57 @@
-import React from 'react';
-import ReactComponent_Custom from '../../../CustomLibrary/ReactComponent_Custom.js';
+import React, { useState } from 'react';
+import React_Custom from '../../../CustomLibrary/ReactComponent_Custom.js';
 import './NavPane.css';
 import ClientDirectory from '../../../Directories/ClientDirectory';
 import CC from '../../../CustomLibrary/Object_Custom.js';
 import Client from '../../Definitions/client.js';
 
 
-export default class NavPane extends ReactComponent_Custom {
-    
-    constructor(props){
-        super(props);
-        this.state = {
-            rootName: 'NavPane',
-            isSearching: false,
-            searchQuery: '',
-        }
-
-        this.customBinds();
-
-        this.createClient = this.createClient.bind(this);
-        this.selectClient = this.selectClient(this);
-        this.removeClient = this.removeClient.bind(this);
-        this.SearchChange = this.SearchChange.bind(this);
+const NavPane = (props) => {
+    const [rootName, ] = useState('NavPane');
+    let [isSearching, setIsSearching] = useState(false);
+    let [searchQuery, setSearchQuery] = useState('');
 
 
-        this.buttonReqs = {
-            'CreateClient': new CC.ButtonReq('CreateClient', 'Create Client', this.createClient),
-            'RemoveClient': new CC.ButtonReq('RemoveClient', 'Remove Client', this.removeClient),
-        }
+    const selectClient = (id) => {
+        props.setViewingClient(true);
+        props.setSelectedClient(id);
     }
 
-    createClient(e){
+    const createClient = (e) => {
         let newClient = new Client();
-        this.dbInsertEntry('clients', newClient, this.selectClient);
-    }
-
-    selectClient(id){
-        this.stateHandler('viewingClient', true);
-        setTimeout(() => {
-            this.stateHandler('selectedClient', id);
-        }, 0);
+        React_Custom.dbInsertEntry('clients', newClient, selectClient);
     }
     
-    removeClient(e){ 
-        if(this.props.selectedClient !== ""){
-            const selectedClient = this.props.selectedClient;
-            this.stateHandler('selectedClient', "");
-            this.dbRemoveEntry('clients', selectedClient);
+    const removeClient = (e) => { 
+        if(props.selectedClient !== ""){
+            const selectedClientCache = this.props.selectedClient;
+            props.setSelectedClient("");
+            React_Custom.dbRemoveEntry('clients', selectedClientCache);
         }
     }
 
-    getButtons(buttonReqs){
+    const SearchChange = (e) => {
+        setIsSearching((e.target.value === '') ? false : true );
+        setSearchQuery(e.target.value);
+    }
+
+    const getSearchBar = () => {
+        const className = rootName + '-searchbar';
+
+        return (
+            <div className={className}>
+                <div className={className + "-line"}>
+                    <input className={className + '-input'} id='seachbarInput' defaultValue='Search' onChange={SearchChange}></input>
+                </div>
+            </div>
+        )
+    }
+
+    const getButtons = (buttonReqs) =>{
         const rItems = [];
         let i = 0;
         for(const [key, ButtonReq] of Object.entries(buttonReqs)){
-            const btn = this.ReactButton(ButtonReq, this.state.rootName, this.state.rootName + '-button-' + i);
+            const btn = React_Custom.ReactButton(ButtonReq, rootName, rootName + '-button-' + i);
             rItems.push(btn)
             i++;
         }
@@ -66,59 +63,41 @@ export default class NavPane extends ReactComponent_Custom {
         );
     }
 
-    SearchChange(e){
-        this.stateHandler('isSearching', ((e.target.value === '') ? false : true ));
-        
-        setTimeout(() => {
-            this.stateHandler('searchQuery', e.target.value);
-        }, 0);
-    }
+    const getContent = () => {
+        return(
+            <ClientDirectory 
+                clients = {props.clients}
+                setSelectedClient = {props.setSelectedClient}
+                selectedClient = {props.selectedClient}
 
-
-    getSearchBar(){
-        const className = this.state.rootName + '-searchbar';
-
-        return (
-            <div className={className}>
-                <div className={className + "-line"}>
-                    <input className={className + '-input'} id='seachbarInput' defaultValue='Search' onChange={this.SearchChange}></input>
-                </div>
-            </div>
+                inquiries = {props.inquiries}
+                setSelectedInquiry = {props.setSelectedInquiry}
+                selectedInquiry = {props.selectedInquiry}
+                
+                
+                isSearching = {isSearching}
+                searchQuery = {searchQuery}
+            />
         )
     }
 
-
-    getContent(){
-            return(
-                <ClientDirectory 
-                    clients = {this.props.clients}
-                    selectedClient = {this.props.selectedClient}
-
-                    
-                    selectedInquiry = {this.props.selectedInquiry}
-                    relatedInquiries = {this.getRelatedInquiries()}
-
-                    stateHandler = {this.stateHandler}
-                    
-                    
-                    isSearching = {this.state.isSearching}
-                    searchQuery = {this.state.searchQuery}
-                />
-            )
+    const buttonReqs = {
+        'CreateClient': new CC.ButtonReq('CreateClient', 'Create Client', createClient),
+        'RemoveClient': new CC.ButtonReq('RemoveClient', 'Remove Client', removeClient),
     }
-
-
-    render(){   
-        return (
-            <div className="App-Window NavPane">
-                {this.WindowControlBar("Client Directory")}
-                <div className="NavPane-header">
-                    {this.getSearchBar()}
-                    {this.getButtons(this.buttonReqs)}
-                </div>
-                {this.Divider()}
-                {this.getContent()}
+  
+    return (
+        <div className="App-Window NavPane">
+            {React_Custom.WindowControlBar("Client Directory")}
+            <div className="NavPane-header">
+                {getSearchBar()}
+                {getButtons(buttonReqs)}
             </div>
-        )
-    }
+            {React_Custom.Divider()}
+            {getContent()}
+        </div>
+    )
+
 }
+
+export default NavPane;
