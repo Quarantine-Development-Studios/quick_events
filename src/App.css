@@ -10,7 +10,7 @@
 }
 
 .App-divider {
-  display: block;
+  display: flex;
   align-self: center;
 
   margin: 5px;

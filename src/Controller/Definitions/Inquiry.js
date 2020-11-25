@@ -9,9 +9,9 @@ export default class Inquiry {
             eventTitle: "",
             eventDate: "",
             room: "",
-            startTime: "",
+            startTime: "12:00",
             guestCount: "",
-            stopTime: "",            
+            stopTime: "15:00",            
 
             company: "",
             
@@ -37,7 +37,6 @@ export default class Inquiry {
             name: client.name,
             email: client.email,
             phone: client.phone,
-            dateRecieved: new Date().toDateString(),
             eventTitle: 'New Event'
         }
         return new Inquiry(dataObj);

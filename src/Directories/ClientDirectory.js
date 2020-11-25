@@ -4,15 +4,19 @@ import React_Custom from '../CustomLibrary/ReactComponent_Custom.js';
 
 const ClientDirectory = (props) => {
 
-        const [rootName, ] = useState('ClientDirectory');
+    const rootName = 'ClientDirectory';
     
 
     const selectLbl = (event) => {
         let pointer = event.target.attributes['callbackpointer'].value;
         const targetID = event.target.attributes['data-key'].value;
+        
         let value = ((props['selected' + pointer] !== targetID) ? targetID : "");
 
         props['setSelected' + pointer](value);
+        if(pointer === 'Client'){
+            props['setSelectedInquiry']('')
+        }
     }
 
     const isSelected = (event) => {

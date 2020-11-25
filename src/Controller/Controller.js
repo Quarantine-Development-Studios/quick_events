@@ -37,7 +37,6 @@ const Controller = () => {
         }
     }
 
-    console.log('Controller');
     return (
         <AuthContext.Provider value={{isLoggedIn, setLoggedIn }}>
             <div className="App">

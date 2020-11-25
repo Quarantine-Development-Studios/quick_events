@@ -24,7 +24,17 @@ const NavPane = (props) => {
     
     const removeClient = (e) => { 
         if(props.selectedClient !== ""){
-            const selectedClientCache = this.props.selectedClient;
+            console.log('attempting to remove Client')
+
+            const client = React_Custom.getEntry(props.clients, props.selectedClient)
+            if(client.inquiries){
+                for(let i = 0; i < client.inquiries.length; i++){
+                    console.log('removing inquiry: ' + client.inquiries[i])
+                    React_Custom.dbRemoveEntry('inquiries', client.inquiries[i])
+                }
+            }
+
+            const selectedClientCache = props.selectedClient;
             props.setSelectedClient("");
             React_Custom.dbRemoveEntry('clients', selectedClientCache);
         }

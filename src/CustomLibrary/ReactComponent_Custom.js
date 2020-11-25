@@ -13,6 +13,66 @@ const React_Custom = {
         );
     },
 
+    ReactDresser: (rootName, title, drawers) => {
+        if(drawers){
+            return (
+                <div className={rootName + "-dresser"}>
+                    <label className="InquiryPane-header">{title}:</label>
+                    {drawers}
+                </div>
+            )
+        }
+    },
+
+    ReactDrawer: (rootName, labelName, contentFields, isExpanded, callback, callbackPointer) => {
+        if(!isExpanded){
+            return (
+                <div className={rootName + "-drawer"}>
+                    <label className={rootName + "-drawer-label"}>{labelName}</label>
+                    <button className={rootName + "-drawer-expandBtn"} callbackpointer={callbackPointer}>+</button>
+                </div>
+            )
+        } else {
+            return (
+                <div className={rootName + "-drawer"}>
+                    <div className={rootName + "-drawer-header"}>
+                        <label className={rootName + "-drawer-label"}>{labelName}</label>
+                        <button className={rootName + "-drawer-expandBtn"} callbackpointer={callbackPointer}>-</button>
+                    </div>
+                    <div className={rootName + "-drawerContents"}>
+                        {contentFields}
+                    </div>
+                </div>
+            )
+        }
+    },
+
+    InfoField: (id, rootName, value, callback, callbackPointer, type) => {
+        const inputType = (type) ? type : '';
+
+        return (
+            <div className={rootName + "-field"} key={id}>
+                <label className={rootName + "-field-label content-label"} key={'lbl-' + id}>{id}: </label>
+                <input className={rootName + '-field-input content-input'} id={rootName + '-' + id} key={'input-' + id} defaultValue={value} onBlur={callback} callbackpointer={callbackPointer} type={inputType}></input>
+            </div>
+        )
+    },
+
+    getButtons: (buttonReqs, rootName) => {
+        const rItems = [];
+        let i = 0;
+        for(const [ , ButtonReq] of Object.entries(buttonReqs)){
+            const btn = React_Custom.ReactButton(ButtonReq, rootName, rootName + '-button-' + i);
+            rItems.push(btn)
+            i++;
+        }
+
+        return (
+            <div className="App-header-menu">
+                {rItems}
+            </div>   
+        );
+    },
     //#endregion
     
 
@@ -42,6 +102,8 @@ const React_Custom = {
     },
 
     dbRemoveEntry: (dbID, entryID) => {
+        console.log('removing client')
+        //remove root client
         if(dbID && entryID){
             firebase.firestore().collection(dbID).doc(entryID).delete();
         } else {
@@ -132,16 +194,7 @@ const React_Custom = {
         event.target.className.concat('-pointer');
     },
 
-    InfoField: (id, rootName, value, callback, callbackPointer, type) => {
-        const inputType = (type) ? type : '';
 
-        return (
-            <div className={rootName + "-field"} key={id}>
-                <label className={rootName + "-field-label content-label"} key={'lbl-' + id}>{id}: </label>
-                <input className={rootName + '-field-input content-input'} id={rootName + '-' + id} key={'input-' + id} defaultValue={value} onBlur={callback} callbackpointer={callbackPointer} type={inputType}></input>
-            </div>
-        )
-    },
 
     WindowControlBar: (WindowTitle, closingCallback) => {
         return(

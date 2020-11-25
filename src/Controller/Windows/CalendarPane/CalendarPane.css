@@ -1,0 +1,35 @@
+
+.CalendarPane{
+}
+
+.cs1 {
+    height: auto;
+    margin: 10px;
+
+    min-height: 29%;;
+}
+
+.CalendarPane-basicCalendar-container {
+    margin: 2px;
+    border-color: khaki;
+    border-style: solid;
+    border-width: 3px;
+
+}
+
+.CalendarPane-calTable {
+    width: 100%;
+
+}
+
+.calTable-monthLbl {
+    text-align: center !important;
+}
+
+.tableRow {
+    text-align: center;
+}
+
+.cal-popup-disp-item {
+    margin-left: 5px !important;
+}

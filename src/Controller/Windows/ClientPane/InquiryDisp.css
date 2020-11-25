@@ -2,35 +2,64 @@
 
     background-color: rgba(176, 196, 222, 0.344) !important;
 
-    border-style: ridge;
-
     margin: 10px;
     padding: 1px;
 }
+.InquiryPane-header {
+font-weight: bold;
+}
 
-.InquiryPane-content {
+
+.InquiryPane-entry-drawer-header {
+    margin-bottom: 10px;
+}
+
+.InquiryPane-entry-drawer {
+    border-style: ridge;
+
     flex: auto;
+    min-height: 26px;
+    text-align: left;
+    padding-left: 10px;
     flex-direction: column;
     order:2;
     margin: 10px;
 }
 
+.InquiryPane-entry-drawerContents {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.InquiryPane-entry-drawer-label {
+    font-weight: bold;
+}
+
+.InquiryPane-entry-drawer-expandBtn {
+    float: right;
+    margin: 3px;
+    max-height: 20px;
+}
+
 .InquiryPane-field {
-    display: inline-block;
-    flex: auto;
-    flex-direction: row;
+    display: block;
+    flex-grow: 1;
+    max-width: 300px;
 
     margin-left: 10px;
     margin-bottom: 5px;
 }
 
 .InquiryPane-field-label {
-    font-weight: bold;
-    max-width: 60px;
+    font-weight: normal;
 }
 
 .InquiryPane-field-input {
     display: block;
-    margin-left: 20px;
-    max-width: 150px;
+    margin-left: 10px;
+    width: 150px;
+    float: right;
+
+    background-color: rgba(237, 247, 191, 0.35) !important;
 }
