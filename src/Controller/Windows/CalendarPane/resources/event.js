@@ -22,6 +22,20 @@ const event = (inquiry_ID, title, startDate_Time, stopDate_Time, status) => {
             }
         }
 
+        const color = () => {
+            switch(status) {
+                case 'lead':
+                    return 'yellow';
+                case 'outforsign':
+                    return 'blue';
+                case 'booked':
+                    return 'green';
+                case 'hosted':
+                    return 'pink';
+                default:
+                    return '';
+            }
+        }
 
         return{
             id: inquiry_ID,
@@ -34,7 +48,10 @@ const event = (inquiry_ID, title, startDate_Time, stopDate_Time, status) => {
             end: (stopDate_Time)    
                 ? stopDate_Time  : cAlert("needs a valid stop Date"),
             
-            resourceId: resourceId()
+            resourceId: resourceId(), 
+            color: color(),
+            textColor: 'black',
+            borderColor: 'black',
         }
     }   
 

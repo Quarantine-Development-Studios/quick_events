@@ -13,6 +13,7 @@ export const resources = [
         title: 'Leads',
         eventColor: 'yellow',
         eventTextColor: 'black',
+        eventBorderColor: 'black',
         tOrder: 1,
     },
     {
@@ -20,6 +21,7 @@ export const resources = [
         title: 'Out For Sign',
         eventColor: 'blue',
         eventTextColor: 'black',
+        eventBorderColor: 'black',
         tOrder: 2,
     },
     {
