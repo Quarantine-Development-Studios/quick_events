@@ -6,6 +6,7 @@ export default class Inquiry {
             email: "",
             phone: "",
 
+            address: "",
             eventTitle: "",
             eventDate: "",
             room: "",

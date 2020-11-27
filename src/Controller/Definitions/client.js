@@ -5,7 +5,7 @@ export default class Client {
         this.name = (name) ? name : 'New Client';
         this.email = (email) ? email : '';
         this.phone = (phone) ? phone : '';
-        this.inquiries = (inquiryIDArray) ? inquiryIDArray : [];
+        this.testing = "";
 
     }
 
@@ -43,7 +43,6 @@ export default class Client {
             name: this.name,
             email: this.email,
             phone: this.phone,
-
         }
     }
 
