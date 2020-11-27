@@ -53,7 +53,7 @@ const React_Custom = {
         return (
             <div className={rootName + "-field"} key={id}>
                 <label className={rootName + "-field-label content-label"} key={'lbl-' + id}>{id}: </label>
-                <input className={rootName + '-field-input content-input'} id={rootName + '-' + id} key={'input-' + id} defaultValue={value} onBlur={callback} callbackpointer={callbackPointer} type={inputType}></input>
+                <input className={rootName + '-field-input content-input'} id={rootName + '-' + id} key={'input-' + id} value={value} onBlur={callback} callbackpointer={callbackPointer} type={inputType}></input>
             </div>
         )
     },

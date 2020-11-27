@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import React_Custom from '../../../CustomLibrary/ReactComponent_Custom.js';
 import './ClientPane.css';
 import Inquiry from '../../Definitions/Inquiry.js';
@@ -10,8 +10,14 @@ const ClientPane = (props) => {
     console.log('ClientPane Loaded')
     const rootName = 'ClientPane';
 
+    const [client, setClient] = useState(null);
     const [inquiry, setInquiry] = useState(null);
     let inquiryDisp = null;
+
+    useEffect(() => {
+        setClient(props.client)
+    }, [props.client])
+
 
     const setValue = (event) => {
         // console.log('attempting to change db value')
@@ -150,37 +156,39 @@ const ClientPane = (props) => {
         'RemoveInquiry': new CC.ButtonReq('RemoveInquiry', 'Remove Inquiry', removeInquiry)
     }
 
-    if(props.client !== undefined){
-        return (
-            <div className={rootName + " App-Window"}>
-                {React_Custom.WindowControlBar("Client Information")}   
+
+    const tryShowClientInfo = () => {
+        if(client){
+            return (
                 <div className={rootName + "-content"}>
-                    {React_Custom.InfoField('Name', {rootName}, props.client['name'], setValue, 'client')}
-                    {React_Custom.InfoField('Email', {rootName}, props.client['email'], setValue, 'client')}
-                    {React_Custom.InfoField('Phone', {rootName}, props.client['phone'], setValue, 'client')}
+                    {React_Custom.InfoField('Name', {rootName}, client['name'], setValue, 'client')}
+                    {React_Custom.InfoField('Email', {rootName}, client['email'], setValue, 'client')}
+                    {React_Custom.InfoField('Phone', {rootName}, client['phone'], setValue, 'client')}
                     {React_Custom.getButtons(buttonReqs)}
                 </div>
-
-                {React_Custom.Divider()}
-
-                <InquiryDisp 
-                    selectedClient = {props.selectedClient}
-                    client = {props.client}
-
-                    inquiries = {props.inquiries}
-                    selectedInquiry = {props.selectedInquiry}
-                    
-                    setValue = {setValue}
-                />
-            </div>
-        )
-    } else {
-        return (
-            <div className="ClientPane App-Window">
-
-            </div>  
-        )
+            )
+        }
     }
+
+    return (
+        <div className={rootName + " App-Window"}>
+            {React_Custom.WindowControlBar("Client Information")}   
+
+            {tryShowClientInfo()}
+
+            {React_Custom.Divider()}
+
+            <InquiryDisp 
+                selectedClient = {props.selectedClient}
+                client = {props.client}
+
+                inquiries = {props.inquiries}
+                selectedInquiry = {props.selectedInquiry}
+                
+                setValue = {setValue}
+            />
+        </div>
+    )
     
 }
 
