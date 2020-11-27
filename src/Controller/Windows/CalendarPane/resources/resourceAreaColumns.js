@@ -9,16 +9,25 @@ const resourceAreaColumns = [
 
 export const resources = [
     {
-        id: '1_lead',
-        title: 'Leads'
+        id: 'lead',
+        title: 'Leads',
+        eventColor: 'yellow',
+        eventTextColor: 'black',
+        tOrder: 1,
     },
     {
-        id: '2_outforsign',
-        title: 'Out For Sign'
+        id: 'outforsign',
+        title: 'Out For Sign',
+        eventColor: 'blue',
+        eventTextColor: 'black',
+        tOrder: 2,
     },
     {
-        id: '3_booked',
-        title: 'Booked'
+        id: 'booked',
+        title: 'Booked',
+        eventColor: 'green',
+        eventTextColor: 'black',
+        tOrder: 3,
     }
 
 

@@ -38,6 +38,7 @@ const CalendarPane = (props) => {
     }
 
     const handleDateSelect = (selectInfo) => {
+        
         prompt(selectInfo.startStr)
         let calendarApi = selectInfo.view.calendar
 
@@ -45,12 +46,38 @@ const CalendarPane = (props) => {
     }
 
     const handleEvents = (events) => {
+
     }
 
     const  renderEventContent = (eventInfo) => {
+        function addZero(i) {
+            if (i < 10) {
+                i = "0" + i;
+            } else if (i > 12) {
+                i = i - 12;
+            }
+            return i;
+          }
+        
+        
+        const start = eventInfo.event.start; //date object
+        const end = eventInfo.event.end; //date object
+
+        const sHour = addZero(start.getHours());
+        const sMin = addZero(start.getMinutes());
+        const sString = sHour + ':' + sMin
+
+        let eString = '';
+
+        if(end){
+            const eHour = addZero(end.getHours());
+            const eMin  = addZero(end.getMinutes());
+            eString = '-' + eHour + ':' + eMin;
+        }
+
         return (
             <>
-                <b className="cal-popup-disp-time">{eventInfo.timeText}</b>
+                <b className="cal-popup-disp-time">{sString +  eString}</b>
                 <i className="cal-popup-disp-item">{eventInfo.event.title}</i>
             </>
         )
@@ -81,6 +108,7 @@ const CalendarPane = (props) => {
                 selectMirror={true}
                 dayMaxEvents={true}
                 events={events} // alternatively, use the `events` setting to fetch from a feed
+                eventDisplay='list'
                 select={handleDateSelect}
                 eventContent={renderEventContent} // custom render function
     
@@ -104,7 +132,7 @@ const CalendarPane = (props) => {
                 timeZone='UTC'
                 initialView='resourceTimelineDay'
                 aspectRatio= {1.7}
-                slotMinWidth= {20}
+                slotMinWidth= {25}
                 scrollTime='8:00:00'
                 headerToolbar= {{
                     left: 'prev,next',
@@ -113,9 +141,9 @@ const CalendarPane = (props) => {
                 }}
                 editable= {true}
                 resourceAreaColumns={resourceAreaColumns}
+                resourceOrder= 'tOrder'
                 resources={resources}
                 events={events}
-                viewRender={log}
             />
         </div>
     )

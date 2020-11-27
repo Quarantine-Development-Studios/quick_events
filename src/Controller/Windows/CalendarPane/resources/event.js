@@ -10,17 +10,18 @@ const event = (inquiry_ID, title, startDate_Time, stopDate_Time, status) => {
         const resourceId = () => {
             switch(status) {
                 case 'lead':
-                    return '1_lead';
+                    return 'lead';
                 case 'outforsign':
-                    return '2_outforsign';
+                    return 'outforsign';
                 case 'booked':
-                    return '3_booked';
+                    return 'booked';
                 case 'hosted':
-                    return '4_hosted';
+                    return 'hosted';
                 default:
                     return '';
             }
         }
+
 
         return{
             id: inquiry_ID,
@@ -33,7 +34,7 @@ const event = (inquiry_ID, title, startDate_Time, stopDate_Time, status) => {
             end: (stopDate_Time)    
                 ? stopDate_Time  : cAlert("needs a valid stop Date"),
             
-            resourceId: resourceId(),
+            resourceId: resourceId()
         }
     }   
 
