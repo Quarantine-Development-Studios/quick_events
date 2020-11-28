@@ -6,12 +6,12 @@ export default class Inquiry {
             email: "",
             phone: "",
 
-            address: "",
             eventTitle: "",
+            guestCount: "",
             eventDate: "",
             room: "",
+
             startTime: "12:00",
-            guestCount: "",
             stopTime: "15:00",            
 
             company: "",

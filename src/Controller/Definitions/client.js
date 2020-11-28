@@ -2,10 +2,10 @@
 
 export default class Client { 
     constructor(id, name, email, phone, inquiryIDArray){
+        this.id = (id) ? id : '';
         this.name = (name) ? name : 'New Client';
         this.email = (email) ? email : '';
         this.phone = (phone) ? phone : '';
-        this.testing = "";
 
     }
 
@@ -28,7 +28,14 @@ export default class Client {
         this.phone = phone;
     }
     
-
+    static createClientByObj(clientObj){
+        return new Client(
+            clientObj.id,
+            clientObj.name,
+            clientObj.email,
+            clientObj.phone,
+        )
+    }
 
     getInquiries(){
         if(this.inquiries){
@@ -39,11 +46,12 @@ export default class Client {
     }
     
     toJSON(){
-        return {
-            name: this.name,
-            email: this.email,
-            phone: this.phone,
+        const rInfo = {};
+        for(const[key, value] of Object.entries(this)){
+            rInfo[key] = value;
         }
+
+        return rInfo;
     }
 
 }

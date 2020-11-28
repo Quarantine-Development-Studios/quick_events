@@ -9,7 +9,7 @@
     padding: 1px;
 }
 
-.ClientPane-field {
+.ClientInfo-field {
     flex: auto;
     flex-direction: row;
 
@@ -17,13 +17,13 @@
     margin: 10px;
 }
 
-.ClientPane-field-label {
+.ClientInfo-field-label {
     position: relative;
     display: inline-block;
 
 }
 
-.ClientPane-field-input {
+.ClientInfo-field-input {
     position: relative;
     float: right;
 

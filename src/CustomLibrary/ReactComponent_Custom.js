@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import firebase from '../firebase/firebase';
 import WindowCloseImg from '../images/WindowClose.png';
 
@@ -13,47 +13,15 @@ const React_Custom = {
         );
     },
 
-    ReactDresser: (rootName, title, drawers) => {
-        if(drawers){
-            return (
-                <div className={rootName + "-dresser"}>
-                    <label className="InquiryPane-header">{title}:</label>
-                    {drawers}
-                </div>
-            )
-        }
-    },
 
-    ReactDrawer: (rootName, labelName, contentFields, isExpanded, callback, callbackPointer) => {
-        if(!isExpanded){
-            return (
-                <div className={rootName + "-drawer"}>
-                    <label className={rootName + "-drawer-label"}>{labelName}</label>
-                    <button className={rootName + "-drawer-expandBtn"} callbackpointer={callbackPointer}>+</button>
-                </div>
-            )
-        } else {
-            return (
-                <div className={rootName + "-drawer"}>
-                    <div className={rootName + "-drawer-header"}>
-                        <label className={rootName + "-drawer-label"}>{labelName}</label>
-                        <button className={rootName + "-drawer-expandBtn"} callbackpointer={callbackPointer}>-</button>
-                    </div>
-                    <div className={rootName + "-drawerContents"}>
-                        {contentFields}
-                    </div>
-                </div>
-            )
-        }
-    },
 
-    InfoField: (id, rootName, value, callback, callbackPointer, type) => {
+    InfoField: (id, rootName, value, onChangeCB, onBlurCB, callbackPointer, type) => {
         const inputType = (type) ? type : '';
 
         return (
             <div className={rootName + "-field"} key={id}>
                 <label className={rootName + "-field-label content-label"} key={'lbl-' + id}>{id}: </label>
-                <input className={rootName + '-field-input content-input'} id={rootName + '-' + id} key={'input-' + id} value={value} onBlur={callback} callbackpointer={callbackPointer} type={inputType}></input>
+                <input className={rootName + '-field-input content-input'} id={rootName + '-' + id} key={'input-' + id} value={value} onChange={onChangeCB} onBlur={onBlurCB} callbackpointer={callbackPointer} type={inputType}></input>
             </div>
         )
     },
@@ -194,8 +162,6 @@ const React_Custom = {
         event.target.className.concat('-pointer');
     },
 
-
-
     WindowControlBar: (WindowTitle, closingCallback) => {
         return(
             <div className="control-Bar">
@@ -214,5 +180,146 @@ const React_Custom = {
     }
     //#endregion
 }
+
+
+/**
+ * Generates Custom Label & Input Field Combo as small react component to handle data inputs
+ * 
+ * Accepts Options in props:
+ * rootName
+ * labelText
+ * onSubmit: called when user has released focus on target input field
+ * callbackPointer: property for onSubmit to reference
+ * inputType: for setting input type to 'date' or 'time' fields for example
+ * value: if you have a default value to set input field too. Good for loading in information you already have
+ * 
+ * @param {*} props 
+ */
+
+export const ReactField = (props) => {
+    const [value, setValue] = useState(props.value);
+
+    const rootName = (props.rootName) ? props.rootName : 'ReactField';
+    const labelText = (props.labelText) ? props.labelText : 'Unset Label'
+    const onSubmit = (props.onSubmit) ? props.onSubmit : () => {};
+    const callbackPointer = (props.callbackPointer) ? props.callbackPointer : '';
+    const inputType = (props.inputType) ? props.inputType : '';
+
+    useEffect(() =>{
+        setValue(props.value)
+    }, [props.value])
+
+    const onChangeCB = (e) => {
+        setValue(e.target.value)
+    }   
+
+    return (
+        <div className={rootName + "-field"} key={labelText}>
+            <label 
+                className={rootName + "-field-label content-label"} 
+                key={rootName + '-lbl-' + labelText}
+            >
+                {labelText}: 
+            </label>
+
+            <input 
+                className={rootName + '-field-input content-input'} 
+                key={rootName + '-input-' + labelText}
+                id={rootName + '-' + labelText}
+                value={value} 
+                onChange={onChangeCB} 
+                onBlur={onSubmit} 
+                callbackpointer={callbackPointer} 
+                type={inputType}
+            >
+
+            </input>
+        </div>
+    )
+}
+
+
+
+
+/**
+ * Generates Custom ReactDrawer
+ * 
+ * Accepts Options in props:
+ * 
+ * @constant rootName
+ * @constant labelText: for DrawerTitle
+ * @constant isExpanded: live feed for expanded state
+ * @constant onExpand: callback when expand button is pressed
+ * @constant callbackPointer: property for onExpand to identify with
+ * @constant contentHtml: html
+ * @constant drawerNumber: key number
+ * @param {*} props 
+ */
+
+export const ReactDrawer = (props) => {
+    const [isExpanded, setIsExpanded] = 
+        useState((props.isExpanded) ? props.isExpanded : false);
+
+    const rootName = (props.rootName) ? props.rootName : 'ReactDrawer';
+    const labelText = (props.labelText) ? props.labelText : 'Unset Label'
+    const onExpand = (props.onExpand) ? props.onExpand : () => {};
+    const callbackPointer = (props.callbackPointer) ? props.callbackPointer : '';
+    const contentHtml = (props.contentHtml) ? props.contentHtml : [];
+    const drawerNumber = (props.drawerNumber) ? props.drawerNumber : '0';
+
+    useEffect(() =>{
+        setIsExpanded(props.isExpanded)
+    }, [props.isExpanded])
+
+    if(!isExpanded){
+        return (
+            <div className={rootName + "-drawer"} key={rootName + '-' + drawerNumber}>
+                <label className={rootName + "-drawer-label"}>{labelText}</label>
+                <button className={rootName + "-drawer-expandBtn"} callbackpointer={callbackPointer} onClick={onExpand}>+</button>
+            </div>
+        )
+    } else {
+        return (
+            <div className={rootName + "-drawer"} key={rootName + '-' + drawerNumber}>
+                <div className={rootName + "-drawer-header"}>
+                    <label className={rootName + "-drawer-label"}>{labelText}</label>
+                    <button className={rootName + "-drawer-expandBtn"} callbackpointer={callbackPointer} onClick={onExpand}>-</button>
+                </div>
+                <div className={rootName + "-drawerContents"}>
+                    {contentHtml}
+                </div>
+            </div>
+        )
+    }
+}
+
+
+
+/**
+ * Generates Custom ReactDresser
+ * 
+ * Accepts Options in props:
+ * rootName
+ * title: title of the collection of drawers
+ * drawers: actual array of html drawers
+ * 
+ * @param {*} props 
+ */
+export const ReactDresser = (props) => {
+    const rootName = (props.rootName) ? props.rootName : 'ReactDresser';
+    const title = (props.title) ? props.title : 'React Dresser';
+    const drawers = (props.drawers) ? props.drawers : null;
+
+    if(drawers){
+        return (
+            <div className={rootName + "-dresser"}>
+                <label className={rootName + "-header"}>{title}:</label>
+                {drawers}
+            </div>
+        )
+    }
+}
+
+
 
 export default React_Custom;

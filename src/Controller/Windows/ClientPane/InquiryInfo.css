@@ -1,20 +1,20 @@
-.InquiryPane {
+.InquiryInfo {
 
     background-color: rgba(176, 196, 222, 0.344) !important;
 
     margin: 10px;
     padding: 1px;
 }
-.InquiryPane-header {
+.InquiryInfo-header {
 font-weight: bold;
 }
 
 
-.InquiryPane-entry-drawer-header {
+.InquiryInfo-entry-drawer-header {
     margin-bottom: 10px;
 }
 
-.InquiryPane-entry-drawer {
+.InquiryInfo-drawer {
     border-style: ridge;
 
     flex: auto;
@@ -26,23 +26,23 @@ font-weight: bold;
     margin: 10px;
 }
 
-.InquiryPane-entry-drawerContents {
+.InquiryInfo-drawerContents {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
 }
 
-.InquiryPane-entry-drawer-label {
+.InquiryInfo-drawer-label {
     font-weight: bold;
 }
 
-.InquiryPane-entry-drawer-expandBtn {
+.InquiryInfo-drawer-expandBtn {
     float: right;
     margin: 3px;
     max-height: 20px;
 }
 
-.InquiryPane-field {
+.InquiryInfo-field {
     display: block;
     flex-grow: 1;
     max-width: 300px;
@@ -51,11 +51,11 @@ font-weight: bold;
     margin-bottom: 5px;
 }
 
-.InquiryPane-field-label {
+.InquiryInfo-field-label {
     font-weight: normal;
 }
 
-.InquiryPane-field-input {
+.InquiryInfo-field-input {
     display: block;
     margin-left: 10px;
     width: 150px;
