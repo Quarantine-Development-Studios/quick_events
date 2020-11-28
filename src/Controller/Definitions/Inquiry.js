@@ -54,7 +54,7 @@ export default class Inquiry {
     }
     
 
-    
+     
     toJSON(){
         const rInfo = {};
         for(const[key, value] of Object.entries(this.basicInfo)){
