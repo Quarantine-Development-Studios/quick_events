@@ -132,13 +132,19 @@ const InquiryInfo = (props) => {
         }
     }
 
+
     useEffect(() => {
-        if(props.inquiries && props.client && props.client.inquiries) {
+        if(props.inquiries 
+            && props.client 
+            && props.client.inquiries
+            ) {
             const relatedInquiries = filterRelatedInquiries(props.inquiries, props.client.inquiries, 'id');
             const dresser = buildDresser(relatedInquiries);
             setDisplayActual(dresser);
+        } else {
+            setDisplayActual(null)
         }
-    }, [props.selectedInquiry])
+    }, [props.selectedInquiry, props.client])
 
 
 
