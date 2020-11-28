@@ -1,4 +1,5 @@
 .ClientPane {
+    position: relative;
 }
 .ClientPane-content {
     background-color: rgba(217, 221, 136, 0.75) !important;

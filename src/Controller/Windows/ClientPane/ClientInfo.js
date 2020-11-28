@@ -7,23 +7,19 @@ const ClientInfo = (props) => {
 
     const [displayActual, setDisplayActual] = useState(null);
 
-    useEffect(() => {
-        setDisplayActual(null);
-    }, [props.client])
-
-
-    const updateDB = (e) => {
-        console.log(e)
-
-        const fieldKey = e.target.attributes['callbackpointer'].value;
-
-        React_Custom.dbSetValue('clients', props.selectedClient, fieldKey, e.target.value)
-        React_Custom.dbUpdateLinkedInquiries(props.client, fieldKey, e.target.value);
-    }
     
-    if(!displayActual){
+    useEffect(() => {
         const newDisplayActual = [];
         const client = Client.createClientByObj(props.client)
+
+        const updateDB = (e) => {
+            console.log(e)
+    
+            const fieldKey = e.target.attributes['callbackpointer'].value;
+    
+            React_Custom.dbSetValue('clients', props.selectedClient, fieldKey, e.target.value)
+            React_Custom.dbUpdateLinkedInquiries(props.client, fieldKey, e.target.value);
+        }
 
         for(const [key, value] of Object.entries(client.toJSON())){
             let inputType = '';
@@ -49,7 +45,7 @@ const ClientInfo = (props) => {
         }
         
         setDisplayActual(newDisplayActual);
-    }
+    }, [props])
 
 
     return (

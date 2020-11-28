@@ -207,14 +207,14 @@ export const ReactField = (props) => {
 
     useEffect(() =>{
         setValue(props.value)
-    }, [props.value])
+    }, [props])
 
     const onChangeCB = (e) => {
         setValue(e.target.value)
     }   
-
+    
     return (
-        <div className={rootName + "-field"} key={labelText}>
+        <div className={rootName + "-field"} key={rootName + '-' + labelText}>
             <label 
                 className={rootName + "-field-label content-label"} 
                 key={rootName + '-lbl-' + labelText}
@@ -269,7 +269,7 @@ export const ReactDrawer = (props) => {
 
     useEffect(() =>{
         setIsExpanded(props.isExpanded)
-    }, [props.isExpanded])
+    }, [props])
 
     if(!isExpanded){
         return (

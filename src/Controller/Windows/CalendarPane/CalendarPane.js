@@ -1,6 +1,6 @@
-import React, { useEffect, useState, forceUpdate} from 'react';
+import React from 'react';
 import React_Custom from '../../../CustomLibrary/ReactComponent_Custom.js';
-import FullCalendar, { formatDate } from '@fullcalendar/react';
+import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -84,12 +84,6 @@ const CalendarPane = (props) => {
     }
 
     //#endregion
-
-    //checks if: calendar is not generated; inquiries provided and if there is propagated inquiries
-
-    const log = (msg) => {
-        console.log(msg)
-    }
 
     events = generateCalendarEvents(props.inquiries);
 
