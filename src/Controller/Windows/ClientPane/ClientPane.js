@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import React_Custom from '../../../CustomLibrary/ReactComponent_Custom.js';
 import './ClientPane.css';
-import Inquiry from '../../Definitions/inquiry.js';
+import {Inquiry} from '../../Definitions/inquiry.js';
 import CC from '../../../CustomLibrary/Object_Custom.js';
 import InquiryInfo from './InquiryInfo.js';
 import ClientInfo from './ClientInfo.js';

@@ -1,5 +1,5 @@
 
-export default class Inquiry { 
+export class Inquiry { 
     constructor(dataObj){
         this.basicInfo = {
             name: "",
