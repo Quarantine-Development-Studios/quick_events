@@ -1,5 +1,5 @@
 
-export class Inquiry { 
+class Inquiry { 
     constructor(dataObj){
         this.basicInfo = {
             name: "",
@@ -64,3 +64,5 @@ export class Inquiry {
         return rInfo;
     }
 }
+
+export default Inquiry;
