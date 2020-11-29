@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import React_Custom, {ReactField} from '../../../CustomLibrary/ReactComponent_Custom.js';
-import Client from '../../Definitions/client.js'
+import React_Custom, {ReactField, Definitions} from '../../../CustomLibrary/ReactComponent_Custom.js';
 
 const ClientInfo = (props) => {
     const rootName = 'ClientInfo'
@@ -10,7 +9,7 @@ const ClientInfo = (props) => {
     
     useEffect(() => {
         const newDisplayActual = [];
-        const client = Client.createClientByObj(props.client)
+        const client = Definitions.Client.createClientByObj(props.client)
 
         const updateDB = (e) => {
             console.log(e)

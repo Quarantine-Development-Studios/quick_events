@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import React_Custom from '../../../CustomLibrary/ReactComponent_Custom.js';
+import React_Custom, { Definitions }from '../../../CustomLibrary/ReactComponent_Custom.js';
 import './NavPane.css';
 import ClientDirectory from '../../../Directories/ClientDirectory';
 import CC from '../../../CustomLibrary/Object_Custom.js';
-import Client from '../../Definitions/client.js';
 
 
 const NavPane = (props) => {
@@ -18,7 +17,7 @@ const NavPane = (props) => {
     }
 
     const createClient = (e) => {
-        let newClient = new Client();
+        let newClient = new Definitions.Client();
         React_Custom.dbInsertEntry('clients', newClient, selectClient);
     }
     

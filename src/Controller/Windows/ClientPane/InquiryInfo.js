@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import React_Custom, {ReactDresser, ReactDrawer, ReactField} from '../../../CustomLibrary/ReactComponent_Custom.js';
-import Inquiry from '../../Definitions/inquiry.js'
+import React_Custom, {ReactDresser, ReactDrawer, ReactField, Definitions} from '../../../CustomLibrary/ReactComponent_Custom.js';
 import './InquiryInfo.css';
 
 const InquiryInfo = (props) => {
@@ -57,7 +56,7 @@ const InquiryInfo = (props) => {
             }
             const getInquiryFields = (inquiry) => {
                 const reactFields = [];
-                const _inquiry = new Inquiry(inquiry);
+                const _inquiry = new Definitions.Inquiry(inquiry);
         
                 for(const [key, value] of Object.entries(_inquiry.toJSON())){
                     let inputType = '';

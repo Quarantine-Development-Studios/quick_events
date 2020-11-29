@@ -7,7 +7,6 @@ import CalendarPane from '../Windows/CalendarPane/CalendarPane.js';
 
 import rxInquiries from '../../firebase/rxInquiries.js';
 import rxClients from '../../firebase/rxClients';
-import Event from '../Windows/CalendarPane/resources/event.js'
 
 export const ViewingContext = React.createContext(null);
 
@@ -15,7 +14,6 @@ const ContentPane = (props) => {
     let [client, setClient] = useState(null);
     let [clients, setClients] = useState([]);
 
-    let [inquiry, setInquiry] = useState(null);
     let [inquiries, setInquiries] = useState([]);
 
     let [viewingNavigation, setViewingNavigation] = useState(true);
@@ -26,7 +24,6 @@ const ContentPane = (props) => {
     let [selectedInquiry, setSelectedInquiry] = useState("");
     let [viewingInquiry, setViewingInquiry] = useState(true);
 
-    const content = [];
                 
     //subscribe to database
     useEffect(() => {
