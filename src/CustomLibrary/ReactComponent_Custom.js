@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import firebase from '../firebase/firebase';
 import WindowCloseImg from '../images/WindowClose.png';
-
+import cClient from './Definitions/client';
+import cInquiry from './Definitions/inquiry';
+import cEvent from './Definitions/event';
 
 const React_Custom = {
     //#region completed
@@ -181,6 +183,11 @@ const React_Custom = {
     //#endregion
 }
 
+export const Definitions = {
+    Client: cClient,
+    Inquiry: cInquiry,
+    Event: cEvent
+}
 
 /**
  * Generates Custom Label & Input Field Combo as small react component to handle data inputs
@@ -238,9 +245,6 @@ export const ReactField = (props) => {
     )
 }
 
-
-
-
 /**
  * Generates Custom ReactDrawer
  * 
@@ -292,8 +296,6 @@ export const ReactDrawer = (props) => {
         )
     }
 }
-
-
 
 /**
  * Generates Custom ReactDresser

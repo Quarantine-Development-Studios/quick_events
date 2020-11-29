@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "homepage": ".",
-  "engines" : { 
-    "node" : "14.13.0" 
-    },
+  "engines": {
+    "node": "14.13.0"
+  },
   "dependencies": {
     "@fullcalendar/core": "^5.4.0",
     "@fullcalendar/daygrid": "^5.4.0",

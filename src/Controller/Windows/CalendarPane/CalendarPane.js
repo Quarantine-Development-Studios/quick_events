@@ -1,12 +1,11 @@
 import React from 'react';
-import React_Custom from '../../../CustomLibrary/ReactComponent_Custom.js';
+import React_Custom, { Definitions } from '../../../CustomLibrary/ReactComponent_Custom.js';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
 import resourceAreaColumns, {resources} from './resources/resourceAreaColumns.js'
-import Event from './resources/event.js';
 import './CalendarPane.css';
 
 const CalendarPane = (props) => {    
@@ -25,7 +24,7 @@ const CalendarPane = (props) => {
                     const startDate = target.eventDate + 'T' + target.startTime + ':00';
                     const stopDate = target.eventDate + 'T' + target.stopTime + ':00';
 
-                    events.push(Event(target.id, target.eventTitle, startDate, stopDate, 'lead'))
+                    events.push(Definitions.Event(target.id, target.eventTitle, startDate, stopDate, 'lead'))
                 }
             }
         }

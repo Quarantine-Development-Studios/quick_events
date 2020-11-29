@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import React_Custom from '../../../CustomLibrary/ReactComponent_Custom.js';
+import React_Custom, { Definitions } from '../../../CustomLibrary/ReactComponent_Custom.js';
 import './ClientPane.css';
-import Inquiry from '../../Definitions/inquiry.js';
 import CC from '../../../CustomLibrary/Object_Custom.js';
 import InquiryInfo from './InquiryInfo.js';
 import ClientInfo from './ClientInfo.js';
@@ -14,7 +13,7 @@ const ClientPane = (props) => {
     const [inquiry, setInquiry] = useState(null);
 
 
-
+    
 
     let inquiryDisp = null;
 
@@ -96,7 +95,7 @@ const ClientPane = (props) => {
 
     //#region Inquiry Handling
     const createInquiry = (e) => {
-        let newInquiry = Inquiry.createInquiryByClient(props.client);
+        let newInquiry = Definitions.Inquiry.createInquiryByClient(props.client);
         React_Custom.dbInsertEntry('inquiries', newInquiry, linkInquiry)
     }
 
