@@ -27,7 +27,7 @@ const ContentPane = (props) => {
                 
     //subscribe to database
     useEffect(() => {
-        console.log('Subscribing to databases in ContentPane')
+        console.log('Subscribing to databases')
         rxInquiries.subscribe((inquiries) => {
             setInquiries(inquiries)
 

@@ -23,7 +23,6 @@ const ClientPane = (props) => {
 
 
     const setValue = (event) => {
-        // console.log('attempting to change db value')
         const cbPointer = event.target.attributes['callbackpointer'].value;
         const value = event.target.value;
 
@@ -51,9 +50,7 @@ const ClientPane = (props) => {
         fieldKey = fieldKey[0].toLowerCase() + fieldKey.slice(1);
         fieldKey = fieldKey.replace(' ', '');
 
-        console.log('setValue')
         if(dbRootKey && dbKey && fieldKey){
-            console.log({dbRootKey, dbKey, fieldKey, value})
             //lock name, email and phone to linked inquiries
             if(fieldKey === 'name' || fieldKey === 'email' || fieldKey === 'phone'){
                 const dbCRootKey = 'clients';
@@ -61,9 +58,7 @@ const ClientPane = (props) => {
 
 
                 React_Custom.dbSetValue(dbCRootKey, dbCKey, fieldKey, value); 
-                console.log('client');
                 const client = React_Custom.getEntry(props.clients, props.selectedClient);
-                console.log(client);
 
                 if(client){
                     React_Custom.dbUpdateLinkedInquiries(client, fieldKey, value); 
@@ -73,8 +68,7 @@ const ClientPane = (props) => {
                 React_Custom.dbSetValue(dbRootKey, dbKey, fieldKey, value)
             }
         } else {
-            console.log('improper input')
-            console.log({dbRootKey, dbKey, fieldKey, value})
+            console.log( ['improper input : ', {dbRootKey, dbKey, fieldKey, value}] )
         }
     }
 

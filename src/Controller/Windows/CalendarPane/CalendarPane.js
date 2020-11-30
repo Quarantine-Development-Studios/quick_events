@@ -5,7 +5,8 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
-import resourceAreaColumns, {resources} from './resources/resourceAreaColumns.js'
+import resourceAreaColumns from './resources/resourceAreaColumns.js';
+import Event from '../../../CustomLibrary/Definitions/event.js';
 import './CalendarPane.css';
 
 const CalendarPane = (props) => {    
@@ -24,7 +25,7 @@ const CalendarPane = (props) => {
                     const startDate = target.eventDate + 'T' + target.startTime + ':00';
                     const stopDate = target.eventDate + 'T' + target.stopTime + ':00';
 
-                    events.push(Definitions.Event(target.id, target.eventTitle, startDate, stopDate, 'lead'))
+                    events.push(new Definitions.Event(target.id, target.eventTitle, startDate, stopDate, inquiries[i].eventStatus))
                 }
             }
         }
@@ -85,7 +86,7 @@ const CalendarPane = (props) => {
     //#endregion
 
     events = generateCalendarEvents(props.inquiries);
-
+    
     return (
         <div className='CalendarPane-basicCalendar-container'>
             <FullCalendar
@@ -135,7 +136,7 @@ const CalendarPane = (props) => {
                 editable= {true}
                 resourceAreaColumns={resourceAreaColumns}
                 resourceOrder= 'tOrder'
-                resources={resources}
+                resources={Event.resources()}
                 events={events}
             />
         </div>

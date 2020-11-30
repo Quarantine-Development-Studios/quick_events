@@ -63,3 +63,12 @@ font-weight: bold;
 
     background-color: rgba(237, 247, 191, 0.35) !important;
 }
+
+.content-input {
+    display: block;
+    margin-left: 10px;
+    width: 150px;
+    float: right;
+
+    background-color: rgba(237, 247, 191, 0.35) !important;
+}

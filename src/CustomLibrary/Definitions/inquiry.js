@@ -1,25 +1,25 @@
 
 class Inquiry { 
-    constructor(dataObj){
-        this.basicInfo = {
-            name: "",
-            email: "",
-            phone: "",
+    constructor(dataObj) {
+        this.name = ("");
+        this.email = "";
+        this.phone = "";
 
-            eventTitle: "",
-            guestCount: "",
-            eventDate: "",
-            room: "",
+        this.eventTitle = "";
+        this.eventStatus = (dataObj.eventStatus) ? dataObj.eventStatus  : 'lead';
+        this.guestCount = "";
+        this.eventDate = "";
+        this.room = "";
 
-            startTime: "12:00",
-            stopTime: "15:00",            
+        this.startTime = "12:00";
+        this.stopTime = "15:00";           
 
-            company: "",
-            
-            dateRecieved: "",
-            source: "",
-            sourceLocation: "",
-        }
+        this.company = "";
+        
+        this.dateRecieved = "";
+        this.source = "";
+        this.sourceLocation = "";
+        
         //this.calendarSlot = "";
         //this.agreement = {};
         //this.tableMenu = {};
@@ -27,10 +27,9 @@ class Inquiry {
 
         if(dataObj){
             for(const [key, value] of Object.entries(dataObj)){
-                this.basicInfo[key] = value;
+                this[key] = value;
             }
         }
-
     }
 
     static createInquiryByClient(client){
@@ -52,12 +51,32 @@ class Inquiry {
         }
         return rInfo;
     }
-    
 
-     
+
     toJSON(){
         const rInfo = {};
-        for(const[key, value] of Object.entries(this.basicInfo)){
+        const basicInfo = {
+            name:           this.name,
+            email:          this.email,
+            phone:          this.phone,
+    
+            eventTitle:     this.eventTitle,
+            eventStatus:    this.eventStatus,
+            guestCount:     this.guestCount,
+            eventDate:      this.eventDate,
+            room:           this.room,
+    
+            startTime:      this.startTime,
+            stopTime:       this.stopTime,            
+    
+            company:        this.company,
+            
+            dateRecieved:   this.dateRecieved,
+            source:         this.source,
+            sourceLocation: this.sourceLocation
+        }
+
+        for(const[key, value] of Object.entries(basicInfo)){
             rInfo[key] = value;
         }
 

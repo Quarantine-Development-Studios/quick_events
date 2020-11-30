@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import React_Custom from '../CustomLibrary/ReactComponent_Custom.js';
 
 
@@ -24,7 +23,6 @@ const ClientDirectory = (props) => {
         callbackpointer = callbackpointer.charAt(0).toUpperCase() + callbackpointer.slice(1);
 
         if(event.target.attributes['data-key'].value !== props['selected' + callbackpointer]){
-            //console.log('removing pointer');
             event.target.className.replace('-pointer', '');
         }
     }

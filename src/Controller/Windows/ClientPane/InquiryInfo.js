@@ -1,5 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import React_Custom, {ReactDresser, ReactDrawer, ReactField, Definitions} from '../../../CustomLibrary/ReactComponent_Custom.js';
+import React_Custom, {
+    ReactDresser, 
+    ReactDrawer, 
+    ReactField, 
+    Definitions} from '../../../CustomLibrary/ReactComponent_Custom.js';
 import './InquiryInfo.css';
 
 const InquiryInfo = (props) => {
@@ -46,14 +50,21 @@ const InquiryInfo = (props) => {
                 }
                 console.log(e)
             }
-            const updateDB = (e) => {
-                console.log(e)
-        
+            const updateDBField = (e) => {
                 const fieldKey = e.target.attributes['callbackpointer'].value;
-        
         
                 React_Custom.dbSetValue('inquiries', props.selectedInquiry, fieldKey, e.target.value)
             }
+
+            const updateDropDownDBField = (e) => {
+                const selectedIndex = e.target.selectedIndex;
+                const fieldKey = e.target.attributes.callbackpointer.value;
+                const value = e.target[selectedIndex].attributes.callbackpointer.value;
+
+                React_Custom.dbSetValue('inquiries', props.selectedInquiry, fieldKey, value)
+            }
+
+
             const getInquiryFields = (inquiry) => {
                 const reactFields = [];
                 const _inquiry = new Definitions.Inquiry(inquiry);
@@ -69,6 +80,15 @@ const InquiryInfo = (props) => {
                         inputType = 'time';
                     }
         
+                    const resourceArray = [];
+                    if(cKey === 'Event Status'){
+                        //itterate through statusEnum resource object provided by custom event class in Definitions
+                        for(const [key, value] of Object.entries(Definitions.Event.statusEnums)) {
+                            resourceArray.push(value);
+                        }
+
+                        inputType = 'dropDown' 
+                    }
         
                     if (cKey !== 'Inquiries' && 
                         cKey !== 'Id' && 
@@ -78,23 +98,24 @@ const InquiryInfo = (props) => {
         
                         reactFields.push(
                             <ReactField
-                                rootName = {rootName}
+                                rootName  = {rootName}
                                 labelText = {cKey}
-                                value = {value}
-                                onSubmit = {updateDB}
+                                value     = {value}
+                                onSubmit  = {updateDBField}
+                                onDropDownSubmit = {updateDropDownDBField}
                                 callbackPointer = {key}
                                 inputType = {inputType}
-        
+                                selectionResource = {resourceArray}
                             />
                         )
                     }
                 }
                 return reactFields;
             }
+
+
             const buildDrawer = (inquiry, index) => {
                 const fields = getInquiryFields(inquiry);
-        
-                console.log()
         
                 return (
                     <ReactDrawer

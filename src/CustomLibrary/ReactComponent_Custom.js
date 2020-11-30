@@ -60,7 +60,6 @@ const React_Custom = {
     },
     
     insertIntoDB: (dbID, entry) => {
-        // console.log('trying to create entry')
         if(entry.toJSON()){
             return new Promise(async (resolve, reject) =>{
                     let docRef = firebase.firestore().collection(dbID).doc();
@@ -105,9 +104,9 @@ const React_Custom = {
     //#endregion
     getEntry: (array, accessorID) => {
         if(!array) {
-            //console.log('array is not passed'); return undefined;
+            console.log('array is not passed'); return undefined;
         } else if (!accessorID) {
-            //console.log('accessorID has not been passed'); return undefined;
+            console.log('accessorID has not been passed'); return undefined;
         } else {
             return array.filter(e => e.id === accessorID)[0]
         }
@@ -158,9 +157,23 @@ const React_Custom = {
         );     
     },
 
+
+
+
+    getDataList: (id, stringArray) => {
+        if(stringArray){
+            const options = React_Custom.getOptionList(stringArray);
+
+            return (
+                <datalist id={id}>
+                    <options />
+                </datalist>
+            )
+        }
+    },
+
     //#region display changes
     chgPointer: (event) => {
-        //console.log('adding pointer')
         event.target.className.concat('-pointer');
     },
 
@@ -186,31 +199,102 @@ const React_Custom = {
 export const Definitions = {
     Client: cClient,
     Inquiry: cInquiry,
-    Event: cEvent
+    Event: cEvent,
+    EventStatusEnums: cEvent.statusEnums, 
 }
+
+
+
+
+
+/** Incomplete
+ * 
+ * @param {*} props 
+ */
+export const ReactDropDown = (props) => {
+    const name = (props.name) ? props.name : 'React Drop Down';
+    const selectionResource = (props.selectionResource) ? props.selectionResource : [];
+    const onChange = (props.onChangeCB) ? props.onChangeCB : null;
+    const callbackPointer = (props.callbackPointer) ? props.callbackPointer : '';
+    const selectedValue = (props.selectedValue) ? props.selectedValue : '';
+
+    const getOptionList = () => {
+        if(selectionResource) {
+            const options = [];
+
+            for(let i = 0; i < selectionResource.length; i++ ){
+                const resource = selectionResource[i];
+
+                if(!(selectedValue === resource.resourceId)) {
+                    options.push(
+                        <option 
+                            name={name + resource.label} 
+                            key={resource.resourceId} 
+                            callbackpointer={resource.resourceId}
+                        >
+                            {resource.label}
+                        </option>
+                    )
+                } else {
+                    options.push(
+                        <option 
+                            name={name + resource.label} 
+                            key={resource.resourceId} 
+                            callbackpointer={resource.resourceId} 
+                            selected
+                        >
+                            {resource.label}
+                        </option>
+                    )
+                }   
+            }
+
+            return options;
+        }
+    }
+
+    return (    
+        <select native="true" name={name} className={name} onChange={onChange} callbackpointer={callbackPointer}>
+            {getOptionList()}
+        </select>
+    )
+}
+
 
 /**
  * Generates Custom Label & Input Field Combo as small react component to handle data inputs
  * 
  * Accepts Options in props:
- * rootName
- * labelText
- * onSubmit: called when user has released focus on target input field
- * callbackPointer: property for onSubmit to reference
- * inputType: for setting input type to 'date' or 'time' fields for example
- * value: if you have a default value to set input field too. Good for loading in information you already have
+ * @constant rootName
+ * @constant labelText
+ * @constant onSubmit: called when user has released focus on target input field
+ * @constant callbackPointer: property for onSubmit to reference
+ * @constant inputType: for setting input type to 'date' or 'time' fields for example
+ * @constant value: if you have a default value to set input field too. Good for loading in information you already have
+ * @constant selectionList: accepts array of strings, used for adding predefined options that can be overidden
  * 
  * @param {*} props 
  */
-
 export const ReactField = (props) => {
     const [value, setValue] = useState(props.value);
 
     const rootName = (props.rootName) ? props.rootName : 'ReactField';
     const labelText = (props.labelText) ? props.labelText : 'Unset Label'
     const onSubmit = (props.onSubmit) ? props.onSubmit : () => {};
+    const onDropDownSubmit = (props.onDropDownSubmit) ? props.onDropDownSubmit : () => {};
     const callbackPointer = (props.callbackPointer) ? props.callbackPointer : '';
     const inputType = (props.inputType) ? props.inputType : '';
+    const selectionResource = (props.selectionResource) ? props.selectionResource : [];
+
+    
+    let selectionID = '';
+
+    if(selectionResource[0] && inputType === 'dropDown'){
+        selectionID = rootName + '-status';
+        //selectionDataList = React_Custom.getDataList(selectionID, selectionList);
+    }
+
+    
 
     useEffect(() =>{
         setValue(props.value)
@@ -220,6 +304,34 @@ export const ReactField = (props) => {
         setValue(e.target.value)
     }   
     
+    const inputActual = () => {
+        if(inputType === 'dropDown'){
+            return (
+                <ReactDropDown
+                    name={rootName + '-' + labelText + '-field-dropdown content-input'}
+                    selectionResource={selectionResource}
+                    onChangeCB={onDropDownSubmit} 
+                    callbackPointer={callbackPointer} 
+                    selectedValue={value}
+                />   
+            )
+        } else {
+            return (
+                <input 
+                    className={rootName + '-field-input content-input'} 
+                    key={rootName + '-input-' + labelText}
+                    id={rootName + '-' + labelText}
+                    value={value} 
+                    onChange={onChangeCB} 
+                    onBlur={onSubmit} 
+                    callbackpointer={callbackPointer} 
+                    type={inputType}
+                    list={selectionID}
+                />
+            )
+        }
+    }
+
     return (
         <div className={rootName + "-field"} key={rootName + '-' + labelText}>
             <label 
@@ -229,18 +341,7 @@ export const ReactField = (props) => {
                 {labelText}: 
             </label>
 
-            <input 
-                className={rootName + '-field-input content-input'} 
-                key={rootName + '-input-' + labelText}
-                id={rootName + '-' + labelText}
-                value={value} 
-                onChange={onChangeCB} 
-                onBlur={onSubmit} 
-                callbackpointer={callbackPointer} 
-                type={inputType}
-            >
-
-            </input>
+            {inputActual()}
         </div>
     )
 }
@@ -259,7 +360,6 @@ export const ReactField = (props) => {
  * @constant drawerNumber: key number
  * @param {*} props 
  */
-
 export const ReactDrawer = (props) => {
     const [isExpanded, setIsExpanded] = 
         useState((props.isExpanded) ? props.isExpanded : false);

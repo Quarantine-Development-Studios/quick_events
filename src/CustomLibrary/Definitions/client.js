@@ -12,12 +12,10 @@ export default class Client {
 
     setID(id){
         this.id = id;
-        console.log("set id of client to " + this.id)
     }
 
     setName(name) {
         this.name = name;
-        console.log("Set name of client to " + this.name)
     }
     
     setEmail(email){
