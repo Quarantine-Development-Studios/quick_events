@@ -16,8 +16,6 @@
 }
 
 .ClientPane-InquiryInfo-drawer {
-    border-style: ridge;
-
     flex: auto;
     min-height: 26px;
     text-align: left;
@@ -25,8 +23,6 @@
     flex-direction: column;
     order:2;
     margin: 10px;
-
-    background-color: rgba(176, 196, 222, 0.75) !important;
 }
 
 .ClientPane-InquiryInfo-drawerContents {

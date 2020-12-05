@@ -54,7 +54,7 @@
   order: 1;
   flex-basis: 100vw;
 
-  min-width: 250px;
+  min-width: 300px;
   max-width: 450px;
   
   max-height: 90vh;
@@ -74,7 +74,8 @@
 
 .-AppContent {
   border-style: ridge;
-  background-color: rgba(176, 196, 222, 0.75) !important;
+  background-color: rgba(156, 181, 214, 0.776) !important;
+  padding: 2px;
 }
 
 .control-Bar {

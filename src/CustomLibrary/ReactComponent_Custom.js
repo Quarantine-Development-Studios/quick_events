@@ -413,14 +413,14 @@ export const ReactDrawer = (props) => {
 
     if(!isExpanded){
         return (
-            <div className={rootName + "-drawer"} key={rootName + '-' + drawerNumber}>
+            <div className={rootName + "-drawer -AppContent"} key={rootName + '-' + drawerNumber}>
                 <label className={rootName + "-drawer-label"}>{labelText}</label>
                 <button className={rootName + "-drawer-expandBtn"} callbackpointer={callbackPointer} onClick={onExpand}>+</button>
             </div>
         )
     } else {
         return (
-            <div className={rootName + "-drawer"} key={rootName + '-' + drawerNumber}>
+            <div className={rootName + "-drawer -AppContent"} key={rootName + '-' + drawerNumber}>
                 <div className={rootName + "-drawer-header"}>
                     <label className={rootName + "-drawer-label"}>{labelText}</label>
                     <button className={rootName + "-drawer-expandBtn"} callbackpointer={callbackPointer} onClick={onExpand}>-</button>
