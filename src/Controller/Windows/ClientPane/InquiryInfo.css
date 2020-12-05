@@ -1,20 +1,21 @@
-.InquiryInfo {
+.ClientPane-InquiryInfo {
 
     background-color: rgba(176, 196, 222, 0.344) !important;
 
     margin: 10px;
     padding: 1px;
 }
-.InquiryInfo-header {
-font-weight: bold;
+.ClientPane-InquiryInfo-header {
+    font-weight: bold;
+    margin-left: 20px;
 }
 
 
-.InquiryInfo-entry-drawer-header {
+.ClientPane-InquiryInfo-entry-drawer-header {
     margin-bottom: 10px;
 }
 
-.InquiryInfo-drawer {
+.ClientPane-InquiryInfo-drawer {
     border-style: ridge;
 
     flex: auto;
@@ -24,25 +25,27 @@ font-weight: bold;
     flex-direction: column;
     order:2;
     margin: 10px;
+
+    background-color: rgba(176, 196, 222, 0.75) !important;
 }
 
-.InquiryInfo-drawerContents {
+.ClientPane-InquiryInfo-drawerContents {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
 }
 
-.InquiryInfo-drawer-label {
+.ClientPane-InquiryInfo-drawer-label {
     font-weight: bold;
 }
 
-.InquiryInfo-drawer-expandBtn {
+.ClientPane-InquiryInfo-drawer-expandBtn {
     float: right;
     margin: 3px;
     max-height: 20px;
 }
 
-.InquiryInfo-field {
+.ClientPane-InquiryInfo-field {
     display: block;
     flex-grow: 1;
     max-width: 300px;
@@ -51,11 +54,11 @@ font-weight: bold;
     margin-bottom: 5px;
 }
 
-.InquiryInfo-field-label {
+.ClientPane-InquiryInfo-field-label {
     font-weight: normal;
 }
 
-.InquiryInfo-field-input {
+.ClientPane-InquiryInfo-field-input {
     display: block;
     margin-left: 10px;
     width: 150px;

@@ -21,134 +21,80 @@ const ClientPane = (props) => {
         setClient(props.client)
     }, [props.client])
 
-
-    const setValue = (event) => {
-        const cbPointer = event.target.attributes['callbackpointer'].value;
-        const value = event.target.value;
-
-        let dbKey;
-        let dbRootKey;
-
-        switch (cbPointer) {
-            case 'client':
-                dbKey = props.selectedClient;
-                dbRootKey = 'clients';
-                break;
-            case 'inquiry':
-                dbKey = props.selectedInquiry;
-                dbRootKey = 'inquiries';
-                break;
-            default:
-                console.log('unable to set dbRoot in "setValue()"');
-                return undefined;
+    //check inquiry accurately reflects selected Inquiry on "props.selectedInquiry" change/update
+    useEffect(() => {
+        if(props.selectedInquiry !== "") {
+            const newInquiry = React_Custom.getEntry(props.inquiries, props.selectedInquiry);
+    
+            if(inquiry !== newInquiry){
+                setInquiry(newInquiry);
+            }
+        } else {
+            if(inquiryDisp){ inquiryDisp = null; }
+            if(inquiry) { setInquiry(null) }
         }
+    }, [props.selectedInquiry])
 
 
-        //parse id for fieldkey
-        let fieldKey = event.target.attributes['id'].value.split('-');
-        fieldKey = fieldKey[fieldKey.length - 1]; //grab last index of array
-        fieldKey = fieldKey[0].toLowerCase() + fieldKey.slice(1);
-        fieldKey = fieldKey.replace(' ', '');
+    /**
+     * this function requires callbackpointer to be set for proper database entry
+     * @param {*} event 
+     * @attribute callbackpointer {String} nested attribute of target element
+     */
+    const setValue = (event) => {
+        if(event.target.attributes.callbackpointer){
+            const cbPointer = event.target.attributes['callbackpointer'].value;
+            const value = event.target.value;
 
-        if(dbRootKey && dbKey && fieldKey){
-            //lock name, email and phone to linked inquiries
-            if(fieldKey === 'name' || fieldKey === 'email' || fieldKey === 'phone'){
-                const dbCRootKey = 'clients';
-                const dbCKey = props.selectedClient;
+            let dbKey;
+            let dbRootKey;
+
+            switch (cbPointer) {
+                case 'client':
+                    dbKey = props.selectedClient;
+                    dbRootKey = 'clients';
+                    break;
+                case 'inquiry':
+                    dbKey = props.selectedInquiry;
+                    dbRootKey = 'inquiries';
+                    break;
+                default:
+                    console.log('unable to set dbRoot in "setValue()"');
+                    return undefined;
+            }
 
 
-                React_Custom.dbSetValue(dbCRootKey, dbCKey, fieldKey, value); 
-                const client = React_Custom.getEntry(props.clients, props.selectedClient);
+            //parse id for fieldkey
+            let fieldKey = event.target.attributes['id'].value.split('-');
+            fieldKey = fieldKey[fieldKey.length - 1]; //grab last index of array
+            fieldKey = fieldKey[0].toLowerCase() + fieldKey.slice(1);
+            fieldKey = fieldKey.replace(' ', '');
 
-                if(client){
-                    React_Custom.dbUpdateLinkedInquiries(client, fieldKey, value); 
+            if(dbRootKey && dbKey && fieldKey){
+                //lock name, email and phone to linked inquiries
+                if(fieldKey === 'name' || fieldKey === 'email' || fieldKey === 'phone'){
+                    const dbCRootKey = 'clients';
+                    const dbCKey = props.selectedClient;
+
+
+                    React_Custom.dbSetValue(dbCRootKey, dbCKey, fieldKey, value); 
+                    const client = React_Custom.getEntry(props.clients, props.selectedClient);
+
+                    if(client){
+                        React_Custom.dbUpdateLinkedInquiries(client, fieldKey, value); 
+                    }
+                } else {
+
+                    React_Custom.dbSetValue(dbRootKey, dbKey, fieldKey, value)
                 }
             } else {
-
-                React_Custom.dbSetValue(dbRootKey, dbKey, fieldKey, value)
+                console.log( ['improper input : ', {dbRootKey, dbKey, fieldKey, value}] )
             }
         } else {
-            console.log( ['improper input : ', {dbRootKey, dbKey, fieldKey, value}] )
+            console.log('"setValue()" requires "callbackpointer" attribute of element to be set for proper database entry.')
         }
     }
-
-
-    //check/set local inquiry if props.selectedInquiry is defined
-    //set local inquiry to null if not
-    if(props.selectedInquiry !== "") {
-        const newInquiry = React_Custom.getEntry(props.inquiries, props.selectedInquiry);
-
-        if(inquiry !== newInquiry){
-            setInquiry(newInquiry);
-        }
-    } else {
-        if(inquiryDisp){ inquiryDisp = null; }
-        if(inquiry) { setInquiry(null) }
-    }
-
-
-    //#region Inquiry Handling
-    const createInquiry = (e) => {
-        let newInquiry = Definitions.Inquiry.createInquiryByClient(props.client);
-        React_Custom.dbInsertEntry('inquiries', newInquiry, linkInquiry)
-    }
-
-    const removeInquiry = (e) => {
-        if(inquiry){
-            const inquiryID = inquiry.id;
-            const clientID = props.client.id;
-            
-            let linkedInquiries = props.client.inquiries;
-            let newLinkedInquiries = [];
-
-            for(let i = 0; i < linkedInquiries.length; i++){
-                if(linkedInquiries[i] !== inquiryID){ 
-                    newLinkedInquiries.push(linkedInquiries[i]);
-                }
-            }
-            
-            //unlink from client
-            React_Custom.dbSetValue('clients', clientID, 'inquiries', newLinkedInquiries);
-
-            //remove from inquiries collection
-            React_Custom.dbRemoveEntry('inquiries', inquiryID);
-            props.setSelectedInquiry('');
-        }
-    }
-
-    const linkInquiry = (id) => {
-        if(props.selectedClient !== ''){
-            const client = props.client;
-            let newArray = (client.inquiries) ? client.inquiries : [];
-            //push id to array
-            newArray.push(id);
-            //insert into db
-            React_Custom.dbSetValue('clients', client.id, 'inquiries', newArray);
-            //select the inquiry to auto display it
-            props.setSelectedInquiry(id);
-        }
-    }
-    //#endregion
  
-    
-    
-    //update inquiry Display if nescessary
-    if(props.viewingInquiry && props.selectedInquiry){
-        const newInquiry = React_Custom.getEntry(props.inquiries, props.selectedInquiry);
-        if(!inquiry || inquiry !== newInquiry){
-            //inquiryDisp = getDisplayContents(newInquiry)
-            setInquiry(newInquiry);
-        } else {
-            //inquiryDisp = getDisplayContents(inquiry)
-        }
-    }
-
-
-    
-    const buttonReqs = {
-        'CreateInquiry': new CC.ButtonReq('CreateInquiry', 'Create Inquiry', createInquiry),
-        'RemoveInquiry': new CC.ButtonReq('RemoveInquiry', 'Remove Inquiry', removeInquiry)
-    }
 
     return (
         <div className={rootName + " App-Window"}>
@@ -157,12 +103,15 @@ const ClientPane = (props) => {
             <ClientInfo
                 rootName = {rootName}
 
-                selectedClient = {props.selectedClient}
                 client = {props.client}
+                inquiry = {inquiry}
+
+                selectedClient = {props.selectedClient}
 
                 setValue = {setValue}
+                setSelectedInquiry = {props.setSelectedInquiry}
             />
-            {React_Custom.getButtons(buttonReqs, rootName)}
+            
 
             {React_Custom.Divider()}
 
@@ -174,7 +123,6 @@ const ClientPane = (props) => {
 
                 inquiries = {props.inquiries}
                 selectedInquiry = {props.selectedInquiry}
-                setSelectedInquiry = {props.setSelectedInquiry}
                 
                 setValue = {setValue}
             />

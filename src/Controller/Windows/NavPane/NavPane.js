@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import React_Custom, { Definitions }from '../../../CustomLibrary/ReactComponent_Custom.js';
+import React_Custom, { Definitions, ReactField }from '../../../CustomLibrary/ReactComponent_Custom.js';
 import './NavPane.css';
-import ClientDirectory from '../../../Directories/ClientDirectory';
 import CC from '../../../CustomLibrary/Object_Custom.js';
+
+//views
+import ClientDirectoryView from './views/clientDirectoryView.js'; //default view
+import FollowUpView from './views/followUpView.js'; //options view
+
 
 
 const NavPane = (props) => {
@@ -44,7 +48,7 @@ const NavPane = (props) => {
         setSearchQuery(e.target.value);
     }
 
-    const getSearchBar = () => {
+    const getControlBar = () => {
         const className = rootName + '-searchbar';
 
         return (
@@ -73,22 +77,64 @@ const NavPane = (props) => {
     }
 
     const getContent = () => {
-        return(
-            <ClientDirectory 
-                clients = {props.clients}
-                setSelectedClient = {props.setSelectedClient}
-                selectedClient = {props.selectedClient}
+        if(props.view === "FollowUps"){
+            return (
+                <FollowUpView 
+                
+                />
+            )
+        } else {
+            //default view for NavPane
+            return(
+                <ClientDirectoryView 
+                    clients = {props.clients}
+                    setSelectedClient = {props.setSelectedClient}
+                    selectedClient = {props.selectedClient}
 
-                inquiries = {props.inquiries}
-                setSelectedInquiry = {props.setSelectedInquiry}
-                selectedInquiry = {props.selectedInquiry}
-                
-                
-                isSearching = {isSearching}
-                searchQuery = {searchQuery}
+                    inquiries = {props.inquiries}
+                    setSelectedInquiry = {props.setSelectedInquiry}
+                    selectedInquiry = {props.selectedInquiry}
+                    
+                    
+                    isSearching = {isSearching}
+                    searchQuery = {searchQuery}
+                />
+            )
+        }
+    }
+
+    const showViewSelectHeader = () => {
+        const resourceArray = [
+            {
+                label: 'Clients',
+                resourceId: '1'
+            },
+            {
+                label: 'Follow Ups',
+                resourceId: '2'
+            }
+
+        ];
+        const inputType = 'dropDown' 
+
+        const updateView = (e) => {
+            const selectedIndex = e.target.selectedIndex;
+            const fieldKey = e.target.attributes.callbackpointer.value;
+            const value = e.target[selectedIndex].attributes.callbackpointer.value;
+
+        }
+
+        return (
+            <ReactField 
+                rootName={rootName}
+                labelText={'View'}
+                inputType={'DropDown'}
+                selectionResource={resourceArray}
+                onDropDownSubmit={updateView}
             />
         )
     }
+
 
     const buttonReqs = {
         'CreateClient': new CC.ButtonReq('CreateClient', 'Create Client', createClient),
@@ -97,12 +143,17 @@ const NavPane = (props) => {
   
     return (
         <div className="App-Window NavPane">
-            {React_Custom.WindowControlBar("Client Directory")}
-            <div className="NavPane-header">
-                {getSearchBar()}
+            {React_Custom.WindowControlBar("Navigation")}
+            <div className="NavPane-header -AppContent">
+                {getControlBar()}
                 {getButtons(buttonReqs)}
             </div>
+
+
             {React_Custom.Divider()}
+
+            {showViewSelectHeader()}
+
             {getContent()}
         </div>
     )

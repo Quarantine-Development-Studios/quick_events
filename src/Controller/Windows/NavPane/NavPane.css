@@ -1,8 +1,4 @@
 .NavPane-header {
-    background-color: lightsteelblue !important;
-
-    border-style: ridge;
-
     margin: 10px;
     padding: 1px;
 }
@@ -31,23 +27,36 @@
     order: 2;
     margin-left: 10px;
 }
+
+.NavPane-contentHeader {
+    font-size: large;
+    margin: 0px;
+    margin-left: 10px;
+}
+
 .NavPane-content {
     flex: auto;
-    
-
     flex-direction: row;
     order: 5;
-
     margin: 10px;
     padding: 10px;
-
-    border-style: ridge;
-
-    background-color: rgba(176, 196, 222, 0.75) !important;
-
     overflow-y: auto;
 }
 
+.NavPane-field {
+    margin-top: 5px;
+}
+
+.NavPane-field-label {
+    float: left;
+    margin-left: 20px;
+}
+
+.NavPane-View-field-dropdown {
+    float:left !important;
+    margin-top: 3px;
+    border: unset !important;
+}
 
 .ClientDirectory-label {
     display: block;

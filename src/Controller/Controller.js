@@ -22,17 +22,16 @@ const Controller = () => {
 
 
     const getDisplay = () => {
-        if(isLoggedIn){
+        if(!isLoggedIn){
             return(
-                <ContentPane
-                    isLoggedIn = {isLoggedIn}
-                />
+                //render Authentication Layer
+                <AuthPane />
             )
         } else {
             return(
-                <AuthPane 
-                    isLoggedIn = {isLoggedIn}
-                />
+                //User is logged in
+                //allow pass to Content
+                <ContentPane />
             )
         }
     }
@@ -44,8 +43,6 @@ const Controller = () => {
 
 
                 {getDisplay()}
-                {<li className="test-line">{'is logged in: ' + isLoggedIn}</li>
-                }
             </div>
         </AuthContext.Provider>
     )

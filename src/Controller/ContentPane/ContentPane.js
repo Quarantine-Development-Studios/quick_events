@@ -10,22 +10,30 @@ import rxClients from '../../firebase/rxClients';
 
 export const ViewingContext = React.createContext(null);
 
+
+/**
+ * ContentPane:
+ * Container for All Custom Windows
+ * 
+ * @param {*} props 
+ * @prop {bool} isLoggedIn //returns true if user has authenticated
+ */
 const ContentPane = (props) => {
     let [client, setClient] = useState(null);
     let [clients, setClients] = useState([]);
-
-    let [inquiries, setInquiries] = useState([]);
-
-    let [viewingNavigation, setViewingNavigation] = useState(true);
-
     let [selectedClient, setSelectedClient] = useState("");
     let [viewingClient, setViewingClient] = useState(true);
 
+    let [inquiries, setInquiries] = useState([]);
     let [selectedInquiry, setSelectedInquiry] = useState("");
     let [viewingInquiry, setViewingInquiry] = useState(true);
 
+
+    let [viewingNavigation, setViewingNavigation] = useState(true);
+    let [viewingFollowUps, setViewingFollowUps] = useState(true);
+
                 
-    //subscribe to database
+    //subscribe inquiries and clients to database
     useEffect(() => {
         console.log('Subscribing to databases')
         rxInquiries.subscribe((inquiries) => {
@@ -35,14 +43,12 @@ const ContentPane = (props) => {
         rxClients.subscribe((clients) => setClients(clients));
     }, [])
 
-    useEffect(() => {
-
-    }, [inquiries])
 
     const tryShowNavPane = () => {
         if (viewingNavigation) {
             return (
                 <NavPane key="NavPane"
+                    view = ''
                     viewingClient = {viewingClient}
                     setViewingClient = {setViewingClient}
                     clients = {clients}
@@ -101,6 +107,8 @@ const ContentPane = (props) => {
             )
         }
     }
+
+
 
 
 

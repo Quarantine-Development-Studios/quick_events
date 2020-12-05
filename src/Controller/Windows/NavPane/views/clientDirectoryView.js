@@ -1,31 +1,10 @@
-import React_Custom from '../CustomLibrary/ReactComponent_Custom.js';
+import React_Custom from '../../../../CustomLibrary/ReactComponent_Custom.js';
 
 
 const ClientDirectory = (props) => {
 
     const rootName = 'ClientDirectory';
     
-
-    const selectLbl = (event) => {
-        let pointer = event.target.attributes['callbackpointer'].value;
-        const targetID = event.target.attributes['data-key'].value;
-        
-        let value = ((props['selected' + pointer] !== targetID) ? targetID : "");
-
-        props['setSelected' + pointer](value);
-        if(pointer === 'Client'){
-            props['setSelectedInquiry']('')
-        }
-    }
-
-    const isSelected = (event) => {
-        let callbackpointer = event.target.attributes['callbackpointer'].value;
-        callbackpointer = callbackpointer.charAt(0).toUpperCase() + callbackpointer.slice(1);
-
-        if(event.target.attributes['data-key'].value !== props['selected' + callbackpointer]){
-            event.target.className.replace('-pointer', '');
-        }
-    }
 
     const getClientAccessors = () => {
         if(props.clients !== undefined && props.clients[0]){    
@@ -46,18 +25,22 @@ const ClientDirectory = (props) => {
                         let tagMod = '';
                         let isPointer = (dbID === props.selectedClient);
                 
-                        let clientLabel = React_Custom.NavLbl(ClientIndex, rootName, text, dbID, selectLbl, tagMod, 'Client', isSelected);
 
                         //if pointer establish extra class name for highlighting
                         if (isPointer) {
                             tagMod = '-pointer';
+                            
                             //overwrite
-                            clientLabel = React_Custom.NavLbl(ClientIndex, rootName, text, dbID, selectLbl, tagMod, 'Client', isSelected);
+                            const clientLabel = React_Custom.NavLbl(ClientIndex, rootName, text, dbID, selectLbl, tagMod, 'Client', isSelected);
+                            
                             //establish root label
                             const inquiryLabels = getInquiryLabels(props.clients[ClientIndex]);
                             
+                            //pass 
                             returnData.push(React_Custom.ExpandedNavTree(rootName, clientLabel, inquiryLabels));
                         } else {
+                            
+                            const clientLabel = React_Custom.NavLbl(ClientIndex, rootName, text, dbID, selectLbl, tagMod, 'Client', isSelected);
                             returnData.push(clientLabel);
                         }
                     }
@@ -69,8 +52,6 @@ const ClientDirectory = (props) => {
             } 
         }
     }
-
-
 
     const testQuery = (dataObj, query) => {
         if(dataObj){
@@ -86,6 +67,27 @@ const ClientDirectory = (props) => {
             }
         }
         return false;
+    }
+
+    const selectLbl = (event) => {
+        let pointer = event.target.attributes['callbackpointer'].value;
+        const targetID = event.target.attributes['data-key'].value;
+        
+        let value = ((props['selected' + pointer] !== targetID) ? targetID : "");
+
+        props['setSelected' + pointer](value);
+        if(pointer === 'Client'){
+            props['setSelectedInquiry']('')
+        }
+    }
+
+    const isSelected = (event) => {
+        let callbackpointer = event.target.attributes['callbackpointer'].value;
+        callbackpointer = callbackpointer.charAt(0).toUpperCase() + callbackpointer.slice(1);
+
+        if(event.target.attributes['data-key'].value !== props['selected' + callbackpointer]){
+            event.target.className.replace('-pointer', '');
+        }
     }
 
     const getInquiryLabels = (client) => {
@@ -115,8 +117,9 @@ const ClientDirectory = (props) => {
         return inquiryLabels;
     }
 
+
     return (
-        <div className="NavPane-content">
+        <div className="NavPane-content -AppContent">
             {getClientAccessors()}
         </div>
     )

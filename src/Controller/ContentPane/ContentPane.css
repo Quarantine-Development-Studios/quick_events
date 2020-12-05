@@ -1,6 +1,8 @@
 .content-pane{ 
     position: relative;
     top:5px; 
+    
+    justify-content: center;
 
     display: flex;
     flex-wrap: wrap;

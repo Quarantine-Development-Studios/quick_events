@@ -17,16 +17,45 @@ const React_Custom = {
 
 
 
-    InfoField: (id, rootName, value, onChangeCB, onBlurCB, callbackPointer, type) => {
+    infoField: (FieldLabel, rootName, value, onChangeCB, onBlurCB, callbackpointer, type) => {
         const inputType = (type) ? type : '';
 
         return (
-            <div className={rootName + "-field"} key={id}>
-                <label className={rootName + "-field-label content-label"} key={'lbl-' + id}>{id}: </label>
-                <input className={rootName + '-field-input content-input'} id={rootName + '-' + id} key={'input-' + id} value={value} onChange={onChangeCB} onBlur={onBlurCB} callbackpointer={callbackPointer} type={inputType}></input>
+            <div className={rootName + "-field"} key={FieldLabel}>
+                {React_Custom.basicLabel(FieldLabel, rootName)}
+                {React_Custom.basicInput(FieldLabel, rootName, value, onChangeCB, onBlurCB, callbackpointer, inputType)}
             </div>
         )
     },
+
+    //#region basic HTML Elements:
+    /**
+     * 
+     * @param {string} lblName //Value Displayed
+     * @param {string} rootName //string representative of wrapping element/component
+     */
+    basicLabel: (lblName, rootName) => {
+        return (
+            <label className={rootName + "-field-label content-label"} key={'lbl-' + lblName}>{lblName}</label>
+        )
+    },
+    /**
+     * 
+     * @param {string} id //used in setting id and key values for HTML element
+     * @param {string} rootName //string representative of wrapping element/component
+     * @param {string} value //actual value of input at current state
+     * @param {callback} onChangeCB //callback when value is changed
+     * @param {callback} onBlurCB //callback when input loses focus (use this to submit final input changes)
+     * @param {*} callbackpointer //data value to be used in callbacks
+     * @param {string} inputType //type of input field
+     */
+    basicInput: (id, rootName, value, onChangeCB, onBlurCB, callbackpointer, inputType) => {
+        return (
+            <input className={rootName + '-field-input content-input'} id={rootName + '-' + id} key={'input-' + id} value={value} onChange={onChangeCB} onBlur={onBlurCB} callbackpointer={callbackpointer} type={inputType}></input>
+        )
+    },
+    //#endregion
+
 
     getButtons: (buttonReqs, rootName) => {
         const rItems = [];
@@ -136,7 +165,18 @@ const React_Custom = {
         )
     },
 
-    NavLbl: (id, rootName, text, dbID, callback, tagMod, pointer, onMouseOutCB) => { 
+    /**
+     * 
+     * @param {string} id //required
+     * @param {string} rootName //recomended for propper CSS styling
+     * @param {*} text //required, actual value displayed
+     * @param {*} resourceId //optional
+     * @param {*} callback //optional
+     * @param {*} tagMod 
+     * @param {*} pointer 
+     * @param {*} onMouseOutCB 
+     */
+    NavLbl: (id, rootName, text, resourceId, callback, tagMod, pointer, onMouseOutCB) => { 
         let className = rootName + '-label' + tagMod;
         if(tagMod !== ''){
             className.concat(tagMod);
@@ -146,7 +186,7 @@ const React_Custom = {
         <label 
             className={className} 
             key={id.toString()} 
-            data-key={dbID} 
+            data-key={resourceId} 
             onClick={callback} 
             onMouseOver={React_Custom.chgPointer} 
             onMouseOut={onMouseOutCB}
@@ -265,13 +305,15 @@ export const ReactDropDown = (props) => {
  * Generates Custom Label & Input Field Combo as small react component to handle data inputs
  * 
  * Accepts Options in props:
- * @constant rootName
- * @constant labelText
- * @constant onSubmit: called when user has released focus on target input field
- * @constant callbackPointer: property for onSubmit to reference
- * @constant inputType: for setting input type to 'date' or 'time' fields for example
- * @constant value: if you have a default value to set input field too. Good for loading in information you already have
- * @constant selectionList: accepts array of strings, used for adding predefined options that can be overidden
+ * @param {String} rootName
+ * @param {String} labelText
+ * @param {Callback} onSubmit: called when user has released focus on target input field
+ * @param {*} callbackPointer: property for onSubmit to reference
+ * @param {string} inputType: for setting input type to 'date' or 'time' fields for example
+ * @param {String} value: if you have a default value to set input field too. Good for loading in information you already have
+ * @param {Array} selectionResource: accepts object Array. 
+ * resourceObjecT: {@param {String} label, @param {String} resourceId}  
+ * @param {Callback} onDropDownSubmit: called when dropDown Input type is selected and the selection has been changed
  * 
  * @param {*} props 
  */
@@ -280,21 +322,15 @@ export const ReactField = (props) => {
 
     const rootName = (props.rootName) ? props.rootName : 'ReactField';
     const labelText = (props.labelText) ? props.labelText : 'Unset Label'
+    
     const onSubmit = (props.onSubmit) ? props.onSubmit : () => {};
+    
     const onDropDownSubmit = (props.onDropDownSubmit) ? props.onDropDownSubmit : () => {};
+
     const callbackPointer = (props.callbackPointer) ? props.callbackPointer : '';
     const inputType = (props.inputType) ? props.inputType : '';
     const selectionResource = (props.selectionResource) ? props.selectionResource : [];
 
-    
-    let selectionID = '';
-
-    if(selectionResource[0] && inputType === 'dropDown'){
-        selectionID = rootName + '-status';
-        //selectionDataList = React_Custom.getDataList(selectionID, selectionList);
-    }
-
-    
 
     useEffect(() =>{
         setValue(props.value)
@@ -305,7 +341,8 @@ export const ReactField = (props) => {
     }   
     
     const inputActual = () => {
-        if(inputType === 'dropDown'){
+        if(inputType === 'DropDown'){
+            console.log(selectionResource)
             return (
                 <ReactDropDown
                     name={rootName + '-' + labelText + '-field-dropdown content-input'}
@@ -326,7 +363,6 @@ export const ReactField = (props) => {
                     onBlur={onSubmit} 
                     callbackpointer={callbackPointer} 
                     type={inputType}
-                    list={selectionID}
                 />
             )
         }

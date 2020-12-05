@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import React_Custom, { Definitions } from '../../../CustomLibrary/ReactComponent_Custom.js';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -10,11 +10,11 @@ import Event from '../../../CustomLibrary/Definitions/event.js';
 import './CalendarPane.css';
 
 const CalendarPane = (props) => {    
-
-
     let events = null;
 
     //#region functions
+    const [selectedDate, setSelectedDate] = useState(Date.now.to)
+
     const generateCalendarEvents = (inquiries) => {
         const events = [];
 
@@ -38,8 +38,20 @@ const CalendarPane = (props) => {
     }
 
     const handleDateSelect = (selectInfo) => {
+        console.log(selectInfo);
+        const selectedDate = selectInfo.startStr;
+        console.log(selectedDate);
+        const subDateArray = selectedDate.split('-')
+        console.log(subDateArray);
+        const dateObj = {
+            year: subDateArray[0],
+            month: subDateArray[1],
+            dat: subDateArray[2]
+        }
+        console.log(dateObj);
         
-        prompt(selectInfo.startStr)
+
+        //prompt(selectInfo.startStr)
         let calendarApi = selectInfo.view.calendar
 
         calendarApi.unselect() // clear date selection
@@ -87,40 +99,41 @@ const CalendarPane = (props) => {
 
     events = generateCalendarEvents(props.inquiries);
     
-    return (
-        <div className='CalendarPane-basicCalendar-container'>
-            <FullCalendar
-                plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-                headerToolbar={{
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                }}
-                initialView='dayGridMonth'
-                editable={true}
-                selectable={true}
-                selectMirror={true}
-                dayMaxEvents={true}
-                events={events} // alternatively, use the `events` setting to fetch from a feed
-                eventDisplay='list'
-                select={handleDateSelect}
-                eventContent={renderEventContent} // custom render function
-    
-                eventsSet={handleEvents} // called after events are initialized/added/changed/removed
-                
-                /* you can update a remote database when these fire:
-                eventAdd={function(){}}
-                eventChange={function(){}}
-                eventRemove={function(){}}
-                */
-            />
+    const getCalendar = () => {
+        return (
+            <div className="-AppContent">
+                <FullCalendar
+                    plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+                    headerToolbar={{
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    }}
+                    initialView='dayGridMonth'
+                    editable={true}
+                    selectable={true}
+                    selectMirror={true}
+                    dayMaxEvents={true}
+                    events={events} // alternatively, use the `events` setting to fetch from a feed
+                    eventDisplay='list'
+                    select={handleDateSelect}
+                    eventContent={renderEventContent} // custom render function
 
-            {React_Custom.Divider()}
-
-            {/* call update to filter for selected date */}
-            {console.log(events)}
-
-            <FullCalendar 
+                    eventsSet={handleEvents} // called after events are initialized/added/changed/removed
+                    
+                    /* you can update a remote database when these fire:
+                    eventAdd={function(){}}
+                    eventChange={function(){}}
+                    eventRemove={function(){}}
+                    */
+                />
+            </div>
+        )
+    }
+    const getTimeline = () => {
+        return (
+            <div className="-AppContent">
+                <FullCalendar 
                 plugins={[resourceTimelinePlugin]}
                 schedulerLicenseKey='CC-Attribution-NonCommercial-NoDerivatives'
                 timeZone='UTC'
@@ -139,6 +152,18 @@ const CalendarPane = (props) => {
                 resources={Event.resources()}
                 events={events}
             />
+            </div>
+        )
+    }
+
+
+    return (
+        <div className='CalendarPane-basicCalendar-container'>
+            {getCalendar()}
+
+            {React_Custom.Divider()}
+
+            {getTimeline()}
         </div>
     )
 }

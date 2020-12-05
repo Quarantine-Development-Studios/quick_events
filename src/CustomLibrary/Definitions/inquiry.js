@@ -1,30 +1,34 @@
+import Message from './message.js';
+
 
 class Inquiry { 
     constructor(dataObj) {
-        this.name = ("");
-        this.email = "";
-        this.phone = "";
+        this.name = (dataObj.name) ? dataObj.name : "";
+        this.email = (dataObj.email) ? dataObj.email : "";
+        this.phone = (dataObj.phone) ? dataObj.phone : "";
 
-        this.eventTitle = "";
+        this.eventTitle = (dataObj.eventTitle) ? dataObj.eventTitle : "";
         this.eventStatus = (dataObj.eventStatus) ? dataObj.eventStatus  : 'lead';
-        this.guestCount = "";
-        this.eventDate = "";
-        this.room = "";
+        this.guestCount = (dataObj.guestCount) ? dataObj.guestCount : "";
+        this.eventDate = (dataObj.eventDate) ? dataObj.eventDate : "";
+        this.room = (dataObj.room) ? dataObj.room : "";
 
         this.startTime = "12:00";
         this.stopTime = "15:00";           
 
-        this.company = "";
+        this.company = (dataObj.company) ? dataObj.company : "";
         
-        this.dateRecieved = "";
-        this.source = "";
-        this.sourceLocation = "";
+        this.dateRecieved = (dataObj.dateRecieved) ? dataObj.dateRecieved : "";
+        this.source = (dataObj.source) ? dataObj.source : "";
+        this.sourceLocation = (dataObj.sourceLocation) ? dataObj.sourceLocation : "";
         
         //this.calendarSlot = "";
         //this.agreement = {};
         //this.tableMenu = {};
-        //this.coorespondence = [];
 
+        this.coorespondence = [];
+
+        //
         if(dataObj){
             for(const [key, value] of Object.entries(dataObj)){
                 this[key] = value;
@@ -41,25 +45,19 @@ class Inquiry {
         }
         return new Inquiry(dataObj);
     }
-    
-    getBaseProps(){
-        const rInfo = {};
-        for(const [key, value] of Object.entries(this.basicInfo)){
-            let k = key.charAt(0).toUpperCase() + key.slice(1);
-            k = k.replace(/([A-Z])/g, ' $1').trim()
-            rInfo[k] = value;
-        }
-        return rInfo;
-    }
+
 
 
     toJSON(){
-        const rInfo = {};
         const basicInfo = {
+            //items will appear in the oder they are here
+            //name, email, and phone are required as they are binded to client when inquiry is created
             name:           this.name,
             email:          this.email,
             phone:          this.phone,
-    
+
+
+
             eventTitle:     this.eventTitle,
             eventStatus:    this.eventStatus,
             guestCount:     this.guestCount,
@@ -76,12 +74,10 @@ class Inquiry {
             sourceLocation: this.sourceLocation
         }
 
-        for(const[key, value] of Object.entries(basicInfo)){
-            rInfo[key] = value;
-        }
-
-        return rInfo;
+        return basicInfo;
     }
+
+    
 }
 
 export default Inquiry;

@@ -6,10 +6,24 @@ import React_Custom, {
     Definitions} from '../../../CustomLibrary/ReactComponent_Custom.js';
 import './InquiryInfo.css';
 
-const InquiryInfo = (props) => {
-    const rootName = 'InquiryInfo'
 
-    const [displayActual, setDisplayActual] = useState(null);
+
+/**
+ * 
+ * @param {*} props
+ * Used Props:
+ * @property {String} rootName
+ * @property {String} selectedClient: Client Identifier for matching with database entries
+ * @property {Client} client: full compiled client for parsing out Client information
+ * @property {Array}  inquiries: Array of inquiries RAW from database
+ * @property {String} selectedInquiry: Inquiry Identifire for matching with database entries
+ * 
+ */
+
+const InquiryInfo = (props) => {
+    const rootName = props.rootName + '-InquiryInfo';
+
+    const [display, setDisplay] = useState(null);
 
 
     //expand/collapse drawer container
@@ -19,6 +33,8 @@ const InquiryInfo = (props) => {
             && props.client 
             && props.client.inquiries
             ) {
+
+            //#region tools
             const filterRelatedInquiries = (inquiries, fieldArray, filterField) => {
                 const rInquiries = [];
         
@@ -35,10 +51,13 @@ const InquiryInfo = (props) => {
         
                 return rInquiries;
             }
-            const compressKey = (key) => {
+            const decompressKey = (key) => {
                 let _key = key.replace(/([A-Z])/g, ' $1').trim();
                 return (_key.charAt(0).toUpperCase() + _key.slice(1));
             }
+            //#endregion
+
+            //#region callbacks
             const drawerHandle = (e) => {
                 const value = e.target.innerText;
         
@@ -55,7 +74,6 @@ const InquiryInfo = (props) => {
         
                 React_Custom.dbSetValue('inquiries', props.selectedInquiry, fieldKey, e.target.value)
             }
-
             const updateDropDownDBField = (e) => {
                 const selectedIndex = e.target.selectedIndex;
                 const fieldKey = e.target.attributes.callbackpointer.value;
@@ -63,15 +81,51 @@ const InquiryInfo = (props) => {
 
                 React_Custom.dbSetValue('inquiries', props.selectedInquiry, fieldKey, value)
             }
+            //#endregion
 
-
+            //#region DropDown Content Creation
+            const buildDresser = (inquiries) => {
+                if(inquiries){
+                    const drawers = [];
+                    
+                    //push drawer for each inquiry
+                    for(let i = 0; i < inquiries.length; i++){
+                        drawers.push(buildDrawer(inquiries[i], i));
+                    }
+        
+        
+                    return (
+                        <ReactDresser
+                            rootName = {rootName}
+                            title = {'Inquiries'}
+                            drawers = {drawers}
+        
+                        />
+                    )
+                }
+            }
+            const buildDrawer = (inquiry, index) => {
+                const fields = getInquiryFields(inquiry);
+        
+                return (
+                    <ReactDrawer
+                        rootName = {rootName}
+                        labelText = {inquiry.eventTitle + ' - ' + inquiry.eventDate}
+                        onExpand = {drawerHandle}
+                        callbackPointer = {inquiry.id}
+                        contentHtml = {fields}
+                        drawerNumber = {index}
+                        isExpanded = {(props.selectedInquiry === inquiry.id)}
+                    />
+                )
+            }
             const getInquiryFields = (inquiry) => {
                 const reactFields = [];
                 const _inquiry = new Definitions.Inquiry(inquiry);
         
                 for(const [key, value] of Object.entries(_inquiry.toJSON())){
                     let inputType = '';
-                    const cKey = compressKey(key);
+                    const cKey = decompressKey(key);
         
                     if(cKey.toLowerCase().includes('date')){
                         inputType = 'date';
@@ -87,7 +141,7 @@ const InquiryInfo = (props) => {
                             resourceArray.push(value);
                         }
 
-                        inputType = 'dropDown' 
+                        inputType = 'DropDown' 
                     }
         
                     if (cKey !== 'Inquiries' && 
@@ -112,49 +166,13 @@ const InquiryInfo = (props) => {
                 }
                 return reactFields;
             }
-
-
-            const buildDrawer = (inquiry, index) => {
-                const fields = getInquiryFields(inquiry);
-        
-                return (
-                    <ReactDrawer
-                        rootName = {rootName}
-                        labelText = {inquiry.eventTitle + ' - ' + inquiry.eventDate}
-                        onExpand = {drawerHandle}
-                        callbackPointer = {inquiry.id}
-                        contentHtml = {fields}
-                        drawerNumber = {index}
-                        isExpanded = {(props.selectedInquiry === inquiry.id)}
-                    />
-                )
-            }
-            const buildDresser = (inquiries) => {
-                if(inquiries){
-                    const drawers = [];
-                    
-                    //push drawer for each inquiry
-                    for(let i = 0; i < inquiries.length; i++){
-                        drawers.push(buildDrawer(inquiries[i], i));
-                    }
-        
-        
-                    return (
-                        <ReactDresser
-                            rootName = {rootName}
-                            title = {'Inquiries'}
-                            drawers = {drawers}
-        
-                        />
-                    )
-                }
-            }
+            //#endregion
 
             const relatedInquiries = filterRelatedInquiries(props.inquiries, props.client.inquiries, 'id');
             const dresser = buildDresser(relatedInquiries);
-            setDisplayActual(dresser);
+            setDisplay(dresser);
         } else {
-            setDisplayActual(null)
+            setDisplay(null)
         }
     }, [props])
 
@@ -162,7 +180,7 @@ const InquiryInfo = (props) => {
 
     return (
         <div className={rootName + "-content"}>
-            {displayActual}
+            {display}
         </div>
     )
 }
