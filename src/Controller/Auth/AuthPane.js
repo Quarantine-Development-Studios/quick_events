@@ -30,17 +30,19 @@ const AuthPane = () => {
 
     return (
         <div className="App-Window AuthPane">
-            <div className="AuthPane-titlebar">
-                <label className="AuthPane-titlebar-label">Login:</label>
-            </div>
-            <form /* onSubmit={e => handleForm(e)} */>
-                
-                <hr />
-                <label className="AuthPane -label">Please Authenticate with Google to Continue. No authentication data will be used or distributed. This Module is for Showing a Working Authentication FrontEnd for User Evaluations Only.</label>
-                <button onClick={ () => handleGoogleLogin()} className="Btn" type="button" >
+            <div className="-AppContent">
+                <div className="AuthPane-titlebar">
+                    <label className="AuthPane-titlebar-label">Login:</label>
+                </div>
+                <form /* onSubmit={e => handleForm(e)} */>
+                    
+                    <hr />
+                    <label className="AuthPane -label">Please Authenticate with Google to Continue. No authentication data will be used or distributed. This Module is for Showing a Working Authentication FrontEnd for User Evaluations Only.</label>
+                    <button onClick={ () => handleGoogleLogin()} className="Btn" type="button" >
 
-                </button>
-            </form>
+                    </button>
+                </form>
+            </div>
         </div>
     )
 

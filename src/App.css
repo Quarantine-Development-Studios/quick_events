@@ -48,11 +48,17 @@
   color: #61dafb;
 }
 
+@viewport {
+  zoom: 0.75;
+}
+
 .App-Window {
   display: flex;
   flex-direction: column;
   order: 1;
-  flex-basis: 100vw;
+  flex-basis: 90vw;
+  flex-grow: 1;
+  flex-shrink: 1;
 
   min-width: 300px;
   max-width: 450px;
