@@ -6,7 +6,7 @@
   height: 4.75vh;
 
   flex-direction: column;
-  width: 100vw;
+  width: 100%;
   justify-content: top;
   font-size: calc(10px + 2vmin);
   color: white;

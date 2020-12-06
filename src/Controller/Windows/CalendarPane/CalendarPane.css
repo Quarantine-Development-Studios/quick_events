@@ -29,3 +29,25 @@
 .cal-popup-disp-item {
     margin-left: 5px !important;
 }
+
+.fc-button {
+    max-height: 30px;
+    padding-top: 1px !important;
+    font-size: .25em;
+    margin-bottom: 3px !important;   
+}
+.fc-toolbar-title {
+    font-size: 1.25em !important;
+}
+.fc table {
+    font-size: .85em;
+}
+.fc-daygrid-day-number {
+    padding-top:1px !important;
+    padding-bottom: 1px !important;
+}
+
+.fc-event-main {
+    font-size: .3em;
+    overflow: hidden;
+}

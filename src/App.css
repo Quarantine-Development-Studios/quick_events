@@ -5,26 +5,12 @@
   background-color: #0052d5;
 
   min-height: 100vh;
+  min-width: fit-content;
+  max-width: 100%;
   
   height: auto;
 }
 
-.App-divider {
-  display: flex;
-  align-self: center;
-
-  margin: 5px;
-  border-top: black;
-  border-style: solid;
-  border-top-width: 1px;
-  border-bottom-width: 1px;
-  
-  border-left-width: 0px;
-  border-right-width: 0px;
-
-  height: 4px;
-  width: 95%;
-}
 
 
 .App-header-menu {
@@ -61,7 +47,7 @@
   flex-shrink: 1;
 
   min-width: 300px;
-  max-width: 450px;
+  max-width: 400px;
   
   max-height: 90vh;
   min-height: 90vh;
@@ -71,31 +57,70 @@
   margin-bottom: 15px;
 
 
-  background-color: #40a5b3;
+  background-color: #219cac;
   border: black;
-  border-style: solid;
-  border-radius: 10px;
+  border-style: none;
+  border-radius: 0px;
   border-width: 1px;
 }
 
+
 .-AppContent {
-  border-style: ridge;
-  background-color: rgba(156, 181, 214, 0.776) !important;
+  border-style: none;
+  background-color: rgba(156, 181, 214, 0.66) !important;
   padding: 2px;
+}
+
+.App-divider {
+  display: flex;
+  align-self: center;
+
+  margin-top: 5px;
+  margin-bottom: 5px;
+
+  background-color: rgba(156, 181, 214, 0.776);
+  border-color: rgba(0, 0, 0, 0.304);
+  border-style: solid;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+  
+  border-left-width: 0px;
+  border-right-width: 0px;
+
+  height: 5px;
+  width: 100%;
 }
 
 .control-Bar {
   position: relative;
   top: 0vh; left: 0vw;
-  background-color: azure;
-  height: 2vh;
+  background-color: rgba(240, 255, 255, 0.365);
+  height: 30px;
   border-color: black;
   border-width: 1px !important;
-  border-bottom: solid;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-bottom: none;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  justify-content: center;
 
   text-align: right;
+}
+
+.App-Window-Title {
+  float:left;
+  margin: 5px;
+  margin-left: 1vw;
+  margin-right: 1vw;
+  left: 1vw;
+  font-size: 1em;
+  font-weight: bold;
+
+}
+
+.App-Window-CloseBtn {
+  position: relative;
+  top: 6px; right:5px;
+  float: right;
 }
 
 .App-Border1{
@@ -104,21 +129,6 @@
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
-}
-
-.App-Window-Title {
-  float:left;
-  margin-left: 1vw;
-  margin-right: 1vw;
-  left: 1vw;
-  font-size: 1.5vh;
-  font-weight: bold;
-
-}
-.App-Window-CloseBtn {
-  position: relative;
-  top: 1px; right:5px;
-  float: right;
 }
 
 .-button {
