@@ -97,12 +97,25 @@ const ContentPane = (props) => {
     }
     
     const tryShowCalendar = () => {
+
+        const handleInquiryFromCalendar = (InquiryID) => {
+            //find related client and select that first
+            const newClient = clients.filter(
+                //grab first match
+                client => client.inquiries.includes(InquiryID))[0];
+
+            setSelectedClient(newClient.id);
+            setSelectedInquiry(InquiryID);
+
+        }
+
         if(inquiries && inquiries[0]) { //temporary
             return ( 
                 <div className='CalendarPane App-Window'>
                     {qds_Custom.WindowControlBar("Calendar")} 
                     <CalendarPane
                         inquiries = {inquiries}
+                        setSelectedInquiry = {handleInquiryFromCalendar}
                     /> 
                 </div>
             )

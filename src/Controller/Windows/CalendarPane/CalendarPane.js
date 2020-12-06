@@ -56,8 +56,17 @@ const CalendarPane = (props) => {
         calendarApi.unselect() // clear date selection
     }
 
-    const handleEvents = (events) => {
+    const handleEvent = (event) => {
+        console.log(event)
+    }
 
+    const handleEvents = (events) => {
+        // called after events are initialized/added/changed/removed   
+
+    }
+
+    const logEvent = (eventInfo) => {
+        props.setSelectedInquiry(eventInfo.event.id)
     }
 
     const  renderEventContent = (eventInfo) => {
@@ -116,7 +125,10 @@ const CalendarPane = (props) => {
                     events={events} // alternatively, use the `events` setting to fetch from a feed
                     eventDisplay='list'
                     select={handleDateSelect}
+                    eventClick={logEvent}
+                    eventChange={(e) => {console.log(e)}}
                     eventContent={renderEventContent} // custom render function
+                    eventLimit='0'
 
                     eventsSet={handleEvents} // called after events are initialized/added/changed/removed
                     
@@ -133,24 +145,25 @@ const CalendarPane = (props) => {
         return (
             <div className="-AppContent">
                 <FullCalendar 
-                plugins={[resourceTimelinePlugin]}
-                schedulerLicenseKey='CC-Attribution-NonCommercial-NoDerivatives'
-                timeZone='UTC'
-                initialView='resourceTimelineDay'
-                aspectRatio= {1.7}
-                slotMinWidth= {25}
-                scrollTime='8:00:00'
-                headerToolbar= {{
-                    left: 'prev,next',
-                    center: 'title',
-                    right: 'resourceTimelineDay'
-                }}
-                editable= {true}
-                resourceAreaColumns={resourceAreaColumns}
-                resourceOrder= 'tOrder'
-                resources={Definitions.Event.resources()}
-                events={events}
-            />
+                    plugins={[resourceTimelinePlugin]}
+                    schedulerLicenseKey='CC-Attribution-NonCommercial-NoDerivatives'
+                    timeZone='UTC'
+                    initialView='resourceTimelineDay'
+                    aspectRatio= {1.7}
+                    slotMinWidth= {25}
+                    scrollTime='8:00:00'
+                    headerToolbar= {{
+                        left: 'prev,next',
+                        center: 'title',
+                        right: 'resourceTimelineDay'
+                    }}
+                    editable= {true}
+                    resourceAreaColumns={resourceAreaColumns}
+                    resourceOrder= 'tOrder'
+                    resources={Definitions.Event.resources()}
+                    events={events}
+                    eventClick={logEvent}
+                />
             </div>
         )
     }
