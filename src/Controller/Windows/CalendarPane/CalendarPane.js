@@ -36,6 +36,34 @@ const CalendarPane = (props) => {
         }
     }
 
+    const handleEventChange = (apiResponse) => {
+        if(apiResponse.oldEvent && apiResponse.event){
+            const eventDbId = apiResponse.event.id;
+
+            const oldEvent = apiResponse.oldEvent;
+            const newEvent = apiResponse.event;
+            
+            const oldStartDate = oldEvent.startStr.split('T');
+            const newStartDate = newEvent.startStr.split('T');
+
+            const oldEndDate = oldEvent.endStr.split('T');
+            const newEndDate = newEvent.endStr.split('T');
+
+            //compare dates [0]
+            if(newStartDate[0] !== oldStartDate[0]){
+                qds_Custom.dbSetValue('inquiries', eventDbId, 'eventDate', newStartDate[0]);
+            }
+
+            //compare times [1]
+            if(newStartDate[1] !== oldStartDate[1]){
+                qds_Custom.dbSetValue('inquiries', eventDbId, 'startTime', newStartDate[0]);
+            }
+            if(newEndDate[1] !== oldEndDate[1]){
+                qds_Custom.dbSetValue('inquiries', eventDbId, 'stopTime', newStartDate[0]);
+            }
+        }
+    }
+
     const handleDateSelect = (selectInfo) => {
         console.log(selectInfo);
         const selectedDate = selectInfo.startStr;
@@ -48,7 +76,7 @@ const CalendarPane = (props) => {
             dat: subDateArray[2]
         }
         console.log(dateObj);
-        
+    
 
         //prompt(selectInfo.startStr)
         let calendarApi = selectInfo.view.calendar
@@ -65,7 +93,7 @@ const CalendarPane = (props) => {
 
     }
 
-    const logEvent = (eventInfo) => {
+    const selectEvent = (eventInfo) => {
         props.setSelectedInquiry(eventInfo.event.id)
     }
 
@@ -125,8 +153,8 @@ const CalendarPane = (props) => {
                     events={events} // alternatively, use the `events` setting to fetch from a feed
                     eventDisplay='list'
                     select={handleDateSelect}
-                    eventClick={logEvent}
-                    eventChange={(e) => {console.log(e)}}
+                    eventClick={selectEvent}
+                    eventChange={handleEventChange}
                     eventContent={renderEventContent} // custom render function
                     eventLimit='0'
 
@@ -157,12 +185,14 @@ const CalendarPane = (props) => {
                         center: 'title',
                         right: 'resourceTimelineDay'
                     }}
-                    editable= {true}
+                    editable={true}
+                    eventStartEditable={true}
+                    selectable= {true}
                     resourceAreaColumns={resourceAreaColumns}
                     resourceOrder= 'tOrder'
                     resources={Definitions.Event.resources()}
                     events={events}
-                    eventClick={logEvent}
+                    eventClick={selectEvent}
                 />
             </div>
         )
