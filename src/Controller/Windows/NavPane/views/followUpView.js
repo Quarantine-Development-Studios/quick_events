@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import React_Custom from '../../../../CustomLibrary/ReactComponent_Custom';
+import qds_Custom from '../../../resources/qds_Library/qds_custom';
 
 
 const FollowUpPane = (props) => {

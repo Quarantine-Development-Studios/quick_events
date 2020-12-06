@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
-import React_Custom, {
+import qds_Custom, {
     ReactDresser, 
     ReactDrawer, 
     ReactField, 
-    Definitions} from '../../../CustomLibrary/ReactComponent_Custom.js';
+    Definitions} from '../../resources/qds_Library/qds_custom.js';
 import './InquiryInfo.css';
 
 
@@ -72,14 +72,14 @@ const InquiryInfo = (props) => {
             const updateDBField = (e) => {
                 const fieldKey = e.target.attributes['callbackpointer'].value;
         
-                React_Custom.dbSetValue('inquiries', props.selectedInquiry, fieldKey, e.target.value)
+                qds_Custom.dbSetValue('inquiries', props.selectedInquiry, fieldKey, e.target.value)
             }
             const updateDropDownDBField = (e) => {
                 const selectedIndex = e.target.selectedIndex;
                 const fieldKey = e.target.attributes.callbackpointer.value;
                 const value = e.target[selectedIndex].attributes.callbackpointer.value;
 
-                React_Custom.dbSetValue('inquiries', props.selectedInquiry, fieldKey, value)
+                qds_Custom.dbSetValue('inquiries', props.selectedInquiry, fieldKey, value)
             }
             //#endregion
 

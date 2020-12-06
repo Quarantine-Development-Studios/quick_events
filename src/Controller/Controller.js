@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import React_Custom from '../CustomLibrary/ReactComponent_Custom.js';
 import TitleBar from './TitleBar/TitleBar.js';
 import ContentPane from './ContentPane/ContentPane.js';
 import AuthPane from './Auth/AuthPane.js';
-import {firebaseConfig} from '../firebase/firebase.js';
+import {firebaseConfig} from './resources/firebase/firebase.js';
 
 export const AuthContext = React.createContext(null);
 

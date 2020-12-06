@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import React_Custom, {ReactField, Definitions} from '../../../CustomLibrary/ReactComponent_Custom.js';
-import CC from '../../../CustomLibrary/Object_Custom.js';
+import qds_Custom, {ReactField, Definitions} from '../../resources/qds_Library/qds_custom.js';
+import CC from '../../resources/qds_Library/qds_deps.js';
 
 const ClientInfo = (props) => {
     const rootName = 'ClientInfo'
@@ -17,13 +17,11 @@ const ClientInfo = (props) => {
             let _key = key.replace(/([A-Z])/g, ' $1').trim();
             return (_key.charAt(0).toUpperCase() + _key.slice(1));
         }
-        const updateDB = (e) => {
-            console.log(e)
-    
+        const updateDB = (e) => {    
             const fieldKey = e.target.attributes['callbackpointer'].value;
-    
-            React_Custom.dbSetValue('clients', props.selectedClient, fieldKey, e.target.value)
-            React_Custom.dbUpdateLinkedInquiries(props.client, fieldKey, e.target.value);
+
+            qds_Custom.dbSetValue('clients', props.selectedClient, fieldKey, e.target.value)
+            qds_Custom.dbUpdateLinkedInquiries(props.client, fieldKey, e.target.value);
         }
         //#endregion
 
@@ -43,7 +41,7 @@ const ClientInfo = (props) => {
                         labelText = {cKey}
                         value = {value}
                         onSubmit = {updateDB}
-                        callbackPointer = {cKey}
+                        callbackPointer = {key}
                         inputType = {inputType}
 
                     />
@@ -57,7 +55,7 @@ const ClientInfo = (props) => {
     //#region Inquiry Handling
     const createInquiry = (e) => {
         let newInquiry = Definitions.Inquiry.createInquiryByClient(props.client);
-        React_Custom.dbInsertEntry('inquiries', newInquiry, linkInquiry)
+        qds_Custom.dbInsertEntry('inquiries', newInquiry, linkInquiry)
     }
 
     const removeInquiry = (e) => {
@@ -76,10 +74,10 @@ const ClientInfo = (props) => {
             }
             
             //unlink from client
-            React_Custom.dbSetValue('clients', clientID, 'inquiries', newLinkedInquiries);
+            qds_Custom.dbSetValue('clients', clientID, 'inquiries', newLinkedInquiries);
 
             //remove from inquiries collection
-            React_Custom.dbRemoveEntry('inquiries', inquiryID);
+            qds_Custom.dbRemoveEntry('inquiries', inquiryID);
             props.setSelectedInquiry('');
         }
     }
@@ -96,7 +94,7 @@ const ClientInfo = (props) => {
             //push id to array
             newArray.push(id);
             //insert into db
-            React_Custom.dbSetValue('clients', client.id, 'inquiries', newArray);
+            qds_Custom.dbSetValue('clients', client.id, 'inquiries', newArray);
             //select the inquiry to auto display it
             props.setSelectedInquiry(id);
         }
@@ -111,10 +109,9 @@ const ClientInfo = (props) => {
     return (
         <div className={rootName + "-content -AppContent"}>
             {display}
-            {React_Custom.getButtons(buttonReqs, rootName)}
+            {qds_Custom.getButtons(buttonReqs, rootName)}
         </div>
     )
-
 }
 
 export default ClientInfo;

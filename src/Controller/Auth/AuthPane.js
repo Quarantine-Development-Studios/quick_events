@@ -1,9 +1,7 @@
-import React, {useState, useContext} from 'react';
-import ReactComponent_Custom from '../../CustomLibrary/ReactComponent_Custom.js';
+import React, {useContext} from 'react';
 import firebase from 'firebase/app';
 import {AuthContext} from '../Controller.js';
 import './AuthPane.css';
-import Controller from '../Controller.js';
 
 const AuthPane = () => {
 

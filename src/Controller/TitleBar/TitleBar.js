@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './TitleBar.css';
-import ReactComponent_Custom from '../../CustomLibrary/ReactComponent_Custom.js';
+import qds_Custom from '../resources/qds_Library/qds_custom.js';
 
 
 const TitleBar = () => {

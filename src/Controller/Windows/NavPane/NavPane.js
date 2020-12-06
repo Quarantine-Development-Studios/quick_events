@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import React_Custom, { Definitions, ReactField }from '../../../CustomLibrary/ReactComponent_Custom.js';
+import qds_Custom, { Definitions, ReactField }from '../../resources/qds_Library/qds_custom.js';
 import './NavPane.css';
-import CC from '../../../CustomLibrary/Object_Custom.js';
+import CC from '../../resources/qds_Library/qds_deps.js';
 
 //views
 import ClientDirectoryView from './views/clientDirectoryView.js'; //default view
@@ -22,24 +22,24 @@ const NavPane = (props) => {
 
     const createClient = (e) => {
         let newClient = new Definitions.Client();
-        React_Custom.dbInsertEntry('clients', newClient, selectClient);
+        qds_Custom.dbInsertEntry('clients', newClient, selectClient);
     }
     
     const removeClient = (e) => { 
         if(props.selectedClient !== ""){
             console.log('attempting to remove Client')
 
-            const client = React_Custom.getEntry(props.clients, props.selectedClient)
+            const client = qds_Custom.getEntry(props.clients, props.selectedClient)
             if(client.inquiries){
                 for(let i = 0; i < client.inquiries.length; i++){
                     console.log('removing inquiry: ' + client.inquiries[i])
-                    React_Custom.dbRemoveEntry('inquiries', client.inquiries[i])
+                    qds_Custom.dbRemoveEntry('inquiries', client.inquiries[i])
                 }
             }
 
             const selectedClientCache = props.selectedClient;
             props.setSelectedClient("");
-            React_Custom.dbRemoveEntry('clients', selectedClientCache);
+            qds_Custom.dbRemoveEntry('clients', selectedClientCache);
         }
     }
 
@@ -64,7 +64,7 @@ const NavPane = (props) => {
         const rItems = [];
         let i = 0;
         for(const [key, ButtonReq] of Object.entries(buttonReqs)){
-            const btn = React_Custom.ReactButton(ButtonReq, rootName, rootName + '-button-' + i);
+            const btn = qds_Custom.ReactButton(ButtonReq, rootName, rootName + '-button-' + i);
             rItems.push(btn)
             i++;
         }
@@ -143,14 +143,14 @@ const NavPane = (props) => {
   
     return (
         <div className="App-Window NavPane">
-            {React_Custom.WindowControlBar("Navigation")}
+            {qds_Custom.WindowControlBar("Navigation")}
             <div className="NavPane-header -AppContent">
                 {getControlBar()}
                 {getButtons(buttonReqs)}
             </div>
 
 
-            {React_Custom.Divider()}
+            {qds_Custom.Divider()}
 
             {showViewSelectHeader()}
 

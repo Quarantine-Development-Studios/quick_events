@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
-import React_Custom from '../../CustomLibrary/ReactComponent_Custom.js';
+import qds_Custom from '../resources/qds_Library/qds_custom.js';
 import './ContentPane.css';
 import NavPane from '../Windows/NavPane/NavPane.js';
 import ClientPane from '../Windows/ClientPane/ClientPane.js';
 import CalendarPane from '../Windows/CalendarPane/CalendarPane.js';
 
-import rxInquiries from '../../firebase/rxInquiries.js';
-import rxClients from '../../firebase/rxClients';
+import rxInquiries from '../resources/firebase/rxInquiries.js';
+import rxClients from '../resources/firebase/rxClients';
 
 export const ViewingContext = React.createContext(null);
 
@@ -65,25 +65,27 @@ const ContentPane = (props) => {
 
     const tryShowClientPane = () => {
         if (viewingClient && selectedClient !== "") {
-            const client_res = React_Custom.getEntry(clients, selectedClient)
+            const client_res = qds_Custom.getEntry(clients, selectedClient)
 
             if(client !== client_res){
+                console.log('setting client in content pane')
                 setClient(client_res);
+            } else {
+                console.log(['client:', client])
+                return (  
+                    <ClientPane key="ClientPane"
+                        client = {client_res}
+                        clients = {clients}
+                        viewingClient = {viewingClient}
+                        selectedClient = {selectedClient}
+                        
+                        inquiries = {inquiries}
+                        viewingInquiry = {viewingInquiry} 
+                        selectedInquiry = {selectedInquiry}                    
+                        setSelectedInquiry = {setSelectedInquiry}
+                    />
+                );
             }
-
-            return (  
-                <ClientPane key="ClientPane"
-                    client = {client}
-                    clients = {clients}
-                    viewingClient = {viewingClient}
-                    selectedClient = {selectedClient}
-                    
-                    inquiries = {inquiries}
-                    viewingInquiry = {viewingInquiry} 
-                    selectedInquiry = {selectedInquiry}                    
-                    setSelectedInquiry = {setSelectedInquiry}
-                />
-            );
         } else {
             if(selectedInquiry !== ""){
                 setSelectedInquiry("");
@@ -96,10 +98,9 @@ const ContentPane = (props) => {
     
     const tryShowCalendar = () => {
         if(inquiries && inquiries[0]) { //temporary
-            console.log('inquiries loaded, showing CalendarPane')
             return ( 
                 <div className='CalendarPane App-Window'>
-                    {React_Custom.WindowControlBar("Calendar")} 
+                    {qds_Custom.WindowControlBar("Calendar")} 
                     <CalendarPane
                         inquiries = {inquiries}
                     /> 
@@ -119,7 +120,6 @@ const ContentPane = (props) => {
             {tryShowCalendar()}
         </div>
     )
-    
 }
 
 export default ContentPane;

@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import React_Custom, { Definitions } from '../../../CustomLibrary/ReactComponent_Custom.js';
+import qds_Custom, { Definitions } from '../../resources/qds_Library/qds_custom.js';
 import './ClientPane.css';
-import CC from '../../../CustomLibrary/Object_Custom.js';
+import CC from '../../resources/qds_Library/qds_deps.js';
 import InquiryInfo from './InquiryInfo.js';
 import ClientInfo from './ClientInfo.js';
 
 const ClientPane = (props) => {
-    console.log('ClientPane Loaded')
     const rootName = 'ClientPane';
 
-    const [client, setClient] = useState(null);
+    const [client, setClient] = useState(props.client);
     const [inquiry, setInquiry] = useState(null);
 
 
@@ -24,7 +23,7 @@ const ClientPane = (props) => {
     //check inquiry accurately reflects selected Inquiry on "props.selectedInquiry" change/update
     useEffect(() => {
         if(props.selectedInquiry !== "") {
-            const newInquiry = React_Custom.getEntry(props.inquiries, props.selectedInquiry);
+            const newInquiry = qds_Custom.getEntry(props.inquiries, props.selectedInquiry);
     
             if(inquiry !== newInquiry){
                 setInquiry(newInquiry);
@@ -42,6 +41,7 @@ const ClientPane = (props) => {
      * @attribute callbackpointer {String} nested attribute of target element
      */
     const setValue = (event) => {
+
         if(event.target.attributes.callbackpointer){
             const cbPointer = event.target.attributes['callbackpointer'].value;
             const value = event.target.value;
@@ -77,15 +77,15 @@ const ClientPane = (props) => {
                     const dbCKey = props.selectedClient;
 
 
-                    React_Custom.dbSetValue(dbCRootKey, dbCKey, fieldKey, value); 
-                    const client = React_Custom.getEntry(props.clients, props.selectedClient);
+                    qds_Custom.dbSetValue(dbCRootKey, dbCKey, fieldKey, value); 
+                    const client = qds_Custom.getEntry(props.clients, props.selectedClient);
 
                     if(client){
-                        React_Custom.dbUpdateLinkedInquiries(client, fieldKey, value); 
+                        qds_Custom.dbUpdateLinkedInquiries(client, fieldKey, value); 
                     }
                 } else {
 
-                    React_Custom.dbSetValue(dbRootKey, dbKey, fieldKey, value)
+                    qds_Custom.dbSetValue(dbRootKey, dbKey, fieldKey, value)
                 }
             } else {
                 console.log( ['improper input : ', {dbRootKey, dbKey, fieldKey, value}] )
@@ -94,16 +94,15 @@ const ClientPane = (props) => {
             console.log('"setValue()" requires "callbackpointer" attribute of element to be set for proper database entry.')
         }
     }
- 
 
     return (
         <div className={rootName + " App-Window"}>
-            {React_Custom.WindowControlBar("Client Information")}   
+            {qds_Custom.WindowControlBar("Client Information")}   
 
             <ClientInfo
                 rootName = {rootName}
 
-                client = {props.client}
+                client = {client}
                 inquiry = {inquiry}
 
                 selectedClient = {props.selectedClient}
@@ -113,7 +112,7 @@ const ClientPane = (props) => {
             />
             
 
-            {React_Custom.Divider()}
+            {qds_Custom.Divider()}
 
             <InquiryInfo
                 rootName = {rootName}
@@ -127,7 +126,7 @@ const ClientPane = (props) => {
                 setValue = {setValue}
             />
 
-            {React_Custom.Divider()}
+            {qds_Custom.Divider()}
         </div>
     )
     

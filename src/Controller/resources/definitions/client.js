@@ -27,12 +27,17 @@ export default class Client {
     }
     
     static createClientByObj(clientObj){
-        return new Client(
-            clientObj.id,
-            clientObj.name,
-            clientObj.email,
-            clientObj.phone,
-        )
+        if(clientObj){
+            const client = new Client(
+                clientObj.id,
+                clientObj.name,
+                clientObj.email,
+                clientObj.phone,
+            )
+            return client;
+        } else {
+            console.error('!CRITICAL! clientObj is not defined.')
+        }
     }
 
     getInquiries(){

@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import React_Custom, { Definitions } from '../../../CustomLibrary/ReactComponent_Custom.js';
+import qds_Custom, { Definitions } from '../../resources/qds_Library/qds_custom.js';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
 import resourceAreaColumns from './resources/resourceAreaColumns.js';
-import Event from '../../../CustomLibrary/Definitions/event.js';
 import './CalendarPane.css';
 
 const CalendarPane = (props) => {    
@@ -149,7 +148,7 @@ const CalendarPane = (props) => {
                 editable= {true}
                 resourceAreaColumns={resourceAreaColumns}
                 resourceOrder= 'tOrder'
-                resources={Event.resources()}
+                resources={Definitions.Event.resources()}
                 events={events}
             />
             </div>
@@ -161,7 +160,7 @@ const CalendarPane = (props) => {
         <div className='CalendarPane-basicCalendar-container'>
             {getCalendar()}
 
-            {React_Custom.Divider()}
+            {qds_Custom.Divider()}
 
             {getTimeline()}
         </div>

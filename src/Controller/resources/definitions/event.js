@@ -1,7 +1,31 @@
 
 
 class Event {
+    constructor(inquiry_ID, title, startDate_Time, stopDate_Time, status) {
+        const cAlert = (msg) => {
+            return window.alert("!! Event  constructor " + msg + " !!")
+        }
 
+        if(inquiry_ID){    
+            return{
+                id: inquiry_ID,
+                title: (title)       
+                    ? title : cAlert("needs a valid title"),
+                
+                start: (startDate_Time)   
+                    ? startDate_Time : cAlert("needs a valid startDate"),
+
+                end: (stopDate_Time)    
+                    ? stopDate_Time  : cAlert("needs a valid stop Date"),
+                
+                resourceId: Event.statusEnums[status].resourceId, 
+                color: Event.statusEnums[status].color,
+                textColor: Event.statusEnums[status].textColor,
+                borderColor: 'black',
+            }
+        }   
+    }
+    
     //resources for constructor
     static statusEnums = {
         lead: {
@@ -43,35 +67,6 @@ class Event {
 
         return entries;
     }
-
-
-
-
-    constructor(inquiry_ID, title, startDate_Time, stopDate_Time, status) {
-        const cAlert = (msg) => {
-            return window.alert("!! Event  constructor " + msg + " !!")
-        }
-
-        if(inquiry_ID){    
-            return{
-                id: inquiry_ID,
-                title: (title)       
-                    ? title : cAlert("needs a valid title"),
-                
-                start: (startDate_Time)   
-                    ? startDate_Time : cAlert("needs a valid startDate"),
-
-                end: (stopDate_Time)    
-                    ? stopDate_Time  : cAlert("needs a valid stop Date"),
-                
-                resourceId: Event.statusEnums[status].resourceId, 
-                color: Event.statusEnums[status].color,
-                textColor: Event.statusEnums[status].textColor,
-                borderColor: 'black',
-            }
-        }   
-    }
-
 }
 
 export default Event;

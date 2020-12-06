@@ -1,4 +1,4 @@
-import React_Custom from '../../../../CustomLibrary/ReactComponent_Custom.js';
+import qds_Custom from '../../../resources/qds_Library/qds_custom.js';
 
 
 const ClientDirectory = (props) => {
@@ -31,16 +31,16 @@ const ClientDirectory = (props) => {
                             tagMod = '-pointer';
                             
                             //overwrite
-                            const clientLabel = React_Custom.NavLbl(ClientIndex, rootName, text, dbID, selectLbl, tagMod, 'Client', isSelected);
+                            const clientLabel = qds_Custom.NavLbl(ClientIndex, rootName, text, dbID, selectLbl, tagMod, 'Client', isSelected);
                             
                             //establish root label
                             const inquiryLabels = getInquiryLabels(props.clients[ClientIndex]);
                             
                             //pass 
-                            returnData.push(React_Custom.ExpandedNavTree(rootName, clientLabel, inquiryLabels));
+                            returnData.push(qds_Custom.ExpandedNavTree(rootName, clientLabel, inquiryLabels));
                         } else {
                             
-                            const clientLabel = React_Custom.NavLbl(ClientIndex, rootName, text, dbID, selectLbl, tagMod, 'Client', isSelected);
+                            const clientLabel = qds_Custom.NavLbl(ClientIndex, rootName, text, dbID, selectLbl, tagMod, 'Client', isSelected);
                             returnData.push(clientLabel);
                         }
                     }
@@ -92,7 +92,7 @@ const ClientDirectory = (props) => {
 
     const getInquiryLabels = (client) => {
         const inquiryLabels = [];
-        const relatedInquiries = React_Custom.getRelatedInquiries(client, props.inquiries);
+        const relatedInquiries = qds_Custom.getRelatedInquiries(client, props.inquiries);
         const selectedInquiry = props.selectedInquiry;
 
         if (relatedInquiries) {
@@ -109,7 +109,7 @@ const ClientDirectory = (props) => {
                     tagMod = '-pointer';
                 }
 
-                const newLabel = React_Custom.NavLbl(key, rootName + '-nested', text, dbID, selectLbl, tagMod, 'Inquiry');
+                const newLabel = qds_Custom.NavLbl(key, rootName + '-nested', text, dbID, selectLbl, tagMod, 'Inquiry');
 
                 inquiryLabels.push(newLabel);
             }

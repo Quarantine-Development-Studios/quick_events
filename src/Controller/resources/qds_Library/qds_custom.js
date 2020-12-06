@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import firebase from '../firebase/firebase';
-import WindowCloseImg from '../images/WindowClose.png';
-import cClient from './Definitions/client';
-import cInquiry from './Definitions/inquiry';
-import cEvent from './Definitions/event';
+import cClient from '../definitions/client.js';
+import cInquiry from '../definitions/inquiry.js';
+import cEvent from '../definitions/event.js';
+
+import WindowCloseImg from './images/WindowClose.png';
 
 const React_Custom = {
     //#region completed
@@ -122,6 +123,7 @@ const React_Custom = {
     },
 
     dbSetValue: (dbRootKey, dbKey, fieldKey, value) => {
+        console.log([dbRootKey, dbKey, fieldKey, value])
         let entry = firebase.firestore().collection(dbRootKey).doc(dbKey);
         if(fieldKey !== 'id'){
             entry.set(
@@ -323,9 +325,9 @@ export const ReactField = (props) => {
     const rootName = (props.rootName) ? props.rootName : 'ReactField';
     const labelText = (props.labelText) ? props.labelText : 'Unset Label'
     
-    const onSubmit = (props.onSubmit) ? props.onSubmit : () => {};
+    const onSubmit = (props.onSubmit) ? props.onSubmit : () => {console.log('no callback set for onSubmit')};
     
-    const onDropDownSubmit = (props.onDropDownSubmit) ? props.onDropDownSubmit : () => {};
+    const onDropDownSubmit = (props.onDropDownSubmit) ? props.onDropDownSubmit : () => {console.log('no clalback set for onDropDownSubmit')};
 
     const callbackPointer = (props.callbackPointer) ? props.callbackPointer : '';
     const inputType = (props.inputType) ? props.inputType : '';
@@ -342,7 +344,6 @@ export const ReactField = (props) => {
     
     const inputActual = () => {
         if(inputType === 'DropDown'){
-            console.log(selectionResource)
             return (
                 <ReactDropDown
                     name={rootName + '-' + labelText + '-field-dropdown content-input'}
