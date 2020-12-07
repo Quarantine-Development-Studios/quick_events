@@ -179,7 +179,7 @@ const InquiryInfo = (props) => {
 
 
     return (
-        <div className={rootName + "-content"}>
+        <div className={rootName + "-content -lightHighlight"}>
             {display}
         </div>
     )

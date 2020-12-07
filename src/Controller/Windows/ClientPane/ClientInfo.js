@@ -107,10 +107,16 @@ const ClientInfo = (props) => {
     }
 
     return (
-        <div className={rootName + "-content -AppContent"}>
-            {display}
-            {qds_Custom.getButtons(buttonReqs, rootName)}
-        </div>
+        <>
+            {qds_Custom.Divider()}
+            <div className={rootName + "-content -AppContent"}>
+                <label className={rootName + "-header -header"}>Information:</label>
+                <div className="-lightHighlight">
+                    {display}
+                    {qds_Custom.getButtons(buttonReqs, rootName)}
+                </div>
+            </div>
+        </>
     )
 }
 

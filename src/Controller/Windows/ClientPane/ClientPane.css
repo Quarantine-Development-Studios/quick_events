@@ -2,7 +2,7 @@
     position: relative;
 }
 .ClientInfo-content {
-    margin: 10px;
+    margin: 0px;
     padding: 1px;
 }
 
@@ -10,8 +10,8 @@
     flex: auto;
     flex-direction: row;
 
-
     margin: 10px;
+    margin-left: 20px;
 }
 
 .ClientInfo-field-label {
@@ -24,7 +24,7 @@
     position: relative;
     float: right;
 
-    max-width: 175px;
+    width: 60% !important;
     margin-right: 10px;
 }
 

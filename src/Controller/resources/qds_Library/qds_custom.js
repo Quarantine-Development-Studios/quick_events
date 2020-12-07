@@ -223,9 +223,8 @@ const React_Custom = {
         return(
             <div className="control-Bar">
                 <div className="App-Window-Title">
-                    <label >{WindowTitle}</label>
+                    <label className="App-Window-Title-Label">{WindowTitle}</label>
                 </div>
-                <img className="App-Window-CloseBtn" onClick={closingCallback} alt="" src={WindowCloseImg} ></img>
             </div>
         )
     },
@@ -372,7 +371,7 @@ export const ReactField = (props) => {
     return (
         <div className={rootName + "-field"} key={rootName + '-' + labelText}>
             <label 
-                className={rootName + "-field-label content-label"} 
+                className={rootName + "-field-label -content-label"} 
                 key={rootName + '-lbl-' + labelText}
             >
                 {labelText}: 
@@ -388,11 +387,12 @@ export const ReactField = (props) => {
  * 
  * Accepts Options in props:
  * 
- * @constant rootName
- * @constant labelText: for DrawerTitle
- * @constant isExpanded: live feed for expanded state
- * @constant onExpand: callback when expand button is pressed
- * @constant callbackPointer: property for onExpand to identify with
+ * @constant {String} rootName
+ * @constant {String} labelText: for DrawerTitle
+ * @constant {Bool} isExpanded: live feed for expanded state
+ * @constant {Callback} onExpand: callback when expand button is pressed
+ * @property {Callback} onClick: callback for when drawer label is clicked 
+ * @constant {String} callbackPointer: property for onExpand to identify with
  * @constant contentHtml: html
  * @constant drawerNumber: key number
  * @param {*} props 
@@ -405,6 +405,7 @@ export const ReactDrawer = (props) => {
     const labelText = (props.labelText) ? props.labelText : 'Unset Label'
     const onExpand = (props.onExpand) ? props.onExpand : () => {};
     const callbackPointer = (props.callbackPointer) ? props.callbackPointer : '';
+    const onClick = (props.onClick) ? props.onClick : () => {};
     const contentHtml = (props.contentHtml) ? props.contentHtml : [];
     const drawerNumber = (props.drawerNumber) ? props.drawerNumber : '0';
 
@@ -414,17 +415,23 @@ export const ReactDrawer = (props) => {
 
     if(!isExpanded){
         return (
-            <div className={rootName + "-drawer -AppContent"} key={rootName + '-' + drawerNumber}>
-                <label className={rootName + "-drawer-label"}>{labelText}</label>
-                <button className={rootName + "-drawer-expandBtn"} callbackpointer={callbackPointer} onClick={onExpand}>+</button>
+            <div className={rootName + "-drawer"} key={rootName + '-' + drawerNumber}>
+                <label 
+                    className={rootName + "-drawer-label -content-label"}
+                    onClick={onClick}
+                    callbackpointer={callbackPointer}
+                >{labelText}</label>
             </div>
         )
     } else {
         return (
-            <div className={rootName + "-drawer -AppContent"} key={rootName + '-' + drawerNumber}>
+            <div className={rootName + "-drawer"} key={rootName + '-' + drawerNumber}>
                 <div className={rootName + "-drawer-header"}>
-                    <label className={rootName + "-drawer-label"}>{labelText}</label>
-                    <button className={rootName + "-drawer-expandBtn"} callbackpointer={callbackPointer} onClick={onExpand}>-</button>
+                    <label 
+                        className={rootName + "-drawer-label -content-label -selected-content-label"}
+                        onClick={onClick}
+                        callbackpointer={callbackPointer}
+                    >{labelText}</label>
                 </div>
                 <div className={rootName + "-drawerContents"}>
                     {contentHtml}
@@ -451,8 +458,8 @@ export const ReactDresser = (props) => {
 
     if(drawers){
         return (
-            <div className={rootName + "-dresser"}>
-                <label className={rootName + "-header"}>{title}:</label>
+            <div className={rootName + "-dresser -AppContent"}>
+                <label className={rootName + "-header -header"}>{title}:</label>
                 {drawers}
             </div>
         )

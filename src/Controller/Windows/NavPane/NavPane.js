@@ -144,15 +144,19 @@ const NavPane = (props) => {
     return (
         <div className="App-Window NavPane">
             {qds_Custom.WindowControlBar("Navigation")}
+            
+            {qds_Custom.Divider()}
+
             <div className="NavPane-header -AppContent">
                 {getControlBar()}
                 {getButtons(buttonReqs)}
+                {showViewSelectHeader()}
             </div>
 
 
             {qds_Custom.Divider()}
 
-            {showViewSelectHeader()}
+            {qds_Custom.Divider()}
 
             {getContent()}
         </div>

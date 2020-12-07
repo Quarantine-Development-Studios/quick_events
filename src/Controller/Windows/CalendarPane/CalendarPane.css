@@ -26,8 +26,10 @@
     text-align: center;
 }
 
-.cal-popup-disp-item {
-    margin-left: 5px !important;
+.cal-popup-disp-item, .fc-event-title {
+    margin-left: 3px !important;
+    font-weight: 1000;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .fc-button {
@@ -50,4 +52,12 @@
 .fc-event-main {
     font-size: .3em;
     overflow: hidden;
+}
+
+.fc-theme-standard, .fc-scrollgrid, .fc-theme-standard td, .fc-theme-standard th {
+    border-color: white !important;
+}
+
+.fc-view-harness {
+    background-color: #454545;
 }

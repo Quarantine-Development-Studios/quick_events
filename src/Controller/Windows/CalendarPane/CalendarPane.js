@@ -189,8 +189,10 @@ const CalendarPane = (props) => {
 
     return (
         <>
+            {qds_Custom.Divider()}
+
             <div className='CalendarPane-basicCalendar-container'>
-                <div className="-AppContent">
+                <div className="-AppContentFull">
                     {calendar}
                 </div>
             </div>
@@ -198,7 +200,7 @@ const CalendarPane = (props) => {
             {qds_Custom.Divider()}
 
             <div className='CalendarPane-basicCalendar-container'>
-                <div className="-AppContent">
+                <div className="-AppContentFull">
                     {timeline}
                 </div>
             </div>

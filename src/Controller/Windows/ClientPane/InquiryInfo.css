@@ -5,13 +5,9 @@
     margin: 10px;
     padding: 1px;
 }
-.ClientPane-InquiryInfo-header {
-    font-weight: bold;
-    margin-left: 20px;
-}
 
 
-.ClientPane-InquiryInfo-entry-drawer-header {
+.ClientPane-InquiryInfo-drawer-header {
     margin-bottom: 10px;
 }
 
@@ -24,16 +20,22 @@
     order:2;
     margin: 10px;
 }
+.ClientPane-InquiryInfo-drawer-label {
+    background-color: rgba(235, 235, 235, 0.486);
+}
 
 .ClientPane-InquiryInfo-drawerContents {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
+    background-color: rgba(28, 28, 28, 0.644);
+    padding: 2px;
+    margin-left: 10px;
+    padding-top: 5px;
+    border-radius: 10px;
+    color: rgb(215, 215, 215);
 }
 
-.ClientPane-InquiryInfo-drawer-label {
-    font-weight: bold;
-}
 
 .ClientPane-InquiryInfo-drawer-expandBtn {
     float: right;
@@ -65,9 +67,10 @@
 
 .content-input {
     display: block;
-    margin-left: 10px;
+    margin-top: 10px;
+    margin-right: 10px;
     width: 150px;
-    float: right;
+    float: right !important;
 
     background-color: rgba(237, 247, 191, 0.35) !important;
 }

@@ -97,7 +97,7 @@ const ClientPane = (props) => {
 
     return (
         <div className={rootName + " App-Window"}>
-            {qds_Custom.WindowControlBar("Client Information")}   
+            {qds_Custom.WindowControlBar("Client")}   
 
             <ClientInfo
                 rootName = {rootName}

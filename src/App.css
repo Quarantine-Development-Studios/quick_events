@@ -2,7 +2,7 @@
   display: flex;
   flex-wrap: wrap;
 
-  background-color: #0052d5;
+  background-color: #122645;
 
   min-height: 100vh;
   min-width: fit-content;
@@ -52,23 +52,35 @@
   max-height: 90vh;
   min-height: 90vh;
 
-  margin-left: 5px;
-  margin-right: 5px;
+  margin-left: auto;
+  margin-right: auto;
   margin-bottom: 15px;
 
 
-  background-color: #219cac;
-  border: black;
+  background-color: #2d2d2d;
   border-style: none;
-  border-radius: 0px;
+  border-radius: 10px;
   border-width: 1px;
+
+  overflow: hidden;
+  scroll-behavior: auto;
 }
 
 
-.-AppContent {
+.-AppContent, .-AppContentFull {
   border-style: none;
-  background-color: rgba(156, 181, 214, 0.66) !important;
+  background-color: rgba(255, 255, 255, 0.863);
   padding: 2px;
+  margin: 10px;
+
+  border-radius: 10px;
+}
+.-AppContentFull {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  border-radius: 0;
+  background-color: #2d2d2d;
+  color: white;
 }
 
 .App-divider {
@@ -78,8 +90,8 @@
   margin-top: 5px;
   margin-bottom: 5px;
 
-  background-color: rgba(156, 181, 214, 0.776);
-  border-color: rgba(0, 0, 0, 0.304);
+  background-color:  rgba(255, 255, 255, 0.863);
+  border-color: black;
   border-style: solid;
   border-top-width: 1px;
   border-bottom-width: 1px;
@@ -94,8 +106,8 @@
 .control-Bar {
   position: relative;
   top: 0vh; left: 0vw;
-  background-color: rgba(240, 255, 255, 0.365);
-  height: 30px;
+  background-color: rgba(255, 255, 255, 0.863) !important;
+  min-height: 35px;
   border-color: black;
   border-width: 1px !important;
   border-bottom: none;
@@ -107,15 +119,12 @@
 }
 
 .App-Window-Title {
-  float:left;
-  margin: 5px;
-  margin-left: 1vw;
-  margin-right: 1vw;
-  left: 1vw;
+  height: 100%;
+  text-align: center;
   font-size: 1em;
   font-weight: bold;
-
 }
+
 
 .App-Window-CloseBtn {
   position: relative;
@@ -146,8 +155,23 @@
   min-height: 20px;
 }
 
-.test-line {
-  position: absolute;
-  top: 15px;
-  font-size: 20px;
+.-header {
+  font-weight: bold;
+  margin-left: 10px;
+}
+
+.-content-label {
+  font-weight: 500;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.-selected-content-label {
+  background-color: rgba(28, 28, 28, 0.644);
+  border-radius: 10px;
+  color: rgb(215, 215, 215);
+}
+
+.lightHighlight {
+  background-color: rgba(255, 255, 255, 0.133);
 }

@@ -41,13 +41,12 @@
     flex: auto;
     flex-direction: row;
     order: 5;
-    margin: 10px;
     padding: 10px;
     overflow-y: auto;
 }
 
 .NavPane-field {
-    margin-top: 5px;
+    background-color: #424c55 !important;
 }
 
 .NavPane-field-label {

@@ -35,7 +35,7 @@ const ClientDirectory = (props) => {
                             
                             //establish root label
                             const inquiryLabels = getInquiryLabels(props.clients[ClientIndex]);
-                            
+
                             //pass 
                             returnData.push(qds_Custom.ExpandedNavTree(rootName, clientLabel, inquiryLabels));
                         } else {
@@ -96,6 +96,16 @@ const ClientDirectory = (props) => {
         const selectedInquiry = props.selectedInquiry;
 
         if (relatedInquiries) {
+            console.log(relatedInquiries)
+
+            //sort by event date
+            relatedInquiries.sort((inquiryA, inquiryB) => { 
+                  return inquiryA.eventDate.replaceAll('-','') - inquiryB.eventDate.replaceAll('-','')
+
+            })
+
+            console.log(relatedInquiries)
+
             for (let riIndex = 0; riIndex < relatedInquiries.length; riIndex++) {
                 const event = relatedInquiries[riIndex];
                 const key = riIndex;
