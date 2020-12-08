@@ -425,7 +425,7 @@ export const ReactDrawer = (props) => {
         )
     } else {
         return (
-            <div className={rootName + "-drawer"} key={rootName + '-' + drawerNumber}>
+            <div className={rootName + "-drawer -expanded"} key={rootName + '-' + drawerNumber}>
                 <div className={rootName + "-drawer-header"}>
                     <label 
                         className={rootName + "-drawer-label -content-label -selected-content-label"}

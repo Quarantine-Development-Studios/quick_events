@@ -6,9 +6,13 @@
     padding: 1px;
 }
 
+.ClientPane-InquiryInfo-header {
+    text-align: center;
+}
+
 
 .ClientPane-InquiryInfo-drawer-header {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .ClientPane-InquiryInfo-drawer {
@@ -18,22 +22,20 @@
     padding-left: 10px;
     flex-direction: column;
     order:2;
-    margin: 10px;
-}
-.ClientPane-InquiryInfo-drawer-label {
-    background-color: rgba(235, 235, 235, 0.486);
+    margin: 5px;
+    background-color: var(--SecondaryDark, rgba(28, 28, 28, 0.644));
+    border-radius: 10px;
+
 }
 
 .ClientPane-InquiryInfo-drawerContents {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    background-color: rgba(28, 28, 28, 0.644);
     padding: 2px;
     margin-left: 10px;
     padding-top: 5px;
-    border-radius: 10px;
-    color: rgb(215, 215, 215);
+    color: white
 }
 
 
@@ -61,16 +63,6 @@
     margin-left: 10px;
     width: 150px;
     float: right;
-
-    background-color: rgba(237, 247, 191, 0.35) !important;
-}
-
-.content-input {
-    display: block;
-    margin-top: 10px;
-    margin-right: 10px;
-    width: 150px;
-    float: right !important;
 
     background-color: rgba(237, 247, 191, 0.35) !important;
 }

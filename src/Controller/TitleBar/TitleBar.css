@@ -1,7 +1,8 @@
+
 .TitleBar-header {
   position: relative;
   top: 0px; left: 0px; right:0px;
-  background-color: #282c34;
+  background-color: var(--PrimaryDark, #0000bf);
   min-height: 40px;
   height: 4.75vh;
 
@@ -10,6 +11,8 @@
   justify-content: top;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 10px;
+  padding-bottom: 0;
 }
 
 .TitleBar-header-title {

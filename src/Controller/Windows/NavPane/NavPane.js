@@ -153,9 +153,6 @@ const NavPane = (props) => {
                 {showViewSelectHeader()}
             </div>
 
-
-            {qds_Custom.Divider()}
-
             {qds_Custom.Divider()}
 
             {getContent()}
