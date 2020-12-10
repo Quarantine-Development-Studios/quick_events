@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import qds_Custom, { Definitions, ReactField }from '../../resources/qds_Library/qds_custom.js';
 import './NavPane.css';
 import CC from '../../resources/qds_Library/qds_deps.js';
+import axios from 'axios';
 
 //views
 import ClientDirectoryView from './views/clientDirectoryView.js'; //default view
@@ -20,26 +21,55 @@ const NavPane = (props) => {
         props.setSelectedClient(id);
     }
 
+    /**
+     * Use to Create New Client entries in database
+     * integrated and working
+     * @param {*} e 
+     */
     const createClient = (e) => {
         let newClient = new Definitions.Client();
-        qds_Custom.dbInsertEntry('clients', newClient, selectClient);
+        //qds_Custom.dbInsertEntry('clients', newClient, selectClient);
+
+        axios.get('/api/v1/firebase-createEntry', { params: {dbId: 'clients', entry: newClient}}).then((res) => {
+            const response = res.data;
+            console.log(response)
+
+            selectClient(response.id)
+        })
     }
     
+    /**
+     * Use to Remove Clients from database
+     * Needs confirmation prompt
+     * @param {*} e 
+     */
     const removeClient = (e) => { 
         if(props.selectedClient !== ""){
-            console.log('attempting to remove Client')
+            if(window.confirm("Are You Sure You Would Like to Remove Client? \n This Will Also Remove Any Related Inquiries!")){
+                console.log('attempting to remove Client')
 
-            const client = qds_Custom.getEntry(props.clients, props.selectedClient)
-            if(client.inquiries){
-                for(let i = 0; i < client.inquiries.length; i++){
-                    console.log('removing inquiry: ' + client.inquiries[i])
-                    qds_Custom.dbRemoveEntry('inquiries', client.inquiries[i])
+                const client = qds_Custom.getEntry(props.clients, props.selectedClient)
+                if(client.inquiries){
+                    for(let i = 0; i < client.inquiries.length; i++){
+
+                        axios.get('api/v1/firebase-removeEntry', { 
+                            params: {
+                                dbId: 'clients', 
+                                entryId: client.inquiries[i]
+                            }
+                        });
+                    }
                 }
-            }
 
-            const selectedClientCache = props.selectedClient;
-            props.setSelectedClient("");
-            qds_Custom.dbRemoveEntry('clients', selectedClientCache);
+                const selectedClientCache = props.selectedClient;
+                props.setSelectedClient("");
+                axios.get('api/v1/firebase-removeEntry', { 
+                    params: {
+                        dbId: 'clients', 
+                        entryId: selectedClientCache
+                    }
+                });
+            }
         }
     }
 

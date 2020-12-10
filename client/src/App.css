@@ -20,6 +20,9 @@
   height: auto;
 }
 
+button#Logout-button {
+  display: flex;
+}
 
 
 .App-header-menu {

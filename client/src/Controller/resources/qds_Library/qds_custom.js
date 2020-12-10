@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import firebase from '../firebase/firebase';
+import firebase from '../firebase/firebase.mjs';
 import cClient from '../definitions/client.js';
 import cInquiry from '../definitions/inquiry.js';
 import cEvent from '../definitions/event.js';

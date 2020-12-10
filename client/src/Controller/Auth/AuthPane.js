@@ -16,7 +16,7 @@ const AuthPane = () => {
             .then(() => {
                 firebase
                 .auth()
-                .signInWithPopup(provider)
+                .signInWithRedirect(provider)
                 .then(result => {
                     console.log(result)
                     Auth.setLoggedIn(true)
@@ -24,7 +24,8 @@ const AuthPane = () => {
                 .catch(e => console.log(e))
             })
     }
-
+    
+ 
 
     return (
         <div className="App-Window AuthPane">
@@ -35,7 +36,11 @@ const AuthPane = () => {
                 <form /* onSubmit={e => handleForm(e)} */>
                     
                     <hr />
-                    <label className="AuthPane -label">Please Authenticate with Google to Continue. No authentication data will be used or distributed. This Module is for Showing a Working Authentication FrontEnd for User Evaluations Only.</label>
+                    <label className="AuthPane -label">
+                        Please Authenticate with Google to Continue. 
+                        No authentication data will be used or distributed. 
+                        This Module is for Showing a Working Authentication Layer for User Evaluations Only.
+                    </label>
                     <button onClick={ () => handleGoogleLogin()} className="Btn" type="button" >
 
                     </button>
