@@ -8,6 +8,8 @@ import router from './routes/routes.mjs';
 const app = express();
 const __dirname = path.resolve();
 // Set our backend port to be either an environment variable or port 5000
+
+console.log(process.env)
 const port = process.env.PORT || 5000;
 
 // This application level middleware prints incoming requests to the servers console, useful to see incoming requests
