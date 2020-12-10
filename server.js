@@ -6,7 +6,7 @@ import router from './routes/routes.mjs';
 
 // Create a new express application named 'app'
 const app = express();
-
+const __dirname = path.resolve();
 // Set our backend port to be either an environment variable or port 5000
 const port = process.env.PORT || 5000;
 
