@@ -1,7 +1,6 @@
 
 .TitleBar-header {
-  display: flex;
-  flex-direction: row;
+  position: relative;
   top: 0px; left: 0px; right:0px;
   background-color: var(--PrimaryDark, #0000bf);
   min-height: 40px;
@@ -12,23 +11,14 @@
   justify-content: top;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 10px;
+  padding-bottom: 0;
 }
 
 .TitleBar-header-title {
-  display: flex;
-  margin: auto;
+  margin-top: .25vh;
+  margin-bottom: .25vh;
 
   text-align: left;
   font-size: 1.5vh;
-}
-
-.TitleBar-button-container {
-  justify-content: center;
-  align-items: center;
-}
-
-.TitleBar-button {
-  float: right;
-  margin-right: 20px;
-  margin-bottom: 10px;
 }
