@@ -113,8 +113,10 @@ const ClientInfo = (props) => {
             {qds_Custom.Divider()}
             <div className={rootName + "-content -AppContent"}>
                 <label className={rootName + "-header -header"}>Information:</label>
-                <div className="-lightHighlight">
-                    {display}
+                <div className="-lightHighlight" >
+                    <div className={rootName +"-content"} >
+                        {display}
+                    </div>
                     {qds_Custom.getButtons(buttonReqs, rootName)}
                 </div>
             </div>

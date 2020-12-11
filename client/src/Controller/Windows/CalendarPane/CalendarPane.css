@@ -54,10 +54,21 @@
     overflow: hidden;
 }
 
-.fc-theme-standard, .fc-scrollgrid, .fc-theme-standard td, .fc-theme-standard th {
-    border-color: white !important;
+.fc-theme-standard, .fc-theme-standard td, .fc-theme-standard th {
+    border-color: black !important;
 }
 
-.fc-view-harness {
-    background-color: #454545;
+.fc-media-screen {
+    background-color: var(--SecondaryDark, black);
 }
+
+.fc-view-harness, .fc-view-harness-active, .fc-daygrid {
+    background-color: var(--SecondaryLight, White);
+    border-radius: 10px;
+}
+
+.fc-scrollgrid-liquid {
+    border-radius: 10px;
+}
+
+
