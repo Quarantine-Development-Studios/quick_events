@@ -1,25 +1,10 @@
 {
-<<<<<<< HEAD
-  "name": "quick-events-v2",
-  "version": "1.0.0",
-  "description": "V2 of QuickEvents with node.js backend",
-  "main": "server.mjs",
-  "type": "module",
-  "scripts": {
-    "postinstall": "cd client && npm install",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "client": "cd client && npm start",
-    "server": "nodemon server.js",
-    "build": "concurrently --kill-others-on-fail \"npm run client\" \"npm run server\"",
-    "dev": "concurrently --kill-others-on-fail \"npm run client\" \"npm run server\""
-=======
   "name": "quick_events",
   "version": "0.1.0",
   "private": true,
   "homepage": ".",
   "engines": {
     "node": "14.13.0"
->>>>>>> parent of 5ebabbd... Merged Gits For Node Backend Support
   },
   "dependencies": {
     "@fullcalendar/core": "^5.4.0",
