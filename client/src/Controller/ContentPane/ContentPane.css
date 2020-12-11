@@ -15,6 +15,14 @@
     
 }
 
+.content-input {
+    background-color: moccasin !important;
+    border: none;
+}
+
+.content-label {
+    font-weight: 500;
+}
 
 .client-importer {
     position: relative;

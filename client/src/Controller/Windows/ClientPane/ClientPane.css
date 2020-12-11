@@ -2,16 +2,15 @@
     position: relative;
 }
 .ClientInfo-content {
-    margin: 5px;
+    margin: 0px;
     padding: 1px;
-    background-color: var(--SecondaryDark, unset);
-    border-radius: 10px;
 }
 
 .ClientInfo-field {
     flex: auto;
     flex-direction: row;
 
+    margin: 10px;
     margin-left: 20px;
 }
 

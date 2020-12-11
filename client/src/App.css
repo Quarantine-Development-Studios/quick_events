@@ -1,17 +1,8 @@
-:root {
-  --PrimaryColor: #f4dcb8;
-  --PrimaryDark: #c1aa88;
-  --PrimaryLight: #ffffea;
-  --SecondaryColor: #b18cd1;
-  --SecondaryDark: #815ea0;
-  --SecondaryLight: #f5e5ff;
-}
-
 .App {
   display: flex;
   flex-wrap: wrap;
 
-  background-color: var( --PrimaryColor, #0000f4);
+  background-color: #122645;
 
   min-height: 100vh;
   min-width: fit-content;
@@ -65,14 +56,11 @@ button#Logout-button {
   min-height: 90vh;
 
   margin-left: auto;
-  
   margin-right: auto;
   margin-bottom: 15px;
 
 
-  background-color: var(--SecondaryColor, #65ba69)
-
-  ;
+  background-color: #2d2d2d;
   border-style: none;
   border-radius: 10px;
   border-width: 1px;
@@ -84,31 +72,29 @@ button#Logout-button {
 
 .-AppContent, .-AppContentFull {
   border-style: none;
-  background-color: var(--SecondaryLight, #ffffff);
+  background-color: rgba(255, 255, 255, 0.863);
   padding: 2px;
-  margin: 5px;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin: 10px;
 
   border-radius: 10px;
 }
 .-AppContentFull {
   margin-left: 0 !important;
   margin-right: 0 !important;
-  border-radius: 10px;
+  border-radius: 0;
   background-color: #2d2d2d;
-  color: black;
+  color: white;
 }
 
 .App-divider {
   display: flex;
   align-self: center;
 
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 
-  background-color:  var(--SecondaryColor, #65ba69);
-  border-color: var(--SecondaryDark,#32893d);
+  background-color:  rgba(255, 255, 255, 0.863);
+  border-color: black;
   border-style: solid;
   border-top-width: 1px;
   border-bottom-width: 1px;
@@ -116,14 +102,14 @@ button#Logout-button {
   border-left-width: 0px;
   border-right-width: 0px;
 
-  height: 1px;
+  height: 5px;
   width: 100%;
 }
 
 .control-Bar {
   position: relative;
   top: 0vh; left: 0vw;
-  background-color: var(--SecondaryDark,#32893d) !important;
+  background-color: rgba(255, 255, 255, 0.863) !important;
   min-height: 35px;
   border-color: black;
   border-width: 1px !important;
@@ -138,10 +124,8 @@ button#Logout-button {
 .App-Window-Title {
   height: 100%;
   text-align: center;
-  font-size: 1.5em;
-  font-weight: normal;
-  text-underline-position: ;
-  color: var(--PrimaryTextColor, white)
+  font-size: 1em;
+  font-weight: bold;
 }
 
 
@@ -181,26 +165,16 @@ button#Logout-button {
 
 .-content-label {
   font-weight: 500;
-  padding: 2px;
+  padding: 5px;
   border-radius: 10px;
-  color: white
 }
 
 .-selected-content-label {
-  color: white;
+  background-color: rgba(28, 28, 28, 0.644);
+  border-radius: 10px;
+  color: rgb(215, 215, 215);
 }
 
 .lightHighlight {
-  background-color: var(--SecondaryDark,) !important;
-}
-
-.content-input {
-  display: block;
-  margin-top: 5px;
-  margin-right: 10px;
-  width: 150px !important;
-  float: right !important;
-  border: none;
-
-  background-color: var(--SecondaryLight, white);
+  background-color: rgba(255, 255, 255, 0.133);
 }

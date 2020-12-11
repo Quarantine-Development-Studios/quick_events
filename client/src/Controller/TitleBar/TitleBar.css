@@ -1,9 +1,8 @@
-
 .TitleBar-header {
   display: flex;
   flex-direction: row;
   top: 0px; left: 0px; right:0px;
-  background-color: var(--PrimaryDark, #0000bf);
+  background-color: #282c34;
   min-height: 40px;
   height: 4.75vh;
 
